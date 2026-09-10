@@ -954,20 +954,6 @@ Session::run_impl(
         }
 
         auto _t2 = _clk::now();
-        if (std::getenv("NEMO_DBG_OPS")) {
-            const int nn = ggml_graph_n_nodes(cr.gf);
-            for (int i = 0; i < nn; ++i) {
-                ggml_tensor* nd = ggml_graph_node(cr.gf, i);
-                if (nd->op == GGML_OP_IM2COL || nd->op == GGML_OP_CONT ||
-                    nd->op == GGML_OP_CONCAT) {
-                    fprintf(stderr, "OP %-8s dst=[%ld,%ld,%ld,%ld] %s src0=[%ld,%ld,%ld,%ld] name=%s\n",
-                        ggml_op_name(nd->op), (long)nd->ne[0],(long)nd->ne[1],(long)nd->ne[2],(long)nd->ne[3],
-                        ggml_type_name(nd->type),
-                        (long)nd->src[0]->ne[0],(long)nd->src[0]->ne[1],(long)nd->src[0]->ne[2],(long)nd->src[0]->ne[3],
-                        nd->src[0]->name[0]?nd->src[0]->name:"-");
-                }
-            }
-        }
         if (cr.compute_threads == 0)
             cr.compute_threads = graph_compute_threads(cr.gf);
         if (!ggml_graph_compute_helper_async(sched.get(), cr.gf, cr.compute_threads)) {
