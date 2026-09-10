@@ -1,5 +1,7 @@
 build/
 build-*/
+out/
+nemo-speech-*.tar.gz
 *.pyc
 __pycache__/
 .cache/
