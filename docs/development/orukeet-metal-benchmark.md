@@ -5,6 +5,10 @@ reduces native median transcription latency by **27.8%** and OpenWhispr backend
 median latency by **26.1%** on this Mac. Word error rate stays at **2.40%**,
 and every measured transcript matches the baseline exactly.
 
+The [second optimization pass](orukeet-metal-followup-benchmark.md) reduces
+native median further to 88.9 ms and backend median to 100.3 ms, with the
+same model, benchmark and transcripts.
+
 ## Measured results
 
 Measured on 2026-09-10 UTC: Apple M4 Pro, 12 CPU cores, 24 GiB RAM,

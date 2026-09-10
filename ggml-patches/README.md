@@ -18,11 +18,12 @@ filename order. Later patches may build on files changed by earlier patches;
 automatically; apply it explicitly before a raw CUDA or Metal CMake
 configuration.
 
-Metal uses `0018-metal-tensor-api-dynamic-k.patch` and
-`0021-metal-asr-kernels.patch`. The `metal-*` presets apply the whole series
+Metal uses `0018-metal-tensor-api-dynamic-k.patch`,
+`0021-metal-asr-kernels.patch` and `0022-metal-asr-fusions.patch`.
+The `metal-*` presets apply the whole series
 because `apply-ggml-patches.sh` requires all of them or it fails. Once the
 submodule moves past upstream ggml `33c9ea5`, drop 0018 as described below;
-keep patch application in the Metal presets for 0021.
+keep patch application in the Metal presets for 0021 and 0022.
 
 ## Building against patched vs stock ggml
 
@@ -154,6 +155,17 @@ stock comparison therefore requires both a pristine ggml checkout and
   views, 1D/2D lowering, padding, dilation and short matrix products.
   See [the M4 Pro benchmark](../docs/development/orukeet-metal-benchmark.md)
   for results and reproduction commands.
+- **0022-metal-asr-fusions.patch** - fuses short F16 convolution lowering
+  with its dot product, preserving the F16 input rounding. If the graph
+  allocator reused the input for the result, the kernel uses the original
+  lowering allocation as scratch and copies the compact result afterward.
+  Single-stream LSTM gates collapse thirteen operations into one kernel,
+  including the reordered graph used by the Metal scheduler. Short Q8
+  matrix-vector products use one SIMD group. Additional outputs, consumers,
+  incompatible layouts and unsupported shapes keep the existing paths.
+  CPU-reference tests cover these fusions, allocator reuse, attention views
+  and cached positional projections used by the accompanying encoder change.
+  See [the follow-up benchmark](../docs/development/orukeet-metal-followup-benchmark.md).
 
 ## Regenerating after editing ggml
 

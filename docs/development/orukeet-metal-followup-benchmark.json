@@ -1,0 +1,2401 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-09-10",
+  "target": {
+    "median_speedup_vs_original": 2,
+    "native_target_ms": 77.1210415,
+    "backend_target_ms": 82.98775000000023,
+    "achieved": false
+  },
+  "benchmark": {
+    "repository": "https://github.com/hoid-ai/openwhispr",
+    "branch": "hoid-orukeet",
+    "commit": "2437b3db8fbe1ba5917b8bd80dbc1d68c8efd79c",
+    "source_sha256": {
+      "resources/orukeet/sidecar.cpp": "e459e32e259a333b5a905daef87094b0e9cff964f5f245fe103a35217e6e1cef",
+      "src/helpers/parakeet.js": "36356e7382ddee9f5628d539b28c3d2f346d2cc4bc9f51bec8df86e5876741a2",
+      "src/helpers/parakeetServer.js": "17d6955909e91888739f721bd438e9aa0ce8123fb561c033faa557bce75777e0",
+      "src/helpers/orukeetNative.js": "0e9eea6a16d31b691e82ab0acaa35589406fec29f8025100dc91cfb9bbfe968f",
+      "src/helpers/ffmpegUtils.js": "e8d011c3fa05f634efc3e422d2ddbc36c138458dfe47375d4948ca378b0566a8",
+      "scripts/benchmark-orukeet-performance.js": "35062d8849569d24de19d0bec86ebb3b349a4762978d6eb554d7c34e4cf3f286",
+      "scripts/lib/orukeet-benchmark.js": "8e0d2e62adc628212894880344c106da3663b4a25d67cc6bee18f4b509016004"
+    },
+    "seconds_per_run": 120,
+    "unique_clips": 24,
+    "unique_audio_seconds": 364.2850000000001,
+    "corpus": {
+      "name": "LibriSpeech test-clean",
+      "url": "https://www.openslr.org/resources/12/test-clean.tar.gz",
+      "source": "https://www.openslr.org/12",
+      "license": "CC BY 4.0",
+      "md5": "32fa31d27d2e1cad72775fee3f4849a9",
+      "checksum_source": "https://www.openslr.org/resources/12/md5sum.txt",
+      "selection_version": "orukeet-quick-v1"
+    },
+    "corpus_manifest_sha256": "3004caf98c8a3f2cd0e15950b573f1745255986d4334dee46782e36fcbab48e8",
+    "mode": "Sequential full-clip recognition; batch size 1; full corpus warmup excluded; native and backend timing from the same call"
+  },
+  "hardware": {
+    "cpu": "Apple M4 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 25769803776,
+    "macos": "26.5"
+  },
+  "model": {
+    "id": "orukeet-v0.1.0-q8",
+    "sha256": "93ce19c6d8244acbfea980eeaf970531d4f216171578ef8e041dcc2d070a45bd",
+    "bytes": 714456704,
+    "url": "https://huggingface.co/oruk/orukeet/resolve/555136b50265a132d4cea0d35560c26fc4f657ab/orukeet-v0.1.0-q8.gguf"
+  },
+  "patch": {
+    "patch": "0022-metal-asr-fusions.patch",
+    "sha256": "8a07b43643a4fcea9662b6fb0ac425545e3b29eb45a32c27d885edb1eedb655e",
+    "bytes": 30788,
+    "files": [
+      "src/ggml-metal/ggml-metal-device.cpp",
+      "src/ggml-metal/ggml-metal-ops.cpp",
+      "src/ggml-metal/ggml-metal.metal",
+      "tests/test-backend-ops.cpp"
+    ],
+    "ggml_revision": "c03b4e2bcece5134827881af90242086daf75be5",
+    "patched_tree": "d0da2a190414cdcf4f7977e34fb22e38934b056f",
+    "series_count": 22,
+    "live_tree_matches": true,
+    "nemo_base_commit": "90f5e58d2a32aea85399fdecf2e7406651abad59",
+    "parent_source_sha256": {
+      "src/asr/encoder/rel_pos_attention.cpp": "142f62dcaae14bc985cc945f1ce13653778973c5ff2a662bf63518d9b2666c79",
+      "src/asr/encoder/rel_pos_attention.h": "447fe67097575c786bd3a292f73206fa83e0ac40068194232c8121a5d072dba8"
+    }
+  },
+  "positional_cache": {
+    "persistent_bytes": 100564992,
+    "maximum_bytes_across_encoder_layers": 134217728,
+    "maximum_frames": 512,
+    "minimum_frames": 5,
+    "disable_environment_variable": "NEMO_SPEECH_METAL_POS_CACHE_DISABLE=1",
+    "contents": "Q8 Metal linear projection of fixed positional embeddings; independent of audio; original projection retained outside supported shapes"
+  },
+  "runs": {
+    "original": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-kernel-baseline-120s.json",
+      "receipt_sha256": "e9f9eb49d8f02555322af093590e48b6673f0eccbf1c208db09d783fa8a2b4b1",
+      "started_at": "2026-09-10T07:27:27.504Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t81%; discharging; 6:07 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.05335320900001,
+      "request_count": 691,
+      "startup": {
+        "backend_start_ms": 829.0343750000001,
+        "native_model_load_ms": 55.651375
+      },
+      "summary": {
+        "native_inference": {
+          "count": 691,
+          "median_ms": 154.242083,
+          "p95_ms": 280.825708,
+          "p99_ms": 283.683166,
+          "min_ms": 55.418542,
+          "max_ms": 316.540125,
+          "mean_ms": 161.13787445007236,
+          "audio_seconds_per_second": 94.18927892900558,
+          "real_time_factor": 0.010616919583318417
+        },
+        "openwhispr_backend": {
+          "count": 691,
+          "median_ms": 165.97550000000047,
+          "p95_ms": 295.01445800000147,
+          "p99_ms": 303.23904199999924,
+          "min_ms": 65.15679199999977,
+          "max_ms": 331.5163750000065,
+          "mean_ms": 173.723707057887,
+          "audio_seconds_per_second": 87.36550963391322,
+          "real_time_factor": 0.011446164558420015
+        },
+        "backend_overhead": {
+          "count": 691,
+          "median_ms": 12.059875000003615,
+          "p95_ms": 16.518207000000558,
+          "p99_ms": 24.503792000005475,
+          "min_ms": 9.183125000002448,
+          "max_ms": 99.65374900000046,
+          "mean_ms": 12.585832607814723,
+          "audio_seconds_per_second": 1205.916261207943,
+          "real_time_factor": 0.0008292449751016039
+        }
+      },
+      "by_duration": {
+        "5–10 s": {
+          "native_inference": {
+            "count": 231,
+            "median_ms": 77.226916,
+            "p95_ms": 105.876417,
+            "p99_ms": 109.87075,
+            "min_ms": 55.418542,
+            "max_ms": 116.036458,
+            "mean_ms": 78.72930109523804,
+            "audio_seconds_per_second": 87.42433944042013,
+            "real_time_factor": 0.011438462176560135
+          },
+          "openwhispr_backend": {
+            "count": 231,
+            "median_ms": 88.20479100000375,
+            "p95_ms": 117.09841700000106,
+            "p99_ms": 140.54025000000547,
+            "min_ms": 65.15679199999977,
+            "max_ms": 200.35829100000046,
+            "mean_ms": 90.28132305194787,
+            "audio_seconds_per_second": 76.23788520352913,
+            "real_time_factor": 0.013116838135401333
+          },
+          "backend_overhead": {
+            "count": 231,
+            "median_ms": 10.443375000006384,
+            "p95_ms": 17.743166000003434,
+            "p99_ms": 35.20979099999974,
+            "min_ms": 9.183125000002448,
+            "max_ms": 99.65374900000046,
+            "mean_ms": 11.552021956709776,
+            "audio_seconds_per_second": 595.8140634297662,
+            "real_time_factor": 0.001678375958841191
+          }
+        },
+        "10–20 s": {
+          "native_inference": {
+            "count": 230,
+            "median_ms": 154.2645415,
+            "p95_ms": 201.914833,
+            "p99_ms": 205.491416,
+            "min_ms": 121.914708,
+            "max_ms": 217.559333,
+            "mean_ms": 162.10948003913037,
+            "audio_seconds_per_second": 95.5803340873679,
+            "real_time_factor": 0.010462403271010978
+          },
+          "openwhispr_backend": {
+            "count": 230,
+            "median_ms": 165.9630834999989,
+            "p95_ms": 214.5263330000016,
+            "p99_ms": 225.23079100000905,
+            "min_ms": 132.41758299999856,
+            "max_ms": 235.18337500000052,
+            "mean_ms": 174.38690194782606,
+            "audio_seconds_per_second": 88.8511584746502,
+            "real_time_factor": 0.011254777283351981
+          },
+          "backend_overhead": {
+            "count": 230,
+            "median_ms": 11.940230000002416,
+            "p95_ms": 14.561792000010115,
+            "p99_ms": 19.269457999999133,
+            "min_ms": 10.47591799999799,
+            "max_ms": 29.691959000000537,
+            "mean_ms": 12.277421908695613,
+            "audio_seconds_per_second": 1262.0302842158949,
+            "real_time_factor": 0.0007923740123409991
+          }
+        },
+        "20–30 s": {
+          "native_inference": {
+            "count": 230,
+            "median_ms": 244.867792,
+            "p95_ms": 282.966959,
+            "p99_ms": 292.380542,
+            "min_ms": 206.680292,
+            "max_ms": 316.540125,
+            "mean_ms": 242.93314036086952,
+            "audio_seconds_per_second": 95.46292721199953,
+            "real_time_factor": 0.010475270654326864
+          },
+          "openwhispr_backend": {
+            "count": 230,
+            "median_ms": 258.5486875000015,
+            "p95_ms": 298.6501250000001,
+            "p99_ms": 318.2601660000073,
+            "min_ms": 218.6306670000049,
+            "max_ms": 331.5163750000065,
+            "mean_ms": 256.8656891478263,
+            "audio_seconds_per_second": 90.2849608781563,
+            "real_time_factor": 0.011076041793378478
+          },
+          "backend_overhead": {
+            "count": 230,
+            "median_ms": 13.246980000003077,
+            "p95_ms": 17.554957999998805,
+            "p99_ms": 21.923916000007296,
+            "min_ms": 11.711417000001433,
+            "max_ms": 36.26704299998988,
+            "mean_ms": 13.93254878695663,
+            "audio_seconds_per_second": 1664.5273632462133,
+            "real_time_factor": 0.0006007711390516096
+          }
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "runtime_provenance": {
+        "device": "metal",
+        "spec": {
+          "version": "0.1.0-native",
+          "component_api": 1,
+          "platform": "macos_arm64",
+          "source": {
+            "repository": "https://github.com/hoid-ai/NeMo-Speech.cpp.git",
+            "sibling_directory": "NeMo-Speech.cpp",
+            "sentencepiece": {
+              "repository": "https://github.com/google/sentencepiece.git",
+              "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+            }
+          }
+        },
+        "source": {
+          "remote": "https://github.com/hoid-ai/NeMo-Speech.cpp",
+          "commit": "a5b6953c4a579a2bbd1c0913ad8a85c2a4d99953",
+          "dirty": true,
+          "diff_sha256": "18a7978c277d999db5dd156fd59c61b8e56392d0cbf7b973b49ba8c2cf125a6a",
+          "ggml": {
+            "remote": "https://github.com/ggml-org/ggml.git",
+            "commit": "c03b4e2bcece5134827881af90242086daf75be5",
+            "dirty": true,
+            "diff_sha256": "caf0d56e4a500fd06d16cf34cf0049c64b5bed84d285e015fcb6393bf3677c0f"
+          },
+          "llama": {
+            "remote": "https://github.com/ggml-org/llama.cpp.git",
+            "commit": "560445bf34c87356ad0f8d80fb03ec5488850b65",
+            "dirty": false,
+            "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "sentencepiece": {
+            "repository": "https://github.com/google/sentencepiece.git",
+            "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+          },
+          "preset": "metal-asr",
+          "sdk_sha256": "ed54b2ac73a10b41c61800aa6b9e88e758e1b81d562a3a8be825d5e216cd9e0c"
+        }
+      }
+    },
+    "previous": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-kernel-optimized-120s.json",
+      "receipt_sha256": "88bbbf1dfa3761224ae5aca09d6823e7be420aacade9c7c5c4217119e5703ebf",
+      "started_at": "2026-09-10T07:42:20.480Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t76%; discharging; 5:31 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.02411525000002,
+      "request_count": 938,
+      "startup": {
+        "backend_start_ms": 805.8753749999996,
+        "native_model_load_ms": 57.7745
+      },
+      "summary": {
+        "native_inference": {
+          "count": 938,
+          "median_ms": 111.430271,
+          "p95_ms": 198.573167,
+          "p99_ms": 200.925541,
+          "min_ms": 42.248042,
+          "max_ms": 217.149417,
+          "mean_ms": 116.2952321748401,
+          "audio_seconds_per_second": 130.46376148959865,
+          "real_time_factor": 0.007664963730788384
+        },
+        "openwhispr_backend": {
+          "count": 938,
+          "median_ms": 122.63664599999902,
+          "p95_ms": 212.1342089999962,
+          "p99_ms": 216.31029200000194,
+          "min_ms": 51.50291599999764,
+          "max_ms": 237.84824999999546,
+          "mean_ms": 127.94735296695075,
+          "audio_seconds_per_second": 118.58247225133996,
+          "real_time_factor": 0.00843294949931945
+        },
+        "backend_overhead": {
+          "count": 938,
+          "median_ms": 11.288416000001845,
+          "p95_ms": 15.484623999997297,
+          "p99_ms": 20.956458999997466,
+          "min_ms": 8.674875000000057,
+          "max_ms": 38.666792000000754,
+          "mean_ms": 11.652120792110665,
+          "audio_seconds_per_second": 1302.1074621118414,
+          "real_time_factor": 0.0007679857685310672
+        }
+      },
+      "by_duration": {
+        "5–10 s": {
+          "native_inference": {
+            "count": 313,
+            "median_ms": 58.093875,
+            "p95_ms": 78.292333,
+            "p99_ms": 78.641417,
+            "min_ms": 42.248042,
+            "max_ms": 79.162625,
+            "mean_ms": 59.745525290734804,
+            "audio_seconds_per_second": 115.22779345269085,
+            "real_time_factor": 0.008678461767217392
+          },
+          "openwhispr_backend": {
+            "count": 313,
+            "median_ms": 68.02595900000597,
+            "p95_ms": 88.56633299999521,
+            "p99_ms": 92.19554100000096,
+            "min_ms": 51.50291599999764,
+            "max_ms": 94.53358300000036,
+            "mean_ms": 69.91103673482432,
+            "audio_seconds_per_second": 98.4729360263378,
+            "real_time_factor": 0.010155074483942855
+          },
+          "backend_overhead": {
+            "count": 313,
+            "median_ms": 9.773207999991143,
+            "p95_ms": 12.686958000006271,
+            "p99_ms": 18.92362400000036,
+            "min_ms": 8.674875000000057,
+            "max_ms": 19.725083999999256,
+            "mean_ms": 10.165511444089505,
+            "audio_seconds_per_second": 677.2256453388821,
+            "real_time_factor": 0.0014766127167254606
+          }
+        },
+        "10–20 s": {
+          "native_inference": {
+            "count": 313,
+            "median_ms": 111.491584,
+            "p95_ms": 144.285459,
+            "p99_ms": 144.978542,
+            "min_ms": 88.037584,
+            "max_ms": 170.193417,
+            "mean_ms": 116.62866612140574,
+            "audio_seconds_per_second": 132.6492310157694,
+            "real_time_factor": 0.007538679209388855
+          },
+          "openwhispr_backend": {
+            "count": 313,
+            "median_ms": 122.66091700000106,
+            "p95_ms": 155.97525000000314,
+            "p99_ms": 159.13349999999627,
+            "min_ms": 98.35254200000054,
+            "max_ms": 201.21691699999792,
+            "mean_ms": 128.16096646964837,
+            "audio_seconds_per_second": 120.71306343545112,
+            "real_time_factor": 0.008284107548432236
+          },
+          "backend_overhead": {
+            "count": 313,
+            "median_ms": 11.114915999997777,
+            "p95_ms": 13.730124999996804,
+            "p99_ms": 22.713999999991387,
+            "min_ms": 9.829708000001034,
+            "max_ms": 31.02349999999791,
+            "mean_ms": 11.532300348242646,
+            "audio_seconds_per_second": 1341.5105753603527,
+            "real_time_factor": 0.0007454283390433824
+          }
+        },
+        "20–30 s": {
+          "native_inference": {
+            "count": 312,
+            "median_ms": 170.666062,
+            "p95_ms": 200.700542,
+            "p99_ms": 202.920083,
+            "min_ms": 145.1645,
+            "max_ms": 217.149417,
+            "mean_ms": 172.69168547435885,
+            "audio_seconds_per_second": 134.2710851209038,
+            "real_time_factor": 0.007447619858732463
+          },
+          "openwhispr_backend": {
+            "count": 312,
+            "median_ms": 185.10356249999677,
+            "p95_ms": 214.5460830000011,
+            "p99_ms": 218.87304200000654,
+            "min_ms": 157.1565840000112,
+            "max_ms": 237.84824999999546,
+            "mean_ms": 185.9553848717944,
+            "audio_seconds_per_second": 124.69388835384594,
+            "real_time_factor": 0.008019639239753943
+          },
+          "backend_overhead": {
+            "count": 312,
+            "median_ms": 12.563062500000115,
+            "p95_ms": 16.78000000000361,
+            "p99_ms": 24.75512500000042,
+            "min_ms": 11.329499999994539,
+            "max_ms": 38.666792000000754,
+            "mean_ms": 13.263699397435403,
+            "audio_seconds_per_second": 1748.1925144114314,
+            "real_time_factor": 0.0005720193810214733
+          }
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "runtime_provenance": {
+        "device": "metal",
+        "spec": {
+          "version": "0.1.0-native",
+          "component_api": 1,
+          "platform": "macos_arm64",
+          "source": {
+            "repository": "https://github.com/hoid-ai/NeMo-Speech.cpp.git",
+            "sibling_directory": "NeMo-Speech.cpp",
+            "sentencepiece": {
+              "repository": "https://github.com/google/sentencepiece.git",
+              "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+            }
+          }
+        },
+        "source": {
+          "remote": "https://github.com/hoid-ai/NeMo-Speech.cpp",
+          "commit": "a5b6953c4a579a2bbd1c0913ad8a85c2a4d99953",
+          "dirty": true,
+          "diff_sha256": "eed9489e3b7aae7ba00416cdd9f1d0f5e68053bc63ec8ff21095c7924c795069",
+          "ggml": {
+            "remote": "https://github.com/ggml-org/ggml.git",
+            "commit": "c03b4e2bcece5134827881af90242086daf75be5",
+            "dirty": true,
+            "diff_sha256": "1a8b9db938ab1a101166410c815e2a1cbd6dcba2d90534ae241ddf482561e544"
+          },
+          "llama": {
+            "remote": "https://github.com/ggml-org/llama.cpp.git",
+            "commit": "560445bf34c87356ad0f8d80fb03ec5488850b65",
+            "dirty": false,
+            "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "sentencepiece": {
+            "repository": "https://github.com/google/sentencepiece.git",
+            "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+          },
+          "preset": "metal-asr",
+          "sdk_sha256": "28330448afd01ba7dc1480261d076eb30b06e1a3f34020f7854cf19ffcaca48e"
+        }
+      }
+    },
+    "previous_control": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-followup-previous-120s.json",
+      "receipt_sha256": "51baae18bfafc10a89e468c388b05667b376ae73439dc6db6a301369bd63422a",
+      "started_at": "2026-09-10T09:25:12.945Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t50%; discharging; 4:25 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.095303458,
+      "request_count": 938,
+      "startup": {
+        "backend_start_ms": 816.2904589999999,
+        "native_model_load_ms": 64.868917
+      },
+      "summary": {
+        "native_inference": {
+          "count": 938,
+          "median_ms": 110.696792,
+          "p95_ms": 197.883834,
+          "p99_ms": 199.57375,
+          "min_ms": 42.385834,
+          "max_ms": 201.26175,
+          "mean_ms": 115.82308080490417,
+          "audio_seconds_per_second": 130.99559541498064,
+          "real_time_factor": 0.007633844457381199
+        },
+        "openwhispr_backend": {
+          "count": 938,
+          "median_ms": 122.50945800000409,
+          "p95_ms": 211.63816699999734,
+          "p99_ms": 214.99962499999674,
+          "min_ms": 52.34979200000089,
+          "max_ms": 233.70466599999054,
+          "mean_ms": 128.0168363560767,
+          "audio_seconds_per_second": 118.51810952923645,
+          "real_time_factor": 0.008437529116622608
+        },
+        "backend_overhead": {
+          "count": 938,
+          "median_ms": 11.902813000000158,
+          "p95_ms": 15.28141700000026,
+          "p99_ms": 23.455126000001172,
+          "min_ms": 9.072707999999167,
+          "max_ms": 67.00758300000209,
+          "mean_ms": 12.19375555117273,
+          "audio_seconds_per_second": 1244.2691153814908,
+          "real_time_factor": 0.0008036846592414227
+        }
+      },
+      "by_duration": {
+        "5–10 s": {
+          "native_inference": {
+            "count": 313,
+            "median_ms": 57.905333,
+            "p95_ms": 77.906875,
+            "p99_ms": 78.941167,
+            "min_ms": 42.385834,
+            "max_ms": 96.892417,
+            "mean_ms": 59.64078684664535,
+            "audio_seconds_per_second": 115.43015127592227,
+            "real_time_factor": 0.008663247764525726
+          },
+          "openwhispr_backend": {
+            "count": 313,
+            "median_ms": 68.30808299999626,
+            "p95_ms": 88.92420799999672,
+            "p99_ms": 90.95779200000106,
+            "min_ms": 52.34979200000089,
+            "max_ms": 117.14816699999938,
+            "mean_ms": 70.23468383706043,
+            "audio_seconds_per_second": 98.0191647746932,
+            "real_time_factor": 0.010202086523575257
+          },
+          "backend_overhead": {
+            "count": 313,
+            "median_ms": 10.250250000003696,
+            "p95_ms": 12.78091699999979,
+            "p99_ms": 17.70587500000419,
+            "min_ms": 9.072707999999167,
+            "max_ms": 22.481665999996125,
+            "mean_ms": 10.59389699041505,
+            "audio_seconds_per_second": 649.8406633698626,
+            "real_time_factor": 0.0015388387590495258
+          }
+        },
+        "10–20 s": {
+          "native_inference": {
+            "count": 313,
+            "median_ms": 110.711625,
+            "p95_ms": 143.23525,
+            "p99_ms": 144.68825,
+            "min_ms": 88.661583,
+            "max_ms": 156.978,
+            "mean_ms": 116.01911050798721,
+            "audio_seconds_per_second": 133.3461600219244,
+            "real_time_factor": 0.0074992785681686144
+          },
+          "openwhispr_backend": {
+            "count": 313,
+            "median_ms": 122.5186659999963,
+            "p95_ms": 155.95116699999926,
+            "p99_ms": 163.89100000000326,
+            "min_ms": 99.19779200000266,
+            "max_ms": 178.99037500000122,
+            "mean_ms": 128.15548496166156,
+            "audio_seconds_per_second": 120.7182266137695,
+            "real_time_factor": 0.00828375323305103
+          },
+          "backend_overhead": {
+            "count": 313,
+            "median_ms": 11.708750000002738,
+            "p95_ms": 14.774040999989268,
+            "p99_ms": 22.187083000001408,
+            "min_ms": 10.12874999999896,
+            "max_ms": 38.41725000000122,
+            "mean_ms": 12.136374453674337,
+            "audio_seconds_per_second": 1274.7384265747971,
+            "real_time_factor": 0.0007844746648824142
+          }
+        },
+        "20–30 s": {
+          "native_inference": {
+            "count": 312,
+            "median_ms": 172.115646,
+            "p95_ms": 199.32925,
+            "p99_ms": 200.764541,
+            "min_ms": 144.802083,
+            "max_ms": 201.26175,
+            "mean_ms": 171.98878821474355,
+            "audio_seconds_per_second": 134.81983471532047,
+            "real_time_factor": 0.007417306230285442
+          },
+          "openwhispr_backend": {
+            "count": 312,
+            "median_ms": 185.5457709999996,
+            "p95_ms": 213.12370900000678,
+            "p99_ms": 222.58504199999152,
+            "min_ms": 157.1455829999977,
+            "max_ms": 233.70466599999054,
+            "mean_ms": 185.84509508974372,
+            "audio_seconds_per_second": 124.76788794884712,
+            "real_time_factor": 0.008014882807104856
+          },
+          "backend_overhead": {
+            "count": 312,
+            "median_ms": 13.089042499996893,
+            "p95_ms": 18.445834000000445,
+            "p99_ms": 26.182041999998944,
+            "min_ms": 11.658375000000717,
+            "max_ms": 67.00758300000209,
+            "mean_ms": 13.856306875000131,
+            "audio_seconds_per_second": 1673.4256977113725,
+            "real_time_factor": 0.0005975765768194131
+          }
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "runtime_provenance": {
+        "device": "metal",
+        "spec": {
+          "version": "0.1.0-native",
+          "component_api": 1,
+          "platform": "macos_arm64",
+          "source": {
+            "repository": "https://github.com/hoid-ai/NeMo-Speech.cpp.git",
+            "sibling_directory": "NeMo-Speech.cpp",
+            "sentencepiece": {
+              "repository": "https://github.com/google/sentencepiece.git",
+              "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+            }
+          }
+        },
+        "source": {
+          "remote": "https://github.com/hoid-ai/NeMo-Speech.cpp",
+          "commit": "a5b6953c4a579a2bbd1c0913ad8a85c2a4d99953",
+          "dirty": true,
+          "diff_sha256": "eed9489e3b7aae7ba00416cdd9f1d0f5e68053bc63ec8ff21095c7924c795069",
+          "ggml": {
+            "remote": "https://github.com/ggml-org/ggml.git",
+            "commit": "c03b4e2bcece5134827881af90242086daf75be5",
+            "dirty": true,
+            "diff_sha256": "1a8b9db938ab1a101166410c815e2a1cbd6dcba2d90534ae241ddf482561e544"
+          },
+          "llama": {
+            "remote": "https://github.com/ggml-org/llama.cpp.git",
+            "commit": "560445bf34c87356ad0f8d80fb03ec5488850b65",
+            "dirty": false,
+            "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "sentencepiece": {
+            "repository": "https://github.com/google/sentencepiece.git",
+            "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+          },
+          "preset": "metal-asr",
+          "sdk_sha256": "28330448afd01ba7dc1480261d076eb30b06e1a3f34020f7854cf19ffcaca48e"
+        }
+      }
+    },
+    "optimized": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-followup-optimized-120s.json",
+      "receipt_sha256": "f9ed46c917b91d41c55fcf9ff8eaa977fe26e016ae15cdfa7ca5a659d9d8ce5b",
+      "started_at": "2026-09-10T10:22:52.528Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t45%; discharging; 3:20 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.051234583,
+      "request_count": 1139,
+      "startup": {
+        "backend_start_ms": 817.5571670000002,
+        "native_model_load_ms": 55.6505
+      },
+      "summary": {
+        "native_inference": {
+          "count": 1139,
+          "median_ms": 88.874875,
+          "p95_ms": 156.100209,
+          "p99_ms": 159.115709,
+          "min_ms": 34.640875,
+          "max_ms": 172.023709,
+          "mean_ms": 93.35380682704113,
+          "audio_seconds_per_second": 162.61701571090998,
+          "real_time_factor": 0.00614941797836049
+        },
+        "openwhispr_backend": {
+          "count": 1139,
+          "median_ms": 100.32629199999792,
+          "p95_ms": 170.07795899999473,
+          "p99_ms": 172.64504200000374,
+          "min_ms": 43.742417000001296,
+          "max_ms": 272.1724580000009,
+          "mean_ms": 105.3872253740124,
+          "audio_seconds_per_second": 144.04893399166846,
+          "real_time_factor": 0.006942085389245839
+        },
+        "backend_overhead": {
+          "count": 1139,
+          "median_ms": 11.604875000003489,
+          "p95_ms": 15.293000999999464,
+          "p99_ms": 23.690999999994887,
+          "min_ms": 8.881542000001296,
+          "max_ms": 100.14874900000092,
+          "mean_ms": 12.033418546971113,
+          "audio_seconds_per_second": 1261.563155325245,
+          "real_time_factor": 0.0007926674108853385
+        }
+      },
+      "by_duration": {
+        "5–10 s": {
+          "native_inference": {
+            "count": 380,
+            "median_ms": 47.831229500000006,
+            "p95_ms": 63.05175,
+            "p99_ms": 63.973333,
+            "min_ms": 34.640875,
+            "max_ms": 69.690416,
+            "mean_ms": 49.33398204210525,
+            "audio_seconds_per_second": 139.44322329004186,
+            "real_time_factor": 0.007171377542815403
+          },
+          "openwhispr_backend": {
+            "count": 380,
+            "median_ms": 58.07068699999945,
+            "p95_ms": 73.9848750000092,
+            "p99_ms": 80.16233300000022,
+            "min_ms": 43.742417000001296,
+            "max_ms": 98.78120800000033,
+            "mean_ms": 59.90824670000036,
+            "audio_seconds_per_second": 114.83042573643131,
+            "real_time_factor": 0.0087084933595499
+          },
+          "backend_overhead": {
+            "count": 380,
+            "median_ms": 10.083646000001778,
+            "p95_ms": 13.20629200000105,
+            "p99_ms": 20.940334000003638,
+            "min_ms": 8.881542000001296,
+            "max_ms": 35.43262400000033,
+            "mean_ms": 10.5742646578951,
+            "audio_seconds_per_second": 650.5690652018899,
+            "real_time_factor": 0.001537115816734495
+          }
+        },
+        "10–20 s": {
+          "native_inference": {
+            "count": 380,
+            "median_ms": 88.902479,
+            "p95_ms": 114.834625,
+            "p99_ms": 119.91075,
+            "min_ms": 72.326541,
+            "max_ms": 155.339875,
+            "mean_ms": 93.65500976315796,
+            "audio_seconds_per_second": 165.25389621224753,
+            "real_time_factor": 0.0060512945408296315
+          },
+          "openwhispr_backend": {
+            "count": 380,
+            "median_ms": 100.33266700000058,
+            "p95_ms": 127.86304199999722,
+            "p99_ms": 141.96658300000126,
+            "min_ms": 83.12979199999972,
+            "max_ms": 171.58141700000124,
+            "mean_ms": 105.57458879999973,
+            "audio_seconds_per_second": 146.59640581198244,
+            "real_time_factor": 0.006821449642377674
+          },
+          "backend_overhead": {
+            "count": 380,
+            "median_ms": 11.46474949999866,
+            "p95_ms": 13.944666999998276,
+            "p99_ms": 23.92737499999477,
+            "min_ms": 10.113291999999262,
+            "max_ms": 37.65804099999886,
+            "mean_ms": 11.919579036841833,
+            "audio_seconds_per_second": 1298.4397532262703,
+            "real_time_factor": 0.0007701551015480474
+          }
+        },
+        "20–30 s": {
+          "native_inference": {
+            "count": 379,
+            "median_ms": 136.605,
+            "p95_ms": 158.732584,
+            "p99_ms": 160.041625,
+            "min_ms": 115.208708,
+            "max_ms": 172.023709,
+            "mean_ms": 137.1877812401055,
+            "audio_seconds_per_second": 169.1676230997154,
+            "real_time_factor": 0.005911296628022921
+          },
+          "openwhispr_backend": {
+            "count": 379,
+            "median_ms": 149.93904200000543,
+            "p95_ms": 172.16512499999953,
+            "p99_ms": 179.33270900000207,
+            "min_ms": 126.96575000000303,
+            "max_ms": 272.1724580000009,
+            "mean_ms": 150.798343564644,
+            "audio_seconds_per_second": 153.89911004402856,
+            "real_time_factor": 0.0064977633705218495
+          },
+          "backend_overhead": {
+            "count": 379,
+            "median_ms": 12.868709000012586,
+            "p95_ms": 16.825624999992783,
+            "p99_ms": 26.238832999999886,
+            "min_ms": 11.37437499999892,
+            "max_ms": 100.14874900000092,
+            "mean_ms": 13.610562324538424,
+            "audio_seconds_per_second": 1705.1265272758974,
+            "real_time_factor": 0.000586466742498925
+          }
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "runtime_provenance": {
+        "device": "metal",
+        "spec": {
+          "version": "0.1.0-native",
+          "component_api": 1,
+          "platform": "macos_arm64",
+          "source": {
+            "repository": "https://github.com/hoid-ai/NeMo-Speech.cpp.git",
+            "sibling_directory": "NeMo-Speech.cpp",
+            "sentencepiece": {
+              "repository": "https://github.com/google/sentencepiece.git",
+              "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+            }
+          }
+        },
+        "source": {
+          "remote": "https://github.com/hoid-ai/NeMo-Speech.cpp",
+          "commit": "90f5e58d2a32aea85399fdecf2e7406651abad59",
+          "dirty": true,
+          "diff_sha256": "4d6063fcda64adf85081aa0528f4c97fffad3ccad6910f8e557d2c4d339cb76d",
+          "ggml": {
+            "remote": "https://github.com/ggml-org/ggml.git",
+            "commit": "c03b4e2bcece5134827881af90242086daf75be5",
+            "dirty": true,
+            "diff_sha256": "2343d263254c8e4b406434bdb4fee67e2c2da0bfdf5999770c2a94d429d80d13"
+          },
+          "llama": {
+            "remote": "https://github.com/ggml-org/llama.cpp.git",
+            "commit": "560445bf34c87356ad0f8d80fb03ec5488850b65",
+            "dirty": false,
+            "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "sentencepiece": {
+            "repository": "https://github.com/google/sentencepiece.git",
+            "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+          },
+          "preset": "metal-asr",
+          "sdk_sha256": "8b409606b9043557e2fe41f5d8328aeba3010c93abcaa85104abdf711c02fd3a"
+        }
+      }
+    },
+    "original_control": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-followup-original-control-120s.json",
+      "receipt_sha256": "d9a02fa66a311be44f6b7bd505de4e2b66ec8fe18d02d679fb6b062ca8792e46",
+      "started_at": "2026-09-10T10:25:56.225Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t40%; discharging; 2:40 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.02654870900001,
+      "request_count": 694,
+      "startup": {
+        "backend_start_ms": 766.281084,
+        "native_model_load_ms": 62.171792
+      },
+      "summary": {
+        "native_inference": {
+          "count": 694,
+          "median_ms": 154.6100625,
+          "p95_ms": 281.253083,
+          "p99_ms": 283.851459,
+          "min_ms": 55.44,
+          "max_ms": 285.831125,
+          "mean_ms": 160.76724341354466,
+          "audio_seconds_per_second": 94.34527432918135,
+          "real_time_factor": 0.01059936501441383
+        },
+        "openwhispr_backend": {
+          "count": 694,
+          "median_ms": 166.30195850000382,
+          "p95_ms": 294.9054160000014,
+          "p99_ms": 298.4799999999959,
+          "min_ms": 65.21904200000426,
+          "max_ms": 302.87225000000035,
+          "mean_ms": 172.93525108789623,
+          "audio_seconds_per_second": 87.70698621351657,
+          "real_time_factor": 0.01140160029630444
+        },
+        "backend_overhead": {
+          "count": 694,
+          "median_ms": 11.900812000001991,
+          "p95_ms": 15.322459000006063,
+          "p99_ms": 21.716291000002684,
+          "min_ms": 9.361290999998673,
+          "max_ms": 28.178875000002733,
+          "mean_ms": 12.168007674351584,
+          "audio_seconds_per_second": 1246.5171036149438,
+          "real_time_factor": 0.000802235281890609
+        }
+      },
+      "by_duration": {
+        "5–10 s": {
+          "native_inference": {
+            "count": 232,
+            "median_ms": 77.141854,
+            "p95_ms": 106.028291,
+            "p99_ms": 106.5915,
+            "min_ms": 55.44,
+            "max_ms": 107.141042,
+            "mean_ms": 78.59442368965517,
+            "audio_seconds_per_second": 87.47439929259122,
+            "real_time_factor": 0.011431916173040775
+          },
+          "openwhispr_backend": {
+            "count": 232,
+            "median_ms": 88.27889600000344,
+            "p95_ms": 116.98912500000006,
+            "p99_ms": 119.80883300000278,
+            "min_ms": 65.21904200000426,
+            "max_ms": 122.3060000000005,
+            "mean_ms": 89.3484175560348,
+            "audio_seconds_per_second": 76.94596264884417,
+            "real_time_factor": 0.012996133462695996
+          },
+          "backend_overhead": {
+            "count": 232,
+            "median_ms": 10.308188000001124,
+            "p95_ms": 13.500958000002214,
+            "p99_ms": 20.241290999999265,
+            "min_ms": 9.361290999998673,
+            "max_ms": 28.178875000002733,
+            "mean_ms": 10.753993866379657,
+            "audio_seconds_per_second": 639.297370393095,
+            "real_time_factor": 0.001564217289655226
+          }
+        },
+        "10–20 s": {
+          "native_inference": {
+            "count": 231,
+            "median_ms": 154.627583,
+            "p95_ms": 202.177083,
+            "p99_ms": 202.825459,
+            "min_ms": 122.674291,
+            "max_ms": 203.224542,
+            "mean_ms": 161.8058822510822,
+            "audio_seconds_per_second": 95.708853076334,
+            "real_time_factor": 0.010448354231164336
+          },
+          "openwhispr_backend": {
+            "count": 231,
+            "median_ms": 166.30816700001014,
+            "p95_ms": 214.84420899999532,
+            "p99_ms": 216.6964169999992,
+            "min_ms": 133.52916599999298,
+            "max_ms": 221.42404100000567,
+            "mean_ms": 173.92012754978342,
+            "audio_seconds_per_second": 89.04234161639856,
+            "real_time_factor": 0.01123061210932748
+          },
+          "backend_overhead": {
+            "count": 231,
+            "median_ms": 11.763917000003744,
+            "p95_ms": 14.47479199999944,
+            "p99_ms": 19.10795800000568,
+            "min_ms": 10.601249999994707,
+            "max_ms": 23.34508399999538,
+            "mean_ms": 12.114245298701157,
+            "audio_seconds_per_second": 1278.3508199983205,
+            "real_time_factor": 0.0007822578781631429
+          }
+        },
+        "20–30 s": {
+          "native_inference": {
+            "count": 231,
+            "median_ms": 228.790334,
+            "p95_ms": 283.392334,
+            "p99_ms": 284.903084,
+            "min_ms": 207.942958,
+            "max_ms": 285.831125,
+            "mean_ms": 242.25715079220777,
+            "audio_seconds_per_second": 95.6732645114472,
+            "real_time_factor": 0.01045224081258721
+          },
+          "openwhispr_backend": {
+            "count": 231,
+            "median_ms": 248.12045899999794,
+            "p95_ms": 297.4517080000005,
+            "p99_ms": 301.51908399999957,
+            "min_ms": 220.09745900001144,
+            "max_ms": 302.87225000000035,
+            "mean_ms": 255.89905592207768,
+            "audio_seconds_per_second": 90.57295027532301,
+            "real_time_factor": 0.011040823965214858
+          },
+          "backend_overhead": {
+            "count": 231,
+            "median_ms": 13.238833000001648,
+            "p95_ms": 18.44737599999911,
+            "p99_ms": 21.716291000002684,
+            "min_ms": 11.845665999994281,
+            "max_ms": 24.60833399999794,
+            "mean_ms": 13.641905129869919,
+            "audio_seconds_per_second": 1698.995283054974,
+            "real_time_factor": 0.0005885831526276481
+          }
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "runtime_provenance": {
+        "device": "metal",
+        "spec": {
+          "version": "0.1.0-native",
+          "component_api": 1,
+          "platform": "macos_arm64",
+          "source": {
+            "repository": "https://github.com/hoid-ai/NeMo-Speech.cpp.git",
+            "sibling_directory": "NeMo-Speech.cpp",
+            "sentencepiece": {
+              "repository": "https://github.com/google/sentencepiece.git",
+              "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+            }
+          }
+        },
+        "source": {
+          "remote": "https://github.com/hoid-ai/NeMo-Speech.cpp",
+          "commit": "a5b6953c4a579a2bbd1c0913ad8a85c2a4d99953",
+          "dirty": true,
+          "diff_sha256": "18a7978c277d999db5dd156fd59c61b8e56392d0cbf7b973b49ba8c2cf125a6a",
+          "ggml": {
+            "remote": "https://github.com/ggml-org/ggml.git",
+            "commit": "c03b4e2bcece5134827881af90242086daf75be5",
+            "dirty": true,
+            "diff_sha256": "caf0d56e4a500fd06d16cf34cf0049c64b5bed84d285e015fcb6393bf3677c0f"
+          },
+          "llama": {
+            "remote": "https://github.com/ggml-org/llama.cpp.git",
+            "commit": "560445bf34c87356ad0f8d80fb03ec5488850b65",
+            "dirty": false,
+            "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "sentencepiece": {
+            "repository": "https://github.com/google/sentencepiece.git",
+            "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+          },
+          "preset": "metal-asr",
+          "sdk_sha256": "ed54b2ac73a10b41c61800aa6b9e88e758e1b81d562a3a8be825d5e216cd9e0c"
+        }
+      }
+    }
+  },
+  "comparison": {
+    "original": {
+      "native_inference": {
+        "median_speedup": 1.735497045706112,
+        "median_latency_reduction_percent": 42.37961957502869,
+        "p95_latency_reduction_percent": 44.41384654142847,
+        "throughput_speedup": 1.7264917786819587
+      },
+      "openwhispr_backend": {
+        "median_speedup": 1.6543569655699415,
+        "median_latency_reduction_percent": 39.55355338589271,
+        "p95_latency_reduction_percent": 42.34928004782942,
+        "throughput_speedup": 1.64880780293362
+      }
+    },
+    "previous": {
+      "native_inference": {
+        "median_speedup": 1.253788216298476,
+        "median_latency_reduction_percent": 20.2417133132522,
+        "p95_latency_reduction_percent": 21.3890721700581,
+        "throughput_speedup": 1.2464535274331698
+      },
+      "openwhispr_backend": {
+        "median_speedup": 1.222377938576675,
+        "median_latency_reduction_percent": 18.19224084129084,
+        "p95_latency_reduction_percent": 19.825303140995143,
+        "throughput_speedup": 1.214757385782541
+      }
+    },
+    "previous_control": {
+      "native_inference": {
+        "median_speedup": 1.2455352764209233,
+        "median_latency_reduction_percent": 19.71323342414476,
+        "p95_latency_reduction_percent": 21.1152291500477,
+        "throughput_speedup": 1.2413930040606016
+      },
+      "openwhispr_backend": {
+        "median_speedup": 1.221110195122198,
+        "median_latency_reduction_percent": 18.107308906717577,
+        "p95_latency_reduction_percent": 19.637387995334098,
+        "throughput_speedup": 1.2154170747731508
+      }
+    },
+    "original_control": {
+      "native_inference": {
+        "median_speedup": 1.7396374678445399,
+        "median_latency_reduction_percent": 42.516758894654735,
+        "p95_latency_reduction_percent": 44.4983118638383,
+        "throughput_speedup": 1.7236371070746033
+      },
+      "openwhispr_backend": {
+        "median_speedup": 1.6576109331341307,
+        "median_latency_reduction_percent": 39.67221257950753,
+        "p95_latency_reduction_percent": 42.327963552899305,
+        "throughput_speedup": 1.642388368481746
+      }
+    }
+  },
+  "clips": [
+    {
+      "id": "4992-41797-0013",
+      "seconds": 9.8,
+      "band": "5–10 s",
+      "sha256": "7ce04fe035acc0d9e1073d423b9e9de4b4c2142c41f5d7df533f8067748d307e",
+      "score": {
+        "reference_words": 27,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "4ae41faa533d757bf047f49cf162506dc29957c6f7b5306da5727d26d98b8f94",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 105.444833,
+          "backend_median_ms": 116.22870800000965
+        },
+        "previous": {
+          "count": 40,
+          "native_median_ms": 78.1641665,
+          "backend_median_ms": 88.36843800000497
+        },
+        "previous_control": {
+          "count": 40,
+          "native_median_ms": 77.7124375,
+          "backend_median_ms": 88.33581250000134
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 62.941292000000004,
+          "backend_median_ms": 73.4646045000045
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 105.858875,
+          "backend_median_ms": 116.61308400000416
+        }
+      },
+      "comparison_vs_original": {
+        "native": 40.30879445747711,
+        "backend": 36.79306449831792
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.00744073302294,
+        "backend": 16.834857323576003
+      }
+    },
+    {
+      "id": "3570-5695-0001",
+      "seconds": 14.715,
+      "band": "10–20 s",
+      "sha256": "2293848fb573ea04a8190222eb30c7bb10dae9c8851ea6de2f888f5b44f7e446",
+      "score": {
+        "reference_words": 47,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "235026746be94b90d80714ce9a41afe1ecc2a2e1cb3737c09086bb2f978469f9",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 154.242083,
+          "backend_median_ms": 165.8976249999978
+        },
+        "previous": {
+          "count": 40,
+          "native_median_ms": 112.1639585,
+          "backend_median_ms": 123.27606250000099
+        },
+        "previous_control": {
+          "count": 40,
+          "native_median_ms": 111.2771875,
+          "backend_median_ms": 122.99037549999775
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 89.390479,
+          "backend_median_ms": 100.70704200000182
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 154.548042,
+          "backend_median_ms": 165.98841700000048
+        }
+      },
+      "comparison_vs_original": {
+        "native": 42.0453372637609,
+        "backend": 39.29566984457845
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.668639180874337,
+        "backend": 18.11794899349367
+      }
+    },
+    {
+      "id": "3575-170457-0046",
+      "seconds": 25.64,
+      "band": "20–30 s",
+      "sha256": "4d4251568928975a0311b2ebc949db9df08829b3c75389aefbddf6631d857cc8",
+      "score": {
+        "reference_words": 67,
+        "substitutions": 3,
+        "deletions": 1,
+        "insertions": 0,
+        "errors": 4
+      },
+      "transcript_sha256": "1ed756fe17d18596a1fe58dabbba408d1ffc4e22a906e2a5128ca9f589ac1aad",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 279.478625,
+          "backend_median_ms": 293.5627910000039
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 200.332541,
+          "backend_median_ms": 213.30158400000073
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 199.186625,
+          "backend_median_ms": 212.56045799999993
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 158.5871455,
+          "backend_median_ms": 171.80827099999806
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 280.109666,
+          "backend_median_ms": 293.6345830000064
+        }
+      },
+      "comparison_vs_original": {
+        "native": 43.25607351903925,
+        "backend": 41.474779410992944
+      },
+      "comparison_vs_previous_control": {
+        "native": 20.38263337209514,
+        "backend": 19.17204515997133
+      }
+    },
+    {
+      "id": "7127-75947-0016",
+      "seconds": 7.48,
+      "band": "5–10 s",
+      "sha256": "13a748c5fc52a32be9c070892a580e2f91edc0f00e94258f64de0b0e8a8adce4",
+      "score": {
+        "reference_words": 16,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "10dd9c579a21d0c904a4c8aae578664f03f54daacfb340f70e1fe5c23739d488",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 78.017292,
+          "backend_median_ms": 88.75891600000614
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 58.187125,
+          "backend_median_ms": 68.05783300000076
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 57.987792,
+          "backend_median_ms": 68.34587499999907
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 47.853770999999995,
+          "backend_median_ms": 58.15360399999918
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 78.381875,
+          "backend_median_ms": 88.71833299999707
+        }
+      },
+      "comparison_vs_original": {
+        "native": 38.662609566094666,
+        "backend": 34.481394522669525
+      },
+      "comparison_vs_previous_control": {
+        "native": 17.47612842372064,
+        "backend": 14.912781495591398
+      }
+    },
+    {
+      "id": "4970-29093-0001",
+      "seconds": 11.92,
+      "band": "10–20 s",
+      "sha256": "701b3334cfbacfb695b56f66d970f84896f81587199d7f0c0d3ad688bd925aa7",
+      "score": {
+        "reference_words": 29,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "f984434df06c76ecd95c00226e2947d45f77c8bee75ed0805195a64c23b392ce",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 123.293042,
+          "backend_median_ms": 134.35020800000348
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 90.915792,
+          "backend_median_ms": 101.3576669999893
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 90.010125,
+          "backend_median_ms": 101.13475000000108
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 73.34395900000001,
+          "backend_median_ms": 84.14708300000348
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 123.396917,
+          "backend_median_ms": 134.62216700000135
+        }
+      },
+      "comparison_vs_original": {
+        "native": 40.51249136995094,
+        "backend": 37.367359341936194
+      },
+      "comparison_vs_previous_control": {
+        "native": 18.51587918581381,
+        "backend": 16.797062335149317
+      }
+    },
+    {
+      "id": "5639-40744-0003",
+      "seconds": 27.12,
+      "band": "20–30 s",
+      "sha256": "feae1e38623c1082c34fa8624430121706fc82defea7e6a396880db7c31d50c7",
+      "score": {
+        "reference_words": 72,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "f5bd7dd5de9bf17969878b7804fb1a533df419a882c14c044ca2d8342d4c2c1f",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 282.022958,
+          "backend_median_ms": 295.79054200000246
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 198.340208,
+          "backend_median_ms": 211.48216699999466
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 196.873709,
+          "backend_median_ms": 210.54416700000002
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 155.46756249999999,
+          "backend_median_ms": 168.86749999999665
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 283.196541,
+          "backend_median_ms": 296.8130829999991
+        }
+      },
+      "comparison_vs_original": {
+        "native": 44.87414655795505,
+        "backend": 42.909770252222856
+      },
+      "comparison_vs_previous_control": {
+        "native": 21.031831375717115,
+        "backend": 19.794738364802743
+      }
+    },
+    {
+      "id": "1320-122617-0026",
+      "seconds": 5.225,
+      "band": "5–10 s",
+      "sha256": "8e46137d386c181c23a97932fb560a1fffa0b8e635bfe38c81c6f0791dbbe9ed",
+      "score": {
+        "reference_words": 15,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "971d86af1dd3ac0de47548bce245e935b966fae4b7b6ed84096bcd67f61d3d67",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 66.399875,
+          "backend_median_ms": 76.63087500000256
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 52.489542,
+          "backend_median_ms": 61.950875000009546
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 52.256333,
+          "backend_median_ms": 62.19208400000207
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 44.357625,
+          "backend_median_ms": 54.179541500001505
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 66.525125,
+          "backend_median_ms": 76.80945800000336
+        }
+      },
+      "comparison_vs_original": {
+        "native": 33.19622213144227,
+        "backend": 29.29802576311481
+      },
+      "comparison_vs_previous_control": {
+        "native": 15.115312434954053,
+        "backend": 12.88354077345325
+      }
+    },
+    {
+      "id": "4077-13754-0002",
+      "seconds": 17.78,
+      "band": "10–20 s",
+      "sha256": "58ff360d46e4fc6bcaf04da1a6ead97dc191c54426528cfa13efe7e780349ff5",
+      "score": {
+        "reference_words": 44,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "5c12e83db0ca5730beee7bc030eed1901cd58e8a1eb555fcb82861be3ca6778d",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 185.890541,
+          "backend_median_ms": 198.52983299999323
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 133.031375,
+          "backend_median_ms": 144.81208399999923
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 132.185959,
+          "backend_median_ms": 144.37733299999672
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 105.72772950000001,
+          "backend_median_ms": 117.65085399999225
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 186.365,
+          "backend_median_ms": 198.64320800000132
+        }
+      },
+      "comparison_vs_original": {
+        "native": 43.12366356500087,
+        "backend": 40.7389548350669
+      },
+      "comparison_vs_previous_control": {
+        "native": 20.015915230451963,
+        "backend": 18.511547792619965
+      }
+    },
+    {
+      "id": "7021-79759-0004",
+      "seconds": 24.47,
+      "band": "20–30 s",
+      "sha256": "04d8c373ae403ed74f731ffeda8310d8fa3f1fe0c3b22403f77199a6a2c6a649",
+      "score": {
+        "reference_words": 56,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "71a79925159155488ecc7e0ce08aea2a8c5b7de308e1ad41fc17ad0c3e4b6815",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 246.762458,
+          "backend_median_ms": 260.44183299999713
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 174.362,
+          "backend_median_ms": 187.12570800000685
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 173.289833,
+          "backend_median_ms": 186.59545799999978
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 137.6615835,
+          "backend_median_ms": 150.76566649999586
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 247.236666,
+          "backend_median_ms": 260.6332089999996
+        }
+      },
+      "comparison_vs_original": {
+        "native": 44.21291447015818,
+        "backend": 42.111578326974254
+      },
+      "comparison_vs_previous_control": {
+        "native": 20.55991911539322,
+        "backend": 19.201856188806033
+      }
+    },
+    {
+      "id": "1188-133604-0039",
+      "seconds": 6.625,
+      "band": "5–10 s",
+      "sha256": "d73d8f1098edc1d35883cfcbb3c0e4fbb58451021575073ebb8ede2d3e4cf72a",
+      "score": {
+        "reference_words": 17,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "e372003cb95c343eddf5ace34f761b4875ce90406aa2b0e005a683c2eb0ce4e8",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 75.927958,
+          "backend_median_ms": 86.16887499999939
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 57.923042,
+          "backend_median_ms": 67.69291700000758
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 57.638417,
+          "backend_median_ms": 67.8971249999995
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 47.788292,
+          "backend_median_ms": 57.83860399999867
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 76.243625,
+          "backend_median_ms": 86.4067500000001
+        }
+      },
+      "comparison_vs_original": {
+        "native": 37.06100722476957,
+        "backend": 32.87761503211099
+      },
+      "comparison_vs_previous_control": {
+        "native": 17.089513405616252,
+        "backend": 14.814354805156938
+      }
+    },
+    {
+      "id": "3729-6852-0034",
+      "seconds": 18.895,
+      "band": "10–20 s",
+      "sha256": "7c5a6acfbb2631e29aa1fd9477bb1bfe790e56dfeadf0c4980a8b8448d58ff3f",
+      "score": {
+        "reference_words": 48,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "4c0a01738a762c9059fe8c7a2f48af92f217c9b547b0ac87225c482fc574c901",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 191.753084,
+          "backend_median_ms": 204.19320899999911
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 135.5815,
+          "backend_median_ms": 147.12025000000722
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 134.666834,
+          "backend_median_ms": 147.06195899999875
+        },
+        "optimized": {
+          "count": 48,
+          "native_median_ms": 108.10933349999999,
+          "backend_median_ms": 120.04225050000059
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 192.296084,
+          "backend_median_ms": 204.52300000000105
+        }
+      },
+      "comparison_vs_original": {
+        "native": 43.6205503218921,
+        "backend": 41.2114383784423
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.720891708198916,
+        "backend": 18.373010045377125
+      }
+    },
+    {
+      "id": "5683-32866-0019",
+      "seconds": 20.855,
+      "band": "20–30 s",
+      "sha256": "944c892a7cabeae53d979c51806d3ce4ef3ba081c0cf209786fdb7e43b688cf8",
+      "score": {
+        "reference_words": 56,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "cce83a63ca43c4debab83baaea82c9dba34a2fabcd76276e27931dbd8242b10c",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 219.771417,
+          "backend_median_ms": 232.66920899999968
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 160.5995,
+          "backend_median_ms": 172.859375
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 159.69425,
+          "backend_median_ms": 172.3680830000012
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 128.539083,
+          "backend_median_ms": 141.1572090000045
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 220.357958,
+          "backend_median_ms": 233.08350000000064
+        }
+      },
+      "comparison_vs_original": {
+        "native": 41.51237465061255,
+        "backend": 39.3313753862443
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.509260352204294,
+        "backend": 18.107107450975413
+      }
+    },
+    {
+      "id": "7176-92135-0042",
+      "seconds": 7.27,
+      "band": "5–10 s",
+      "sha256": "b1c7d947268b3e4cbef60f1f9f5d51ef027dd36565f49d6e21e24f7a4dc8e550",
+      "score": {
+        "reference_words": 22,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "cb32d2dd8270a55c61ba4b951b5c033ad8e05cef9591d64ee0fdf235f5640e9b",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 79.678833,
+          "backend_median_ms": 90.54550000000745
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 60.209083,
+          "backend_median_ms": 69.93370900000446
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 59.804375,
+          "backend_median_ms": 70.22550000000047
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 49.29275,
+          "backend_median_ms": 59.49412499999744
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 80.019667,
+          "backend_median_ms": 90.49316700000054
+        }
+      },
+      "comparison_vs_original": {
+        "native": 38.135702866029675,
+        "backend": 34.29367003330641
+      },
+      "comparison_vs_previous_control": {
+        "native": 17.576682307941518,
+        "backend": 15.281308071858446
+      }
+    },
+    {
+      "id": "2961-960-0002",
+      "seconds": 15.35,
+      "band": "10–20 s",
+      "sha256": "753bea25c30c610c8715e13e9528363fba527c81bbea8997d1c4fa89a3fe3082",
+      "score": {
+        "reference_words": 36,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "ab2a5cf2e484382357e25529b855e3d695c7e81b3cb4e405988f41f9ee35e552",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 154.092333,
+          "backend_median_ms": 165.95066699999734
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 110.791708,
+          "backend_median_ms": 121.74899999999616
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 109.989833,
+          "backend_median_ms": 121.89600000000064
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 88.004208,
+          "backend_median_ms": 99.50229200000467
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 154.639834,
+          "backend_median_ms": 166.5494999999937
+        }
+      },
+      "comparison_vs_original": {
+        "native": 42.888652351054986,
+        "backend": 40.041041233051345
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.98877932654012,
+        "backend": 18.37115902080122
+      }
+    },
+    {
+      "id": "8463-294825-0007",
+      "seconds": 21.05,
+      "band": "20–30 s",
+      "sha256": "ae7287dd69015aa06f15d282e2ba917b28a7cdcd01ff069ff3c7ef59d5738be9",
+      "score": {
+        "reference_words": 43,
+        "substitutions": 2,
+        "deletions": 1,
+        "insertions": 1,
+        "errors": 4
+      },
+      "transcript_sha256": "0e04e2d7417eac0797ed20b1074bc71e6514da904e8d9c28b632352deb7f10fc",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 219.547708,
+          "backend_median_ms": 232.49416600000404
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 159.494834,
+          "backend_median_ms": 171.62120900000446
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 158.837167,
+          "backend_median_ms": 171.5522090000004
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 127.665458,
+          "backend_median_ms": 140.12887499999488
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 220.099792,
+          "backend_median_ms": 233.15050000000338
+        }
+      },
+      "comparison_vs_original": {
+        "native": 41.85069880119177,
+        "backend": 39.72800375558996
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.624946471124105,
+        "backend": 18.317067546478192
+      }
+    },
+    {
+      "id": "2094-142345-0054",
+      "seconds": 5.68,
+      "band": "5–10 s",
+      "sha256": "82aa703d3f0f045b5cc125d54c83213a4ca409343adfc6216555ae1d2bd9958b",
+      "score": {
+        "reference_words": 13,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "dc7c5636df4b66bb92a522babd2afddc563dc5315b7dce9774786c7445e053aa",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 68.127959,
+          "backend_median_ms": 78.21212500000547
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 53.012125,
+          "backend_median_ms": 62.50245800000266
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 52.748375,
+          "backend_median_ms": 62.9429999999993
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 44.703542,
+          "backend_median_ms": 54.5849589999998
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 68.024167,
+          "backend_median_ms": 77.96749999999884
+        }
+      },
+      "comparison_vs_original": {
+        "native": 34.38297190144799,
+        "backend": 30.2090833102975
+      },
+      "comparison_vs_previous_control": {
+        "native": 15.25133807439566,
+        "backend": 13.278745849418671
+      }
+    },
+    {
+      "id": "1221-135767-0004",
+      "seconds": 19.09,
+      "band": "10–20 s",
+      "sha256": "b39853e9fbaeb7a8bcc2cbbaf3bff6650ed0838c609f614357228f16a879509d",
+      "score": {
+        "reference_words": 48,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "09af54ad31b72d2e90a84c42a0262cccc485fd62446b4768e3405ebcdcbfea7d",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 201.632625,
+          "backend_median_ms": 214.02000000000044
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 144.235792,
+          "backend_median_ms": 155.66716599999927
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 142.986833,
+          "backend_median_ms": 155.5225000000064
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 114.46775,
+          "backend_median_ms": 126.78670799999963
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 202.078333,
+          "backend_median_ms": 214.76283300000068
+        }
+      },
+      "comparison_vs_original": {
+        "native": 43.229549285488886,
+        "backend": 40.75941126997507
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.945251182673584,
+        "backend": 18.476935491652714
+      }
+    },
+    {
+      "id": "8555-292519-0001",
+      "seconds": 20.82,
+      "band": "20–30 s",
+      "sha256": "b082de228dbad73be95d916e5149c02035758a390482845def17215c0eed0fa9",
+      "score": {
+        "reference_words": 41,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "8dd827ddce57aec09c0ed9826351a4b08a0e111177bddea7a6ab12f713aefe5d",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 216.496084,
+          "backend_median_ms": 229.27099999999336
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 157.904583,
+          "backend_median_ms": 170.36545800000022
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 156.961417,
+          "backend_median_ms": 169.76458300000377
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 126.539917,
+          "backend_median_ms": 138.89824999999837
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 217.282541,
+          "backend_median_ms": 230.12604199998896
+        }
+      },
+      "comparison_vs_original": {
+        "native": 41.55094417319807,
+        "backend": 39.4174361345297
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.381514630439412,
+        "backend": 18.18184479621684
+      }
+    },
+    {
+      "id": "61-70968-0054",
+      "seconds": 7.86,
+      "band": "5–10 s",
+      "sha256": "7b58da65dd63a6b09d43ee20c6aa4b5a8853199af7c350a87ab692fb4d0d874c",
+      "score": {
+        "reference_words": 30,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 1,
+        "errors": 2
+      },
+      "transcript_sha256": "ecb24ce6b4a9baa286a45a59e7a0dc5a54186e468ee8ba8466800ee5bbc58be9",
+      "runs": {
+        "original": {
+          "count": 29,
+          "native_median_ms": 96.739334,
+          "backend_median_ms": 107.28116699999919
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 74.484667,
+          "backend_median_ms": 84.51695800000016
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 74.004833,
+          "backend_median_ms": 84.55966699999408
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 61.506041,
+          "backend_median_ms": 71.66774999999325
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 96.9065,
+          "backend_median_ms": 107.51091699999233
+        }
+      },
+      "comparison_vs_original": {
+        "native": 36.42085545058641,
+        "backend": 33.196336315027416
+      },
+      "comparison_vs_previous_control": {
+        "native": 16.889156414960095,
+        "backend": 15.245941070228831
+      }
+    },
+    {
+      "id": "5105-28233-0010",
+      "seconds": 13.595,
+      "band": "10–20 s",
+      "sha256": "0503ea1f20965deaff3df717c88c715ca26038521bc37f491e80661af208ad06",
+      "score": {
+        "reference_words": 34,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "9901da8b5139ac78f9129029415221021fba3648f6333f21b82b1c25f20fbeb9",
+      "runs": {
+        "original": {
+          "count": 28,
+          "native_median_ms": 145.427146,
+          "backend_median_ms": 156.8394580000022
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 107.524792,
+          "backend_median_ms": 118.17279199999757
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 106.491041,
+          "backend_median_ms": 117.65058399998816
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 86.546875,
+          "backend_median_ms": 97.68341599999985
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 145.722792,
+          "backend_median_ms": 157.0956670000014
+        }
+      },
+      "comparison_vs_original": {
+        "native": 40.487813052454456,
+        "backend": 37.7175761471973
+      },
+      "comparison_vs_previous_control": {
+        "native": 18.728491911352428,
+        "backend": 16.971584263440896
+      }
+    },
+    {
+      "id": "1089-134691-0009",
+      "seconds": 20.055,
+      "band": "20–30 s",
+      "sha256": "11b43ade12501f613e4d81b5f4ab18f0f751d8ce8fd60130cd66f0cb8fdbedc0",
+      "score": {
+        "reference_words": 49,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "c8703acc9365b9374697a68ba6c5f6b407849c660f6d7aa78fa241adc682e8f5",
+      "runs": {
+        "original": {
+          "count": 28,
+          "native_median_ms": 207.68543749999998,
+          "backend_median_ms": 220.59616700000333
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 146.873,
+          "backend_median_ms": 159.0796249999985
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 146.190167,
+          "backend_median_ms": 158.58508400000574
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 116.623208,
+          "backend_median_ms": 128.7098330000008
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 208.545583,
+          "backend_median_ms": 221.11570900000152
+        }
+      },
+      "comparison_vs_original": {
+        "native": 43.84622754303608,
+        "backend": 41.653640337278
+      },
+      "comparison_vs_previous_control": {
+        "native": 20.22499844329475,
+        "backend": 18.838626084155464
+      }
+    },
+    {
+      "id": "260-123286-0031",
+      "seconds": 5.06,
+      "band": "5–10 s",
+      "sha256": "269d142f97190494ae29fae077c9c0c8b1f8752a0065a4140e31526d5b54aee5",
+      "score": {
+        "reference_words": 11,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "8a0c062518e8406139ec5fba27ad78d23e120f76db10f418b9ee89df662c98f4",
+      "runs": {
+        "original": {
+          "count": 28,
+          "native_median_ms": 56.326896,
+          "backend_median_ms": 66.32299950000379
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 43.245,
+          "backend_median_ms": 52.531332999998995
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 43.149041,
+          "backend_median_ms": 52.878708000003826
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 35.721166,
+          "backend_median_ms": 45.33695799999987
+        },
+        "original_control": {
+          "count": 29,
+          "native_median_ms": 56.453375,
+          "backend_median_ms": 66.27633300000161
+        }
+      },
+      "comparison_vs_original": {
+        "native": 36.58239928576927,
+        "backend": 31.642177914469507
+      },
+      "comparison_vs_previous_control": {
+        "native": 17.21446138281497,
+        "backend": 14.262356788300146
+      }
+    },
+    {
+      "id": "4446-2273-0010",
+      "seconds": 12.44,
+      "band": "10–20 s",
+      "sha256": "ee6acd6b5c33e2d7e114405b48aec2700f720d68dd8d59676172e81ca63317dc",
+      "score": {
+        "reference_words": 36,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "630ea64e2f4601d119849256fd952f1dc88fd89f729974ee27d1a76ffc842c09",
+      "runs": {
+        "original": {
+          "count": 28,
+          "native_median_ms": 133.2030625,
+          "backend_median_ms": 144.37143749999996
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 99.109333,
+          "backend_median_ms": 109.54883400000108
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 98.443666,
+          "backend_median_ms": 109.38949999999022
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 79.365667,
+          "backend_median_ms": 90.27249999999913
+        },
+        "original_control": {
+          "count": 28,
+          "native_median_ms": 133.58243800000002,
+          "backend_median_ms": 144.95006249999642
+        }
+      },
+      "comparison_vs_original": {
+        "native": 40.41753582054466,
+        "backend": 37.47205017613048
+      },
+      "comparison_vs_previous_control": {
+        "native": 19.379610466761765,
+        "backend": 17.476083170681644
+      }
+    },
+    {
+      "id": "2300-131720-0035",
+      "seconds": 25.49,
+      "band": "20–30 s",
+      "sha256": "94ac8c20f2589b2a13fdc6c65208f1cd38bedcf20d204f29a809ef1d1f8266ba",
+      "score": {
+        "reference_words": 59,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "81dc0456a6b231da68efd169f3a4f1b8e5585087b4f1c1d7a8dba2d08104165b",
+      "runs": {
+        "original": {
+          "count": 28,
+          "native_median_ms": 260.13216650000004,
+          "backend_median_ms": 273.4826039999971
+        },
+        "previous": {
+          "count": 39,
+          "native_median_ms": 183.580291,
+          "backend_median_ms": 196.60633299999608
+        },
+        "previous_control": {
+          "count": 39,
+          "native_median_ms": 182.615833,
+          "backend_median_ms": 195.93308299999626
+        },
+        "optimized": {
+          "count": 47,
+          "native_median_ms": 144.416125,
+          "backend_median_ms": 157.49916700000176
+        },
+        "original_control": {
+          "count": 28,
+          "native_median_ms": 260.441688,
+          "backend_median_ms": 273.69622900000104
+        }
+      },
+      "comparison_vs_original": {
+        "native": 44.48355736121547,
+        "backend": 42.409804244805485
+      },
+      "comparison_vs_previous_control": {
+        "native": 20.918070121554035,
+        "backend": 19.61583792360131
+      }
+    }
+  ],
+  "validation": {
+    "all_measured_transcripts_identical": true,
+    "compared_calls": 4400,
+    "shader_validation": true,
+    "cpu_reference_tests_passed": 249,
+    "test_groups": {
+      "short_convolution": 128,
+      "lstm_gates": 60,
+      "relative_shift_views": 24,
+      "attention_input_views": 24,
+      "positional_projection_cache": 6,
+      "short_q8_matrix_vector": 7
+    },
+    "test_log_sha256": {
+      "fusions-views-test.log": "553b60978acf37bcbbcaa595c7b37e2a5e3a8cdd0a5427f83294440f6d8ecbba",
+      "position-cache-test.log": "7712b960994caf2ff5617ce8432f9e883f0fde12e8b9028dcb165e8588ccc90e",
+      "short-q8-test.log": "4fbc1b95c0b0c8810086195a75a2e39839b19124d78acae4922381228d9a0898"
+    },
+    "view_and_cached_projection_tests_exact": true,
+    "native_boundary_checks": {
+      "scope": "Direct C ABI correctness, including inputs beyond the app worker 30-second cap; not timing evidence",
+      "receipt_sha256": "fb2b855fceee59a29ec44c8e4d072d4d0fd90bee090b47e90eb0cea5eb0f078b",
+      "checks": 54,
+      "all_transcripts_identical": true,
+      "audio_seconds": [
+        0.04,
+        0.08,
+        0.24,
+        0.32,
+        1.0,
+        40.8,
+        40.88,
+        41.0,
+        50.0
+      ],
+      "encoder_frames": [
+        1,
+        2,
+        4,
+        5,
+        13,
+        511,
+        512,
+        513,
+        626
+      ],
+      "variants": [
+        "previous",
+        "optimized",
+        "cache-disabled"
+      ],
+      "repetitions": 2
+    },
+    "native_regression": {
+      "checks": [
+        "verified model installation",
+        "ten identical warm transcriptions reuse one worker",
+        "concurrent app calls are serialized without changing transcript",
+        "silence returns the app no-audio result",
+        "already-cancelled app call skips inference",
+        "in-flight cancellation kills worker and next call reloads",
+        "explicit shutdown leaves no native child"
+      ],
+      "success": true,
+      "receipt_sha256": "1cbcee3555ea96b85cb973a46ed17e3a12366a3be3061fa4956983c088c0a4b8"
+    },
+    "pre_commit_all_files": "passed",
+    "normal_openwhispr_build": "passed",
+    "openwhispr_build_verification": "passed"
+  }
+}
