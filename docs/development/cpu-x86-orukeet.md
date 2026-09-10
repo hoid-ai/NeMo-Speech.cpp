@@ -438,11 +438,11 @@ The tarball built from this branch:
 | | |
 |---|---|
 | file | `nemo-speech-0.1.0-linux-x86_64-cpu.tar.gz` |
-| size | 2,033,796 bytes |
-| sha256 | `d92ce11e218ad3bd32f76abe5ec1021e32a29521f6da430111a4e7e385414f72` |
+| size | 2,036,213 bytes |
+| sha256 | `b790c9b4df44ef1bd5bd91b01d055c11657d090fc5d656087045dad2024fe45b` |
 
 Verified by extracting it elsewhere and running it against the Q8 model with
-`LD_LIBRARY_PATH=<prefix>/lib`: correct transcript, 178 ms/utterance.
+`LD_LIBRARY_PATH=<prefix>/lib`: correct transcript, 180 ms/utterance.
 
 ## Open questions
 
