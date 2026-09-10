@@ -169,6 +169,9 @@ struct Params {
     bool use_gpu = false;
     int gpu_device_idx = 0;
     char* pe_bin_path = nullptr;
+    // Threads for ggml's CPU backend. 0 selects default_compute_threads()
+    // (see cpu_topology.h): one thread per performance core.
+    int cpu_threads = 0;
 };
 
 // Owns ggml backend handles shared by one or more Sessions.
@@ -378,6 +381,9 @@ class Session {
     void init_schedule();
 
     WeightLoadHook weight_load_hook_;
+
+    // Resolved once in the constructor from params.cpu_threads.
+    int cpu_threads_ = 1;
 
     // Called under the compute mutex before graph allocation.
     void bind_state(SessionState* state);

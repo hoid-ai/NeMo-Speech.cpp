@@ -9,6 +9,7 @@
 #include <mutex>
 #include <unordered_set>
 
+#include "cpu_topology.h"
 #include "runtime.h"
 
 namespace ggml_runtime {
@@ -20,6 +21,10 @@ Session::Session(BackendManager& backend_manager, Module* module, GGUFLoader* gg
     this->params = backend_manager.get_params();
     this->root_module = module;
     this->gguf_loader = gguf_loader;
+    // A hardcoded 4 left 24-thread desktop parts two thirds idle; 0 resolves
+    // to one thread per performance core.
+    this->cpu_threads_ = this->params.cpu_threads > 0 ? this->params.cpu_threads
+                                                      : default_compute_threads();
 }
 
 // Launches without forcing each graph boundary to wait for the device. The
@@ -908,7 +913,7 @@ Session::run_impl(
         }
 
         auto _t2 = _clk::now();
-        if (!ggml_graph_compute_helper_async(sched.get(), cr.gf, 4)) {
+        if (!ggml_graph_compute_helper_async(sched.get(), cr.gf, cpu_threads_)) {
             GGMLF_LOG_ERROR("Failed to compute graph\n");
             throw std::runtime_error("failed to compute graph");
         }

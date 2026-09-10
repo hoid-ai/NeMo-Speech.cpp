@@ -28,8 +28,13 @@ class Recognizer;
 
 struct BackendConfig {
     int gpu = 0;  // -1 = CPU
+    // ggml CPU-backend worker threads; 0 = one per detected performance core.
+    int cpu_threads = 0;
     void Register(common::ParameterParser& p) {
         p.Register("gpu", &gpu, "GPU device index (-1 = CPU)", {"--gpu", "-g"});
+        p.Register(
+            "cpu_threads", &cpu_threads,
+            "CPU compute threads (0 = one per performance core)", {"--cpu-threads"});
     }
 };
 
