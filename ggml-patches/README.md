@@ -150,6 +150,14 @@ stock comparison therefore requires both a pristine ggml checkout and
   by a CPUID check so an AVX2-only build still runs anywhere. Weight sign is
   folded into the activation as in ggml's scalar Q8_0 dot product.
 
+  Also adds an AVX2 `ggml_quantize_mat_q8_0_4x4`, the activation-side
+  quantizer that GEMM consumes. x86 had none - `arch-fallback.h` aliased it to
+  the scalar C implementation, whose per-element `roundf` cost ~8% of encoder
+  time once the weight matmuls were repacked. The 4-byte interleave needs no
+  closing permute, unlike the existing 8-byte variant, and matching the
+  vectorized round-to-nearest makes the repacked result bit-identical to the
+  unrepacked path rather than merely within tolerance.
+
 - **0020-bf16-convolution.patch** - adds BF16 im2col and direct depthwise
   convolution support, then fuses bias, BF16 output rounding, and optional
   ReLU epilogues. This preserves the VoiceChat perception stem's native BF16
