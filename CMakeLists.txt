@@ -227,6 +227,27 @@ endif()
 option(NEMO_SPEECH_CPU_DIRECT_DW_CONV
     "Use the direct depthwise-conv kernel on CPU (requires ggml patch 0022)" OFF)
 if(NEMO_SPEECH_CPU_DIRECT_DW_CONV)
+    # Enabling this against an unpatched ggml would not fail to build - it would
+    # transcribe garbage, because the stock kernel reads the F16 weights as F32.
+    # Fail loudly instead. The cpu-* presets turn this option on, and a bare
+    # `cmake --preset cpu-asr` does not apply the patch series the way
+    # scripts/configure.sh does.
+    set(_dw_marker "${CMAKE_CURRENT_SOURCE_DIR}/ggml/src/ggml-cpu/ops.cpp")
+    if(EXISTS "${_dw_marker}")
+        file(READ "${_dw_marker}" _dw_ops)
+        string(FIND "${_dw_ops}" "ggml_conv_2d_dw_kernel_f32" _dw_found)
+        if(_dw_found EQUAL -1)
+            message(FATAL_ERROR
+                "NEMO_SPEECH_CPU_DIRECT_DW_CONV=ON but the vendored ggml does not "
+                "contain ggml-patches/0022-cpu-direct-depthwise-conv.patch. The stock "
+                "CPU CONV_2D_DW kernel misreads F16 depthwise weights as F32 and would "
+                "produce garbage output.\n"
+                "  Either apply the series:  scripts/apply-ggml-patches.sh\n"
+                "  or configure with:        -DNEMO_SPEECH_CPU_DIRECT_DW_CONV=OFF")
+        endif()
+        unset(_dw_ops)
+    endif()
+    unset(_dw_marker)
     message(STATUS "NEMO_SPEECH_CPU_DIRECT_DW_CONV=ON: CPU sessions use GGML_OP_CONV_2D_DW")
 endif()
 

@@ -421,10 +421,17 @@ tar czf nemo-speech-0.1.0-linux-x86_64-cpu.tar.gz -C out nemo-speech
 ```
 
 `scripts/configure.sh` applies the ggml patch series for `cpu-*` presets. A raw
-`cmake --preset cpu-asr` does **not**, and would then build with
+`cmake --preset cpu-asr` does **not**, and would otherwise build with
 `NEMO_SPEECH_CPU_DIRECT_DW_CONV=ON` against an unpatched ggml, which misreads
-the F16 depthwise kernels. Use the script, or pass
+the F16 depthwise kernels - a silent wrong-output failure, not a build failure.
+CMake therefore checks the vendored ggml for patch 0022 whenever that option is
+on and stops with instructions if it is missing. Use the script, or pass
 `-DNEMO_SPEECH_CPU_DIRECT_DW_CONV=OFF`.
+
+Building against pristine upstream ggml works and is tested: with
+`-DNEMO_SPEECH_GGML_PATCHED=OFF -DNEMO_SPEECH_CPU_DIRECT_DW_CONV=OFF` and no
+patches applied, the branch builds and transcribes correctly - it just loses the
+two CPU patches' gains.
 
 The tarball built from this branch:
 
