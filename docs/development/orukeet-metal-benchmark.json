@@ -1,0 +1,948 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-09-10",
+  "benchmark": {
+    "repository": "https://github.com/hoid-ai/openwhispr",
+    "branch": "hoid-orukeet",
+    "commit": "2437b3db8fbe1ba5917b8bd80dbc1d68c8efd79c",
+    "script": "scripts/benchmark-orukeet-performance.js",
+    "script_sha256": "35062d8849569d24de19d0bec86ebb3b349a4762978d6eb554d7c34e4cf3f286",
+    "seconds_per_run": 120,
+    "unique_clips": 24,
+    "unique_audio_seconds": 364.2850000000001,
+    "corpus": "LibriSpeech test-clean",
+    "corpus_url": "https://www.openslr.org/12",
+    "corpus_manifest_sha256": "3004caf98c8a3f2cd0e15950b573f1745255986d4334dee46782e36fcbab48e8",
+    "mode": "Sequential full-clip recognition; batch size 1; corpus warmup excluded; native and backend timings from the same call"
+  },
+  "hardware": {
+    "cpu": "Apple M4 Pro",
+    "logical_cpus": 12,
+    "memory_bytes": 25769803776,
+    "macos": "26.5"
+  },
+  "model": {
+    "id": "orukeet-v0.1.0-q8",
+    "sha256": "93ce19c6d8244acbfea980eeaf970531d4f216171578ef8e041dcc2d070a45bd",
+    "bytes": 714456704,
+    "url": "https://huggingface.co/oruk/orukeet/resolve/555136b50265a132d4cea0d35560c26fc4f657ab/orukeet-v0.1.0-q8.gguf"
+  },
+  "patch": {
+    "file": "0021-metal-asr-kernels.patch",
+    "sha256": "b4aa8f61d3913ab88dcb47511bb7c05cc66710c215b545dd3b482aaa66b8aff1",
+    "nemo_base_commit": "a5b6953c4a579a2bbd1c0913ad8a85c2a4d99953",
+    "ggml_base_commit": "c03b4e2bcece5134827881af90242086daf75be5",
+    "baseline_series": "0001\u20130020",
+    "optimized_series": "0001\u20130021"
+  },
+  "runs": {
+    "baseline": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-kernel-baseline-120s.json",
+      "receipt_sha256": "e9f9eb49d8f02555322af093590e48b6673f0eccbf1c208db09d783fa8a2b4b1",
+      "started_at": "2026-09-10T07:27:27.504Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t81%; discharging; 6:07 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.05335320900001,
+      "request_count": 691,
+      "startup": {
+        "backend_start_ms": 829.0343750000001,
+        "native_model_load_ms": 55.651375
+      },
+      "summary": {
+        "native_inference": {
+          "count": 691,
+          "median_ms": 154.242083,
+          "p95_ms": 280.825708,
+          "p99_ms": 283.683166,
+          "min_ms": 55.418542,
+          "max_ms": 316.540125,
+          "mean_ms": 161.13787445007236,
+          "audio_seconds_per_second": 94.18927892900558,
+          "real_time_factor": 0.010616919583318417
+        },
+        "openwhispr_backend": {
+          "count": 691,
+          "median_ms": 165.97550000000047,
+          "p95_ms": 295.01445800000147,
+          "p99_ms": 303.23904199999924,
+          "min_ms": 65.15679199999977,
+          "max_ms": 331.5163750000065,
+          "mean_ms": 173.723707057887,
+          "audio_seconds_per_second": 87.36550963391322,
+          "real_time_factor": 0.011446164558420015
+        },
+        "backend_overhead": {
+          "count": 691,
+          "median_ms": 12.059875000003615,
+          "p95_ms": 16.518207000000558,
+          "p99_ms": 24.503792000005475,
+          "min_ms": 9.183125000002448,
+          "max_ms": 99.65374900000046,
+          "mean_ms": 12.585832607814723,
+          "audio_seconds_per_second": 1205.916261207943,
+          "real_time_factor": 0.0008292449751016039
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "sdk_sha256": "ed54b2ac73a10b41c61800aa6b9e88e758e1b81d562a3a8be825d5e216cd9e0c",
+      "ggml_diff_sha256": "caf0d56e4a500fd06d16cf34cf0049c64b5bed84d285e015fcb6393bf3677c0f"
+    },
+    "optimized": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-kernel-optimized-120s.json",
+      "receipt_sha256": "88bbbf1dfa3761224ae5aca09d6823e7be420aacade9c7c5c4217119e5703ebf",
+      "started_at": "2026-09-10T07:42:20.480Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t76%; discharging; 5:31 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.02411525000002,
+      "request_count": 938,
+      "startup": {
+        "backend_start_ms": 805.8753749999996,
+        "native_model_load_ms": 57.7745
+      },
+      "summary": {
+        "native_inference": {
+          "count": 938,
+          "median_ms": 111.430271,
+          "p95_ms": 198.573167,
+          "p99_ms": 200.925541,
+          "min_ms": 42.248042,
+          "max_ms": 217.149417,
+          "mean_ms": 116.2952321748401,
+          "audio_seconds_per_second": 130.46376148959865,
+          "real_time_factor": 0.007664963730788384
+        },
+        "openwhispr_backend": {
+          "count": 938,
+          "median_ms": 122.63664599999902,
+          "p95_ms": 212.1342089999962,
+          "p99_ms": 216.31029200000194,
+          "min_ms": 51.50291599999764,
+          "max_ms": 237.84824999999546,
+          "mean_ms": 127.94735296695075,
+          "audio_seconds_per_second": 118.58247225133996,
+          "real_time_factor": 0.00843294949931945
+        },
+        "backend_overhead": {
+          "count": 938,
+          "median_ms": 11.288416000001845,
+          "p95_ms": 15.484623999997297,
+          "p99_ms": 20.956458999997466,
+          "min_ms": 8.674875000000057,
+          "max_ms": 38.666792000000754,
+          "mean_ms": 11.652120792110665,
+          "audio_seconds_per_second": 1302.1074621118414,
+          "real_time_factor": 0.0007679857685310672
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "sdk_sha256": "28330448afd01ba7dc1480261d076eb30b06e1a3f34020f7854cf19ffcaca48e",
+      "ggml_diff_sha256": "1a8b9db938ab1a101166410c815e2a1cbd6dcba2d90534ae241ddf482561e544"
+    },
+    "baseline_control": {
+      "receipt_file": "../openwhispr/benchmark-results/orukeet/m4-pro-metal-kernel-baseline-control-120s.json",
+      "receipt_sha256": "6ba63d343c51dc810b56664de4829242e99820c201220e517a181821d40e5f00",
+      "started_at": "2026-09-10T07:45:07.883Z",
+      "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=21823587)\t73%; discharging; 4:51 remaining present: true",
+      "power_settings": "Battery Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         20\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n powermode            0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         10\n womp                 1\n networkoversleep     0\n sleep                1\n tcpkeepalive         1\n disksleep            10",
+      "measured_seconds": 120.100469083,
+      "request_count": 693,
+      "startup": {
+        "backend_start_ms": 804.3858339999999,
+        "native_model_load_ms": 53.238042
+      },
+      "summary": {
+        "native_inference": {
+          "count": 693,
+          "median_ms": 155.366041,
+          "p95_ms": 281.272292,
+          "p99_ms": 283.952875,
+          "min_ms": 54.913625,
+          "max_ms": 285.61525,
+          "mean_ms": 161.45956121212106,
+          "audio_seconds_per_second": 94.03106817111353,
+          "real_time_factor": 0.01063478294408232
+        },
+        "openwhispr_backend": {
+          "count": 693,
+          "median_ms": 166.71949999999197,
+          "p95_ms": 294.4912089999998,
+          "p99_ms": 297.4735419999997,
+          "min_ms": 64.21370900000329,
+          "max_ms": 301.03374999999505,
+          "mean_ms": 173.29407305916308,
+          "audio_seconds_per_second": 87.60954566537185,
+          "real_time_factor": 0.011414281313814134
+        },
+        "backend_overhead": {
+          "count": 693,
+          "median_ms": 11.518248999995421,
+          "p95_ms": 15.723707000000331,
+          "p99_ms": 21.268208000001394,
+          "min_ms": 8.963334000002945,
+          "max_ms": 60.859500000001475,
+          "mean_ms": 11.834511847041878,
+          "audio_seconds_per_second": 1282.8763199903287,
+          "real_time_factor": 0.000779498369731806
+        }
+      },
+      "accuracy": {
+        "reference_words": 916,
+        "substitutions": 16,
+        "deletions": 4,
+        "insertions": 2,
+        "errors": 22,
+        "wer_percent": 2.4017467248908297
+      },
+      "sdk_sha256": "ed54b2ac73a10b41c61800aa6b9e88e758e1b81d562a3a8be825d5e216cd9e0c",
+      "ggml_diff_sha256": "caf0d56e4a500fd06d16cf34cf0049c64b5bed84d285e015fcb6393bf3677c0f"
+    }
+  },
+  "comparison": {
+    "native_inference": {
+      "median_ms_reduction_percent": 27.756246004535612,
+      "p95_ms_reduction_percent": 29.28953391973643,
+      "p99_ms_reduction_percent": 29.17255407393473,
+      "mean_ms_reduction_percent": 27.8287413361199,
+      "throughput_increase_percent": 38.512326427230306
+    },
+    "openwhispr_backend": {
+      "median_ms_reduction_percent": 26.111597193562496,
+      "p95_ms_reduction_percent": 28.09362278780414,
+      "p99_ms_reduction_percent": 28.6667407424396,
+      "mean_ms_reduction_percent": 26.350090535244554,
+      "throughput_increase_percent": 35.73144911331126
+    }
+  },
+  "clips": [
+    {
+      "id": "4992-41797-0013",
+      "seconds": 9.8,
+      "band": "5\u201310 s",
+      "sha256": "7ce04fe035acc0d9e1073d423b9e9de4b4c2142c41f5d7df533f8067748d307e",
+      "score": {
+        "reference_words": 27,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "4ae41faa533d757bf047f49cf162506dc29957c6f7b5306da5727d26d98b8f94",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 105.444833,
+        "backend_median_ms": 116.22870800000965
+      },
+      "optimized": {
+        "requests": 40,
+        "native_median_ms": 78.1641665,
+        "backend_median_ms": 88.36843800000497
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 106.648,
+        "backend_median_ms": 116.94470799999544
+      }
+    },
+    {
+      "id": "3570-5695-0001",
+      "seconds": 14.715,
+      "band": "10\u201320 s",
+      "sha256": "2293848fb573ea04a8190222eb30c7bb10dae9c8851ea6de2f888f5b44f7e446",
+      "score": {
+        "reference_words": 47,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "235026746be94b90d80714ce9a41afe1ecc2a2e1cb3737c09086bb2f978469f9",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 154.242083,
+        "backend_median_ms": 165.8976249999978
+      },
+      "optimized": {
+        "requests": 40,
+        "native_median_ms": 112.1639585,
+        "backend_median_ms": 123.27606250000099
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 155.258209,
+        "backend_median_ms": 166.2132500000007
+      }
+    },
+    {
+      "id": "3575-170457-0046",
+      "seconds": 25.64,
+      "band": "20\u201330 s",
+      "sha256": "4d4251568928975a0311b2ebc949db9df08829b3c75389aefbddf6631d857cc8",
+      "score": {
+        "reference_words": 67,
+        "substitutions": 3,
+        "deletions": 1,
+        "insertions": 0,
+        "errors": 4
+      },
+      "transcript_sha256": "1ed756fe17d18596a1fe58dabbba408d1ffc4e22a906e2a5128ca9f589ac1aad",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 279.478625,
+        "backend_median_ms": 293.5627910000039
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 200.332541,
+        "backend_median_ms": 213.30158400000073
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 280.606167,
+        "backend_median_ms": 293.76112500000454
+      }
+    },
+    {
+      "id": "7127-75947-0016",
+      "seconds": 7.48,
+      "band": "5\u201310 s",
+      "sha256": "13a748c5fc52a32be9c070892a580e2f91edc0f00e94258f64de0b0e8a8adce4",
+      "score": {
+        "reference_words": 16,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "10dd9c579a21d0c904a4c8aae578664f03f54daacfb340f70e1fe5c23739d488",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 78.017292,
+        "backend_median_ms": 88.75891600000614
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 58.187125,
+        "backend_median_ms": 68.05783300000076
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 78.962125,
+        "backend_median_ms": 88.97695799999929
+      }
+    },
+    {
+      "id": "4970-29093-0001",
+      "seconds": 11.92,
+      "band": "10\u201320 s",
+      "sha256": "701b3334cfbacfb695b56f66d970f84896f81587199d7f0c0d3ad688bd925aa7",
+      "score": {
+        "reference_words": 29,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "f984434df06c76ecd95c00226e2947d45f77c8bee75ed0805195a64c23b392ce",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 123.293042,
+        "backend_median_ms": 134.35020800000348
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 90.915792,
+        "backend_median_ms": 101.3576669999893
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 124.26075,
+        "backend_median_ms": 134.75916700000016
+      }
+    },
+    {
+      "id": "5639-40744-0003",
+      "seconds": 27.12,
+      "band": "20\u201330 s",
+      "sha256": "feae1e38623c1082c34fa8624430121706fc82defea7e6a396880db7c31d50c7",
+      "score": {
+        "reference_words": 72,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "f5bd7dd5de9bf17969878b7804fb1a533df419a882c14c044ca2d8342d4c2c1f",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 282.022958,
+        "backend_median_ms": 295.79054200000246
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 198.340208,
+        "backend_median_ms": 211.48216699999466
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 283.283667,
+        "backend_median_ms": 296.53250000000116
+      }
+    },
+    {
+      "id": "1320-122617-0026",
+      "seconds": 5.225,
+      "band": "5\u201310 s",
+      "sha256": "8e46137d386c181c23a97932fb560a1fffa0b8e635bfe38c81c6f0791dbbe9ed",
+      "score": {
+        "reference_words": 15,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "971d86af1dd3ac0de47548bce245e935b966fae4b7b6ed84096bcd67f61d3d67",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 66.399875,
+        "backend_median_ms": 76.63087500000256
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 52.489542,
+        "backend_median_ms": 61.950875000009546
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 67.137833,
+        "backend_median_ms": 76.47849999999744
+      }
+    },
+    {
+      "id": "4077-13754-0002",
+      "seconds": 17.78,
+      "band": "10\u201320 s",
+      "sha256": "58ff360d46e4fc6bcaf04da1a6ead97dc191c54426528cfa13efe7e780349ff5",
+      "score": {
+        "reference_words": 44,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "5c12e83db0ca5730beee7bc030eed1901cd58e8a1eb555fcb82861be3ca6778d",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 185.890541,
+        "backend_median_ms": 198.52983299999323
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 133.031375,
+        "backend_median_ms": 144.81208399999923
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 186.894458,
+        "backend_median_ms": 198.77033299999312
+      }
+    },
+    {
+      "id": "7021-79759-0004",
+      "seconds": 24.47,
+      "band": "20\u201330 s",
+      "sha256": "04d8c373ae403ed74f731ffeda8310d8fa3f1fe0c3b22403f77199a6a2c6a649",
+      "score": {
+        "reference_words": 56,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "71a79925159155488ecc7e0ce08aea2a8c5b7de308e1ad41fc17ad0c3e4b6815",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 246.762458,
+        "backend_median_ms": 260.44183299999713
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 174.362,
+        "backend_median_ms": 187.12570800000685
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 247.7665,
+        "backend_median_ms": 260.95474999999715
+      }
+    },
+    {
+      "id": "1188-133604-0039",
+      "seconds": 6.625,
+      "band": "5\u201310 s",
+      "sha256": "d73d8f1098edc1d35883cfcbb3c0e4fbb58451021575073ebb8ede2d3e4cf72a",
+      "score": {
+        "reference_words": 17,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "e372003cb95c343eddf5ace34f761b4875ce90406aa2b0e005a683c2eb0ce4e8",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 75.927958,
+        "backend_median_ms": 86.16887499999939
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 57.923042,
+        "backend_median_ms": 67.69291700000758
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 76.782166,
+        "backend_median_ms": 86.41858299999149
+      }
+    },
+    {
+      "id": "3729-6852-0034",
+      "seconds": 18.895,
+      "band": "10\u201320 s",
+      "sha256": "7c5a6acfbb2631e29aa1fd9477bb1bfe790e56dfeadf0c4980a8b8448d58ff3f",
+      "score": {
+        "reference_words": 48,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "4c0a01738a762c9059fe8c7a2f48af92f217c9b547b0ac87225c482fc574c901",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 191.753084,
+        "backend_median_ms": 204.19320899999911
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 135.5815,
+        "backend_median_ms": 147.12025000000722
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 193.227875,
+        "backend_median_ms": 205.12666699998954
+      }
+    },
+    {
+      "id": "5683-32866-0019",
+      "seconds": 20.855,
+      "band": "20\u201330 s",
+      "sha256": "944c892a7cabeae53d979c51806d3ce4ef3ba081c0cf209786fdb7e43b688cf8",
+      "score": {
+        "reference_words": 56,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "cce83a63ca43c4debab83baaea82c9dba34a2fabcd76276e27931dbd8242b10c",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 219.771417,
+        "backend_median_ms": 232.66920899999968
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 160.5995,
+        "backend_median_ms": 172.859375
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 220.934042,
+        "backend_median_ms": 233.10741599999892
+      }
+    },
+    {
+      "id": "7176-92135-0042",
+      "seconds": 7.27,
+      "band": "5\u201310 s",
+      "sha256": "b1c7d947268b3e4cbef60f1f9f5d51ef027dd36565f49d6e21e24f7a4dc8e550",
+      "score": {
+        "reference_words": 22,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "cb32d2dd8270a55c61ba4b951b5c033ad8e05cef9591d64ee0fdf235f5640e9b",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 79.678833,
+        "backend_median_ms": 90.54550000000745
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 60.209083,
+        "backend_median_ms": 69.93370900000446
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 80.555,
+        "backend_median_ms": 90.58320800001093
+      }
+    },
+    {
+      "id": "2961-960-0002",
+      "seconds": 15.35,
+      "band": "10\u201320 s",
+      "sha256": "753bea25c30c610c8715e13e9528363fba527c81bbea8997d1c4fa89a3fe3082",
+      "score": {
+        "reference_words": 36,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "ab2a5cf2e484382357e25529b855e3d695c7e81b3cb4e405988f41f9ee35e552",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 154.092333,
+        "backend_median_ms": 165.95066699999734
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 110.791708,
+        "backend_median_ms": 121.74899999999616
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 155.780125,
+        "backend_median_ms": 166.92395899999974
+      }
+    },
+    {
+      "id": "8463-294825-0007",
+      "seconds": 21.05,
+      "band": "20\u201330 s",
+      "sha256": "ae7287dd69015aa06f15d282e2ba917b28a7cdcd01ff069ff3c7ef59d5738be9",
+      "score": {
+        "reference_words": 43,
+        "substitutions": 2,
+        "deletions": 1,
+        "insertions": 1,
+        "errors": 4
+      },
+      "transcript_sha256": "0e04e2d7417eac0797ed20b1074bc71e6514da904e8d9c28b632352deb7f10fc",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 219.547708,
+        "backend_median_ms": 232.49416600000404
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 159.494834,
+        "backend_median_ms": 171.62120900000446
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 220.797083,
+        "backend_median_ms": 233.05129200000374
+      }
+    },
+    {
+      "id": "2094-142345-0054",
+      "seconds": 5.68,
+      "band": "5\u201310 s",
+      "sha256": "82aa703d3f0f045b5cc125d54c83213a4ca409343adfc6216555ae1d2bd9958b",
+      "score": {
+        "reference_words": 13,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "dc7c5636df4b66bb92a522babd2afddc563dc5315b7dce9774786c7445e053aa",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 68.127959,
+        "backend_median_ms": 78.21212500000547
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 53.012125,
+        "backend_median_ms": 62.50245800000266
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 68.622541,
+        "backend_median_ms": 78.24937499999942
+      }
+    },
+    {
+      "id": "1221-135767-0004",
+      "seconds": 19.09,
+      "band": "10\u201320 s",
+      "sha256": "b39853e9fbaeb7a8bcc2cbbaf3bff6650ed0838c609f614357228f16a879509d",
+      "score": {
+        "reference_words": 48,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "09af54ad31b72d2e90a84c42a0262cccc485fd62446b4768e3405ebcdcbfea7d",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 201.632625,
+        "backend_median_ms": 214.02000000000044
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 144.235792,
+        "backend_median_ms": 155.66716599999927
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 202.8085,
+        "backend_median_ms": 214.73708299999998
+      }
+    },
+    {
+      "id": "8555-292519-0001",
+      "seconds": 20.82,
+      "band": "20\u201330 s",
+      "sha256": "b082de228dbad73be95d916e5149c02035758a390482845def17215c0eed0fa9",
+      "score": {
+        "reference_words": 41,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "8dd827ddce57aec09c0ed9826351a4b08a0e111177bddea7a6ab12f713aefe5d",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 216.496084,
+        "backend_median_ms": 229.27099999999336
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 157.904583,
+        "backend_median_ms": 170.36545800000022
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 217.781125,
+        "backend_median_ms": 230.01137500000186
+      }
+    },
+    {
+      "id": "61-70968-0054",
+      "seconds": 7.86,
+      "band": "5\u201310 s",
+      "sha256": "7b58da65dd63a6b09d43ee20c6aa4b5a8853199af7c350a87ab692fb4d0d874c",
+      "score": {
+        "reference_words": 30,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 1,
+        "errors": 2
+      },
+      "transcript_sha256": "ecb24ce6b4a9baa286a45a59e7a0dc5a54186e468ee8ba8466800ee5bbc58be9",
+      "baseline": {
+        "requests": 29,
+        "native_median_ms": 96.739334,
+        "backend_median_ms": 107.28116699999919
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 74.484667,
+        "backend_median_ms": 84.51695800000016
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 97.530708,
+        "backend_median_ms": 107.60204199999862
+      }
+    },
+    {
+      "id": "5105-28233-0010",
+      "seconds": 13.595,
+      "band": "10\u201320 s",
+      "sha256": "0503ea1f20965deaff3df717c88c715ca26038521bc37f491e80661af208ad06",
+      "score": {
+        "reference_words": 34,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 2
+      },
+      "transcript_sha256": "9901da8b5139ac78f9129029415221021fba3648f6333f21b82b1c25f20fbeb9",
+      "baseline": {
+        "requests": 28,
+        "native_median_ms": 145.427146,
+        "backend_median_ms": 156.8394580000022
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 107.524792,
+        "backend_median_ms": 118.17279199999757
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 146.899583,
+        "backend_median_ms": 157.63933299999917
+      }
+    },
+    {
+      "id": "1089-134691-0009",
+      "seconds": 20.055,
+      "band": "20\u201330 s",
+      "sha256": "11b43ade12501f613e4d81b5f4ab18f0f751d8ce8fd60130cd66f0cb8fdbedc0",
+      "score": {
+        "reference_words": 49,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "c8703acc9365b9374697a68ba6c5f6b407849c660f6d7aa78fa241adc682e8f5",
+      "baseline": {
+        "requests": 28,
+        "native_median_ms": 207.68543749999998,
+        "backend_median_ms": 220.59616700000333
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 146.873,
+        "backend_median_ms": 159.0796249999985
+      },
+      "baseline_control": {
+        "requests": 29,
+        "native_median_ms": 209.095667,
+        "backend_median_ms": 221.12116700000115
+      }
+    },
+    {
+      "id": "260-123286-0031",
+      "seconds": 5.06,
+      "band": "5\u201310 s",
+      "sha256": "269d142f97190494ae29fae077c9c0c8b1f8752a0065a4140e31526d5b54aee5",
+      "score": {
+        "reference_words": 11,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "8a0c062518e8406139ec5fba27ad78d23e120f76db10f418b9ee89df662c98f4",
+      "baseline": {
+        "requests": 28,
+        "native_median_ms": 56.326896,
+        "backend_median_ms": 66.32299950000379
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 43.245,
+        "backend_median_ms": 52.531332999998995
+      },
+      "baseline_control": {
+        "requests": 28,
+        "native_median_ms": 56.835499999999996,
+        "backend_median_ms": 66.16341650000504
+      }
+    },
+    {
+      "id": "4446-2273-0010",
+      "seconds": 12.44,
+      "band": "10\u201320 s",
+      "sha256": "ee6acd6b5c33e2d7e114405b48aec2700f720d68dd8d59676172e81ca63317dc",
+      "score": {
+        "reference_words": 36,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1
+      },
+      "transcript_sha256": "630ea64e2f4601d119849256fd952f1dc88fd89f729974ee27d1a76ffc842c09",
+      "baseline": {
+        "requests": 28,
+        "native_median_ms": 133.2030625,
+        "backend_median_ms": 144.37143749999996
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 99.109333,
+        "backend_median_ms": 109.54883400000108
+      },
+      "baseline_control": {
+        "requests": 28,
+        "native_median_ms": 134.26775,
+        "backend_median_ms": 145.04816699999992
+      }
+    },
+    {
+      "id": "2300-131720-0035",
+      "seconds": 25.49,
+      "band": "20\u201330 s",
+      "sha256": "94ac8c20f2589b2a13fdc6c65208f1cd38bedcf20d204f29a809ef1d1f8266ba",
+      "score": {
+        "reference_words": 59,
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 0
+      },
+      "transcript_sha256": "81dc0456a6b231da68efd169f3a4f1b8e5585087b4f1c1d7a8dba2d08104165b",
+      "baseline": {
+        "requests": 28,
+        "native_median_ms": 260.13216650000004,
+        "backend_median_ms": 273.4826039999971
+      },
+      "optimized": {
+        "requests": 39,
+        "native_median_ms": 183.580291,
+        "backend_median_ms": 196.60633299999608
+      },
+      "baseline_control": {
+        "requests": 28,
+        "native_median_ms": 261.233,
+        "backend_median_ms": 274.3263125000085
+      }
+    }
+  ],
+  "validation": {
+    "metal_shader_validation": true,
+    "cpu_reference_tests": {
+      "im2col": 98,
+      "f32_copy_cont_dup": 40,
+      "short_f16_matmul": 17
+    },
+    "all_transcripts_identical_to_baseline": true,
+    "all_requests_native_calls": 1,
+    "all_21_patches_apply_and_match_live_ggml": true,
+    "native_regression_checks": [
+      "verified model installation",
+      "ten identical warm transcriptions reuse one worker",
+      "concurrent app calls are serialized without changing transcript",
+      "silence returns the app no-audio result",
+      "already-cancelled app call skips inference",
+      "in-flight cancellation kills worker and next call reloads",
+      "explicit shutdown leaves no native child"
+    ]
+  }
+}
