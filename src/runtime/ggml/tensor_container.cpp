@@ -63,19 +63,29 @@ buft_supports_matmul_weight(
     return supported;
 }
 
-// First buffer type that will take `meta` as a matmul weight, else the
-// device's main buffer type. Extra buffer types precede the main one in
-// buft_list, so a weight-layout type wins when it applies and everything
-// else lands exactly where it did before.
+// Weight-layout buffer type for `meta`, else the placement it would have had.
+//
+// Restricted to the device `device_main_buft()` already chose: an accelerator
+// build lists the GPU's buffer types first and the CPU's extra types after
+// them, and a weight belongs on the accelerator, not pulled back to host
+// memory because the CPU happens to offer a repacking buffer type.
 static ggml_backend_buffer_type_t
 matmul_weight_buft(const buft_list_t& buft_list, const ggml_tensor* meta) {
+    const ggml_backend_buffer_type_t main = device_main_buft(buft_list);
+    ggml_backend_dev_t main_dev = nullptr;
     for (const auto& cur : buft_list) {
-        if (cur.second == ggml_backend_dev_buffer_type(cur.first))
-            continue;  // main buffer type: the fallback below.
+        if (cur.second == main) {
+            main_dev = cur.first;
+            break;
+        }
+    }
+    for (const auto& cur : buft_list) {
+        if (cur.first != main_dev || cur.second == main)
+            continue;
         if (buft_supports_matmul_weight(cur.first, cur.second, meta))
             return cur.second;
     }
-    return device_main_buft(buft_list);
+    return main;
 }
 
 TensorBag::TensorBag() {

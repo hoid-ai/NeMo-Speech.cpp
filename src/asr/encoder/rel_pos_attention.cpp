@@ -12,6 +12,7 @@
 #include <ggml.h>
 
 #include <cmath>
+#include <cstring>
 #include <stdexcept>
 #include <vector>
 
@@ -143,8 +144,13 @@ RelPositionMultiHeadAttention::define_tensors(Session* session) {
     // quantization type (rows are independent for all ggml quant formats, so
     // stacking is a plain byte concat — see set_data).
     const ggml_type qkv_type = session->gguf_loader->get_tensor_type(name + ".linear_q.weight");
+    // build_graph feeds this straight to ggml_mul_mat and nothing else reads
+    // it, so it may live on a matmul-layout buffer type. set_data() below
+    // assembles it in host memory precisely so it can be uploaded in one
+    // piece, which such a buffer type requires.
     session->model_tensor_container->create_tensor_4d(
-        qkv_weight_name, qkv_type, n_feat, 3 * n_feat, 1, 1);
+        qkv_weight_name, qkv_type, n_feat, 3 * n_feat, 1, 1,
+        TensorContainer::TensorRole::MatmulWeight);
     if (use_bias) {
         session->model_tensor_container->create_tensor_4d(
             qkv_bias_name, GGML_TYPE_F32, 3 * n_feat, 1, 1, 1);
@@ -362,6 +368,8 @@ RelPositionMultiHeadAttention::set_data(Session* session) {
         const size_t part_d = third - part_qs;
         const size_t total_qs = 3 * part_qs;
         const char* parts[3] = {".linear_q.weight", ".linear_k.weight", ".linear_v.weight"};
+        std::vector<char> staged;
+        int staged_parts = 0;
         for (int i = 0; i < 3; i++) {
             const std::string key = name + parts[i];
             const ggml_type disk = session->gguf_loader->get_tensor_type(key);
@@ -377,8 +385,17 @@ RelPositionMultiHeadAttention::set_data(Session* session) {
                 ggml_backend_tensor_set(w.tensor, data, i * part_qs, part_qs);
                 ggml_backend_tensor_set(w.tensor, data + part_qs, total_qs + i * part_d, part_d);
             } else {
-                ggml_backend_tensor_set(w.tensor, data, i * third, third);
+                // Stage the thirds and upload once. A weight-layout buffer
+                // type rewrites the whole tensor on set_tensor and rejects a
+                // partial write, so three offset writes are not an option
+                // there; staging costs one transient 3*n_feat*n_feat buffer.
+                staged.resize(ggml_nbytes(w.tensor));
+                memcpy(staged.data() + i * third, data, third);
+                staged_parts++;
             }
+        }
+        if (staged_parts == 3) {
+            ggml_backend_tensor_set(w.tensor, staged.data(), 0, staged.size());
         }
         if (planar_q8) {
 #ifdef NEMO_SPEECH_GGML_PATCHED
