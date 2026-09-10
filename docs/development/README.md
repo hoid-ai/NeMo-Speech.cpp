@@ -13,6 +13,8 @@ the server want [ASR configuration](../asr/configuration.md),
   indexed streaming-state arenas.
 - [`ggml-patches.md`](ggml-patches.md) - the project-specific ggml patches and how
   they are applied at build setup.
+- [`orukeet-metal-benchmark.md`](orukeet-metal-benchmark.md) - M4 Pro results,
+  kernel changes and reproduction steps for Orukeet Q8 on Metal.
 - [`cublas-shim.md`](cublas-shim.md) - the in-tree drop-in cuBLAS replacement
   under `kernels/` and where the custom GPU kernels live.
 - [Windows build notes](windows-build.md)

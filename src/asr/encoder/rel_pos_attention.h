@@ -87,6 +87,8 @@ class RelPositionMultiHeadAttention : public Module {
     int n_feat;
     int d_k;
     bool use_bias;
+    int pos_cache_frames_ = 0;
+    std::string pe_cache_source_;
     Linear* linear_out;
     Linear* linear_pos;
 };

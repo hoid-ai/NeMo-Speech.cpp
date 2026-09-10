@@ -1,0 +1,2357 @@
+{
+  "created_utc": "2026-09-10T16:36:50.628403+00:00",
+  "scope": "Independent full-model recognition from identical PCM: frontend features, final encoder activations, encoder projection, and every token/duration logit before greedy selection; original and optimized Q8 Metal runtimes.",
+  "criterion": "abs(actual-reference) <= atol + rtol*abs(reference)",
+  "instrumentation": "Test-only dyld interposition retains encoder output and full joint logits through their views, then synchronizes for readback. No model or kernel arithmetic is replaced; production fusion/optimization and positional caching remain enabled. Not timing evidence.",
+  "source_sha256": {
+    "tests/cpp/orukeet_model_numerics.cpp": "8f629b88ff195b6df708104c07e54319a64b5cea2fd0a9da8fa4f503f35e82c1",
+    "scripts/verify-orukeet-model-numerics.py": "d6387c481dde3789354732a424a31af816fd577051977422a996dd12ecce24d3"
+  },
+  "model": {
+    "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-benchmark/model-cache/parakeet-models/orukeet-v0.1.0-q8/orukeet-r3-93ce19c6-q8.gguf",
+    "sha256": "93ce19c6d8244acbfea980eeaf970531d4f216171578ef8e041dcc2d070a45bd"
+  },
+  "manifest": {
+    "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-benchmark/clips-orukeet-quick-v1-24.json",
+    "sha256": "3004caf98c8a3f2cd0e15950b573f1745255986d4334dee46782e36fcbab48e8"
+  },
+  "clips": [
+    {
+      "id": "4992-41797-0013",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/4992-41797-0013.f32",
+      "pcm_sha256": "050d11e69614e5ee0abfa4a42799f241acea9a29571bee2d409287f5ef869bba",
+      "seconds": 9.8
+    },
+    {
+      "id": "3570-5695-0001",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/3570-5695-0001.f32",
+      "pcm_sha256": "174f097b063cc17093786b50e7b4d1d8c3192997f2898059a2cbab4b6da9481a",
+      "seconds": 14.715
+    },
+    {
+      "id": "3575-170457-0046",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/3575-170457-0046.f32",
+      "pcm_sha256": "5bd6faf14de9bcb9eec3e846e3df2e5ce48d016dc4408faa9945e50698fcd531",
+      "seconds": 25.64
+    },
+    {
+      "id": "7127-75947-0016",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/7127-75947-0016.f32",
+      "pcm_sha256": "2e93b1f72b5a705ce7cb984442fc533043c09870c7111a20b2b0ce0bdfb2023a",
+      "seconds": 7.48
+    },
+    {
+      "id": "4970-29093-0001",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/4970-29093-0001.f32",
+      "pcm_sha256": "d908713d3e3b522c130a41682e649cf632e866f0d4714b17dd96c67a610a0361",
+      "seconds": 11.92
+    },
+    {
+      "id": "5639-40744-0003",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/5639-40744-0003.f32",
+      "pcm_sha256": "84d85d4db9a736295c479584978332f54a4987eef5a3b520b18e2acc65ee45e4",
+      "seconds": 27.12
+    },
+    {
+      "id": "1320-122617-0026",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/1320-122617-0026.f32",
+      "pcm_sha256": "d20983f0ddb57112131abacd5c781b3ac381599590d6732c3b5c7f3c72dcba79",
+      "seconds": 5.225
+    },
+    {
+      "id": "4077-13754-0002",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/4077-13754-0002.f32",
+      "pcm_sha256": "0bf3e9987e0fa871dafba979e1ee82ff7376b8f95f3b43d5fcf0b1d0e1e57a98",
+      "seconds": 17.78
+    },
+    {
+      "id": "7021-79759-0004",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/7021-79759-0004.f32",
+      "pcm_sha256": "42094d403855bbf6492adf7947a50e9223ef3c5f8e70ea43141af56e9e77521a",
+      "seconds": 24.47
+    },
+    {
+      "id": "1188-133604-0039",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/1188-133604-0039.f32",
+      "pcm_sha256": "e9799177652b6a2e90ea51eedebb66a94bbf8cb9e3e89a1f8aa6739f52a66530",
+      "seconds": 6.625
+    },
+    {
+      "id": "3729-6852-0034",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/3729-6852-0034.f32",
+      "pcm_sha256": "66102237e3493789f1968be0c2fb1faab2e1936d0e3e9197ce157b118d6e16e6",
+      "seconds": 18.895
+    },
+    {
+      "id": "5683-32866-0019",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/5683-32866-0019.f32",
+      "pcm_sha256": "fa006368cab68d5326ea81433c76783bc9d22933c495c57a4717642a1ec18ae6",
+      "seconds": 20.855
+    },
+    {
+      "id": "7176-92135-0042",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/7176-92135-0042.f32",
+      "pcm_sha256": "7afee1db85cb456aa6e9e4f9c43301782f2b924734ac94849573f0d10c0d4497",
+      "seconds": 7.27
+    },
+    {
+      "id": "2961-960-0002",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/2961-960-0002.f32",
+      "pcm_sha256": "2a24f064991cfeed09d5b1f7dd85fe41bddc8f956ead1091f78252c945408750",
+      "seconds": 15.35
+    },
+    {
+      "id": "8463-294825-0007",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/8463-294825-0007.f32",
+      "pcm_sha256": "78e1894ad02615f0a745e5984ce5877c636c419ff81c30e0a48dcc964eab245b",
+      "seconds": 21.05
+    },
+    {
+      "id": "2094-142345-0054",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/2094-142345-0054.f32",
+      "pcm_sha256": "27d719e878e73b3b16ae796e563d2493e966721ddbbe71ec38866ebb0398d3ef",
+      "seconds": 5.68
+    },
+    {
+      "id": "1221-135767-0004",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/1221-135767-0004.f32",
+      "pcm_sha256": "85fbe3df25adc55154c49dd792c73df98a43ddc6676e163a38e98f24145bc768",
+      "seconds": 19.09
+    },
+    {
+      "id": "8555-292519-0001",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/8555-292519-0001.f32",
+      "pcm_sha256": "dd7b72eab2cf76a2fc6d3a02ea1932bbb2890688bfb0f2283d92fe843e98c432",
+      "seconds": 20.82
+    },
+    {
+      "id": "61-70968-0054",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/61-70968-0054.f32",
+      "pcm_sha256": "eebf761ad4acfb7389137071e2c28686646de265c1f4cdf62f9e4366603443ce",
+      "seconds": 7.86
+    },
+    {
+      "id": "5105-28233-0010",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/5105-28233-0010.f32",
+      "pcm_sha256": "95e7699c9f0664804483ee841ebe3211f4e3dadb7420930390e3450b7e6e0943",
+      "seconds": 13.595
+    },
+    {
+      "id": "1089-134691-0009",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/1089-134691-0009.f32",
+      "pcm_sha256": "b3847c6e2fb88a265759c3f06d273104469543773d10b6032eb62dba4a4eff8c",
+      "seconds": 20.055
+    },
+    {
+      "id": "260-123286-0031",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/260-123286-0031.f32",
+      "pcm_sha256": "ab2921df9f79ca1146700c8495129ede0e96d962257dd5aa76c27aaf2f2fe3b9",
+      "seconds": 5.06
+    },
+    {
+      "id": "4446-2273-0010",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/4446-2273-0010.f32",
+      "pcm_sha256": "1e40b3ea6093cf118ebccae3739c4a343684aaa0c14eb8c40a6351f6952f29b8",
+      "seconds": 12.44
+    },
+    {
+      "id": "2300-131720-0035",
+      "pcm": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/pcm/2300-131720-0035.f32",
+      "pcm_sha256": "4bff48ebd1307c1534de3c7a36503ba7c537d117ca7fe917100ea40ea83150ee",
+      "seconds": 25.49
+    }
+  ],
+  "repeats": 2,
+  "recognitions_per_runtime": 48,
+  "valid_aligned_comparison": true,
+  "input_features_exact": true,
+  "all_decisions_exact": true,
+  "all_transcripts_exact": true,
+  "total_decisions": 8032,
+  "total_decision_differences": 0,
+  "groups": {
+    "duration_logits": {
+      "elements": 20080,
+      "nonfinite": 0,
+      "exact_differences": 10474,
+      "max_absolute_error": 1.52587890625e-05,
+      "worst_absolute": {
+        "absolute_error": 1.52587890625e-05,
+        "actual": -120.14427185058594,
+        "index": 8196,
+        "invocation": 31,
+        "reference": -120.144287109375,
+        "clip": "1320-122617-0026",
+        "repeat": 0
+      },
+      "tolerances": [
+        {
+          "atol": 1e-05,
+          "rtol": 1e-05,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0.1421486839697152,
+          "worst": {
+            "absolute_error": 1.9073486328125e-06,
+            "actual": 0.3417963981628418,
+            "index": 8193,
+            "invocation": 66,
+            "reference": 0.3417983055114746,
+            "clip": "2961-960-0002",
+            "repeat": 0
+          },
+          "pass": true
+        },
+        {
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0.01421486839697152,
+          "worst": {
+            "absolute_error": 1.9073486328125e-06,
+            "actual": 0.3417963981628418,
+            "index": 8193,
+            "invocation": 66,
+            "reference": 0.3417983055114746,
+            "clip": "2961-960-0002",
+            "repeat": 0
+          },
+          "pass": true
+        },
+        {
+          "atol": 0.001,
+          "rtol": 0.001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0.0014214868396971523,
+          "worst": {
+            "absolute_error": 1.9073486328125e-06,
+            "actual": 0.3417963981628418,
+            "index": 8193,
+            "invocation": 66,
+            "reference": 0.3417983055114746,
+            "clip": "2961-960-0002",
+            "repeat": 0
+          },
+          "pass": true
+        }
+      ]
+    },
+    "encoder_output": {
+      "elements": 9351168,
+      "nonfinite": 0,
+      "exact_differences": 0,
+      "max_absolute_error": 0,
+      "worst_absolute": null,
+      "tolerances": [
+        {
+          "atol": 1e-05,
+          "rtol": 1e-05,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        },
+        {
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        },
+        {
+          "atol": 0.001,
+          "rtol": 0.001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        }
+      ]
+    },
+    "encoder_projection": {
+      "elements": 5844480,
+      "nonfinite": 0,
+      "exact_differences": 0,
+      "max_absolute_error": 0,
+      "worst_absolute": null,
+      "tolerances": [
+        {
+          "atol": 1e-05,
+          "rtol": 1e-05,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        },
+        {
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        },
+        {
+          "atol": 0.001,
+          "rtol": 0.001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        }
+      ]
+    },
+    "input_features": {
+      "elements": 9330944,
+      "nonfinite": 0,
+      "exact_differences": 0,
+      "max_absolute_error": 0,
+      "worst_absolute": null,
+      "tolerances": [
+        {
+          "atol": 1e-05,
+          "rtol": 1e-05,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        },
+        {
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        },
+        {
+          "atol": 0.001,
+          "rtol": 0.001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0,
+          "worst": null,
+          "pass": true
+        }
+      ]
+    },
+    "token_logits": {
+      "elements": 32903088,
+      "nonfinite": 0,
+      "exact_differences": 13667244,
+      "max_absolute_error": 3.0517578125e-05,
+      "worst_absolute": {
+        "absolute_error": 3.0517578125e-05,
+        "actual": -136.58790588378906,
+        "index": 4667,
+        "invocation": 59,
+        "reference": -136.5879364013672,
+        "clip": "5105-28233-0010",
+        "repeat": 0
+      },
+      "tolerances": [
+        {
+          "atol": 1e-05,
+          "rtol": 1e-05,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0.0949353680014646,
+          "worst": {
+            "absolute_error": 1.1324882507324219e-06,
+            "actual": -0.19290560483932495,
+            "index": 1460,
+            "invocation": 56,
+            "reference": -0.19290447235107422,
+            "clip": "1221-135767-0004",
+            "repeat": 0
+          },
+          "pass": true
+        },
+        {
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0.00949353680014646,
+          "worst": {
+            "absolute_error": 1.1324882507324219e-06,
+            "actual": -0.19290560483932495,
+            "index": 1460,
+            "invocation": 56,
+            "reference": -0.19290447235107422,
+            "clip": "1221-135767-0004",
+            "repeat": 0
+          },
+          "pass": true
+        },
+        {
+          "atol": 0.001,
+          "rtol": 0.001,
+          "failed_elements": 0,
+          "failed_recognitions": 0,
+          "max_error_over_bound": 0.0009493536800146459,
+          "worst": {
+            "absolute_error": 1.1324882507324219e-06,
+            "actual": -0.19290560483932495,
+            "index": 1460,
+            "invocation": 56,
+            "reference": -0.19290447235107422,
+            "clip": "1221-135767-0004",
+            "repeat": 0
+          },
+          "pass": true
+        }
+      ]
+    }
+  },
+  "repeatability": {
+    "original": {
+      "comparisons": 24,
+      "all_tensors_exact": true,
+      "all_decisions_exact": true,
+      "all_transcripts_exact": true,
+      "groups": {
+        "duration_logits": {
+          "elements": 10040,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "encoder_output": {
+          "elements": 4675584,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "encoder_projection": {
+          "elements": 2922240,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "input_features": {
+          "elements": 4665472,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "token_logits": {
+          "elements": 16451544,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    "optimized": {
+      "comparisons": 24,
+      "all_tensors_exact": true,
+      "all_decisions_exact": true,
+      "all_transcripts_exact": true,
+      "groups": {
+        "duration_logits": {
+          "elements": 10040,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "encoder_output": {
+          "elements": 4675584,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "encoder_projection": {
+          "elements": 2922240,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "input_features": {
+          "elements": 4665472,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        },
+        "token_logits": {
+          "elements": 16451544,
+          "nonfinite": 0,
+          "exact_differences": 0,
+          "max_absolute_error": 0,
+          "worst_absolute": null,
+          "tolerances": [
+            {
+              "atol": 1e-05,
+              "rtol": 1e-05,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.0001,
+              "rtol": 0.0001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            },
+            {
+              "atol": 0.001,
+              "rtol": 0.001,
+              "failed_elements": 0,
+              "failed_recognitions": 0,
+              "max_error_over_bound": 0,
+              "worst": null,
+              "pass": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  "pass_at_1e-4": true,
+  "machine": {
+    "chip": "Apple M4 Pro",
+    "macos": "26.5",
+    "backend": "MTL0",
+    "chip_source": "Existing benchmark receipt / user hardware"
+  },
+  "versions": {
+    "original": "a5b6953c4a579a2bbd1c0913ad8a85c2a4d99953",
+    "optimized": "a6217ccac7fd1c29da648bbf2d459200c34f9961",
+    "ggml_pin": "c03b4e2bcece5134827881af90242086daf75be5"
+  },
+  "variants": {
+    "original": {
+      "runtime": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime",
+      "libraries": {
+        "libnemo_speech_asr_c.1.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime/lib/libnemo_speech_asr_c.1.dylib",
+          "sha256": "1ca354703eba9a4c189064607b027d8583fac604f4bac5084e78acd153c20c18"
+        },
+        "libggml.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime/lib/libggml.0.12.0.dylib",
+          "sha256": "797c56479b13a0f5b28f93878da2c06a439e25d77b10af95c54c5bcf1294a8b1"
+        },
+        "libggml-base.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime/lib/libggml-base.0.12.0.dylib",
+          "sha256": "121dc73a9c30902261872421c35916cd41506bbaee365fbf337853f6ac8431da"
+        },
+        "libnemo_speech_asr.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime/lib/libnemo_speech_asr.dylib",
+          "sha256": "86dec555e1c3cf311343eaa9c8ab5d10af68a8f7e7443f74daa83fd8746d9f6a"
+        },
+        "libggml-blas.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime/lib/libggml-blas.0.12.0.dylib",
+          "sha256": "0c56f8903457593fe83d1453e8f375b439b1415761f6750a3b4babb16511c74a"
+        },
+        "libggml-cpu.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime/lib/libggml-cpu.0.12.0.dylib",
+          "sha256": "6d23cea9e05b086230a242a8b4546047af57e4a4335191276e9cbddf13db6b29"
+        },
+        "libggml-metal.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/.cache/orukeet-optimization/baseline-runtime/lib/libggml-metal.0.12.0.dylib",
+          "sha256": "aa32398f0081dd0d39b764723561939a6c36333bd3e9cae7c0745b15a5ebedd1"
+        }
+      },
+      "package_metadata": {
+        "device": "metal",
+        "spec": {
+          "version": "0.1.0-native",
+          "component_api": 1,
+          "platform": "macos_arm64",
+          "source": {
+            "repository": "https://github.com/hoid-ai/NeMo-Speech.cpp.git",
+            "sibling_directory": "NeMo-Speech.cpp",
+            "sentencepiece": {
+              "repository": "https://github.com/google/sentencepiece.git",
+              "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+            }
+          }
+        },
+        "source": {
+          "directory": "/Users/momcilomrkaic/dev-dir/oruk-hoid/NeMo-Speech.cpp",
+          "remote": "https://github.com/hoid-ai/NeMo-Speech.cpp",
+          "commit": "a5b6953c4a579a2bbd1c0913ad8a85c2a4d99953",
+          "dirty": true,
+          "diff_sha256": "18a7978c277d999db5dd156fd59c61b8e56392d0cbf7b973b49ba8c2cf125a6a",
+          "ggml": {
+            "directory": "/Users/momcilomrkaic/dev-dir/oruk-hoid/NeMo-Speech.cpp/ggml",
+            "remote": "https://github.com/ggml-org/ggml.git",
+            "commit": "c03b4e2bcece5134827881af90242086daf75be5",
+            "dirty": true,
+            "diff_sha256": "caf0d56e4a500fd06d16cf34cf0049c64b5bed84d285e015fcb6393bf3677c0f"
+          },
+          "llama": {
+            "directory": "/Users/momcilomrkaic/dev-dir/oruk-hoid/NeMo-Speech.cpp/llama.cpp",
+            "remote": "https://github.com/ggml-org/llama.cpp.git",
+            "commit": "560445bf34c87356ad0f8d80fb03ec5488850b65",
+            "dirty": false,
+            "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "sentencepiece": {
+            "repository": "https://github.com/google/sentencepiece.git",
+            "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+          },
+          "preset": "metal-asr",
+          "sdk_sha256": "ed54b2ac73a10b41c61800aa6b9e88e758e1b81d562a3a8be825d5e216cd9e0c"
+        }
+      }
+    },
+    "optimized": {
+      "runtime": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal",
+      "libraries": {
+        "libnemo_speech_asr_c.1.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal/lib/libnemo_speech_asr_c.1.dylib",
+          "sha256": "1ca354703eba9a4c189064607b027d8583fac604f4bac5084e78acd153c20c18"
+        },
+        "libggml.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal/lib/libggml.0.12.0.dylib",
+          "sha256": "797c56479b13a0f5b28f93878da2c06a439e25d77b10af95c54c5bcf1294a8b1"
+        },
+        "libggml-base.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal/lib/libggml-base.0.12.0.dylib",
+          "sha256": "121dc73a9c30902261872421c35916cd41506bbaee365fbf337853f6ac8431da"
+        },
+        "libnemo_speech_asr.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal/lib/libnemo_speech_asr.dylib",
+          "sha256": "d20883efbc43c3d33f2ff86b8c51af2e8e532857ad7ab54818a9c3481cca0647"
+        },
+        "libggml-blas.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal/lib/libggml-blas.0.12.0.dylib",
+          "sha256": "0c56f8903457593fe83d1453e8f375b439b1415761f6750a3b4babb16511c74a"
+        },
+        "libggml-cpu.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal/lib/libggml-cpu.0.12.0.dylib",
+          "sha256": "6d23cea9e05b086230a242a8b4546047af57e4a4335191276e9cbddf13db6b29"
+        },
+        "libggml-metal.0.12.0.dylib": {
+          "path": "/Users/momcilomrkaic/dev-dir/oruk-hoid/openwhispr/resources/bin/orukeet-darwin-arm64/metal/lib/libggml-metal.0.12.0.dylib",
+          "sha256": "195977aa8bb3ecadf3c20b93d2e976de8e12e573ce3e494dbce4d31a32be5642"
+        }
+      },
+      "package_metadata": {
+        "device": "metal",
+        "spec": {
+          "version": "0.1.0-native",
+          "component_api": 1,
+          "platform": "macos_arm64",
+          "source": {
+            "repository": "https://github.com/hoid-ai/NeMo-Speech.cpp.git",
+            "sibling_directory": "NeMo-Speech.cpp",
+            "sentencepiece": {
+              "repository": "https://github.com/google/sentencepiece.git",
+              "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+            }
+          }
+        },
+        "source": {
+          "directory": "/Users/momcilomrkaic/dev-dir/oruk-hoid/NeMo-Speech.cpp",
+          "remote": "https://github.com/hoid-ai/NeMo-Speech.cpp",
+          "commit": "90f5e58d2a32aea85399fdecf2e7406651abad59",
+          "dirty": true,
+          "diff_sha256": "4d6063fcda64adf85081aa0528f4c97fffad3ccad6910f8e557d2c4d339cb76d",
+          "ggml": {
+            "directory": "/Users/momcilomrkaic/dev-dir/oruk-hoid/NeMo-Speech.cpp/ggml",
+            "remote": "https://github.com/ggml-org/ggml.git",
+            "commit": "c03b4e2bcece5134827881af90242086daf75be5",
+            "dirty": true,
+            "diff_sha256": "2343d263254c8e4b406434bdb4fee67e2c2da0bfdf5999770c2a94d429d80d13"
+          },
+          "llama": {
+            "directory": "/Users/momcilomrkaic/dev-dir/oruk-hoid/NeMo-Speech.cpp/llama.cpp",
+            "remote": "https://github.com/ggml-org/llama.cpp.git",
+            "commit": "560445bf34c87356ad0f8d80fb03ec5488850b65",
+            "dirty": false,
+            "diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "sentencepiece": {
+            "repository": "https://github.com/google/sentencepiece.git",
+            "revision": "17d7580d6407802f85855d2cc9190634e2c95624"
+          },
+          "preset": "metal-asr",
+          "sdk_sha256": "8b409606b9043557e2fe41f5d8328aeba3010c93abcaa85104abdf711c02fd3a"
+        }
+      }
+    }
+  },
+  "complete_receipt": {
+    "path": ".cache/orukeet-model-numerics/full/report.json",
+    "sha256": "3bd89d81232932fa748e55e9b9656dbc7238191b6a66eb1f70c89a039341de8e"
+  },
+  "fusion_diagnostic": {
+    "original": {
+      "log_path": ".cache/orukeet-model-numerics/fusion-check/original/runtime.log",
+      "log_sha256": "11c1502d8129bee776d2387d0ecae2709dc7585e3929531fc5010b4c4512c533",
+      "observed_fusions": [
+        {
+          "first_op": "NORM",
+          "fused_ops": 3,
+          "dispatches": 120
+        }
+      ],
+      "all_captured_bytes_identical_to_main_run": true
+    },
+    "optimized": {
+      "log_path": ".cache/orukeet-model-numerics/fusion-check/optimized/runtime.log",
+      "log_sha256": "b53885f91e8900fcbdb8fab7ac4baf25f1da6b0272ac610f1937ee6bb4f12f2c",
+      "observed_fusions": [
+        {
+          "first_op": "CONT",
+          "fused_ops": 13,
+          "dispatches": 116
+        },
+        {
+          "first_op": "IM2COL",
+          "fused_ops": 2,
+          "dispatches": 27
+        },
+        {
+          "first_op": "NORM",
+          "fused_ops": 3,
+          "dispatches": 120
+        }
+      ],
+      "all_captured_bytes_identical_to_main_run": true
+    }
+  },
+  "final_logit_elements": 32923168,
+  "decoder_steps": 4016,
+  "valid_scope": "24 benchmark clips, each independently recognized twice per runtime. This establishes agreement with the original Q8 Metal implementation for this workload, not a global bound on arbitrary audio/activation magnitudes or equivalence to an FP32 source model.",
+  "byte_equality_verification": {
+    "all_repeat_snapshots_identical": true,
+    "repeat_snapshot_comparisons": [
+      {
+        "runtime": "original",
+        "clip": "4992-41797-0013",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "9281e446ebddaf7480f5a18ee83bc80736916c322d28c6285f49fb90e824f2e9"
+      },
+      {
+        "runtime": "original",
+        "clip": "3570-5695-0001",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "0f539a56305bfdb7db9e6027de717f6bee56c55ef1f378c2b96d7f39a56fc2a9"
+      },
+      {
+        "runtime": "original",
+        "clip": "3575-170457-0046",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "a06d05aa0975063a0e67442ab4f09bc792d961df981c04d5ea2dcff3033689e7"
+      },
+      {
+        "runtime": "original",
+        "clip": "7127-75947-0016",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "e3fad1feecaf3bf2edbf499eaf196d51f536bde96ee0e88a1a1418942b6ca495"
+      },
+      {
+        "runtime": "original",
+        "clip": "4970-29093-0001",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "9b0aa82629f917853c7a7fad4c37f8e33ffe71a6427dd0895bd9a0f2bd76dc66"
+      },
+      {
+        "runtime": "original",
+        "clip": "5639-40744-0003",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "c5129317c7ebc8209aba785feba235383fa47435d2f998fe4ae08300e72c9670"
+      },
+      {
+        "runtime": "original",
+        "clip": "1320-122617-0026",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "da92d0719a9d040c6d099bddc8502688f65c5dddd79bf1eb21a4894bfe1b76f9"
+      },
+      {
+        "runtime": "original",
+        "clip": "4077-13754-0002",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "6cf4b9b522f6bb40750f058a2e4bc93d73e5433c46a719bfe09e58ae1cda6783"
+      },
+      {
+        "runtime": "original",
+        "clip": "7021-79759-0004",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "ab868f3428e641973c232d3beb2d570a56a3f9eae1651d497b3f131a8a34561f"
+      },
+      {
+        "runtime": "original",
+        "clip": "1188-133604-0039",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "f00d2853b7120928470c0fd83128521f1c3c794052a38edcf3e7b0ce556c0699"
+      },
+      {
+        "runtime": "original",
+        "clip": "3729-6852-0034",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "2a8346e3293e5903a21f4eb8c4bff3ee9f01a42160a00ba0ed64219dcd2b029e"
+      },
+      {
+        "runtime": "original",
+        "clip": "5683-32866-0019",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "ecec257353eb4e62e8126b72e207918ee6a80709457b166132250157acb3e93e"
+      },
+      {
+        "runtime": "original",
+        "clip": "7176-92135-0042",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "219c2839ce056bf31a9ac28d1a98c082aca22cc348a738d8d7138f6020e52a33"
+      },
+      {
+        "runtime": "original",
+        "clip": "2961-960-0002",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "8a9ca2c925dc97defc09b995d4ad87a75b6c39a7157268124ca3ab53e7c860db"
+      },
+      {
+        "runtime": "original",
+        "clip": "8463-294825-0007",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "86d964bc21cdf4dad4b7a54280d34f81261f366dbb659a364f1730befe9c12fb"
+      },
+      {
+        "runtime": "original",
+        "clip": "2094-142345-0054",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "8311e611e582984cdf86f5b8f386476b5079963bd2c1f8daca8aaa3d659feea0"
+      },
+      {
+        "runtime": "original",
+        "clip": "1221-135767-0004",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "004f6eef1d19f91edb12c7277c97283a6a9ed1b370fc9826aef35ca0e48690e5"
+      },
+      {
+        "runtime": "original",
+        "clip": "8555-292519-0001",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "1927ce3fd861c46d1dde4ec85bbf37908996d648db219450ac8257ecc16ca434"
+      },
+      {
+        "runtime": "original",
+        "clip": "61-70968-0054",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "3b679cdf80ee77f61a5bc163e6ce77dc1d641ecc1728fbe31b428af2f44f15da"
+      },
+      {
+        "runtime": "original",
+        "clip": "5105-28233-0010",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "d0e5ad7a8e1a0dd603272eddce26db1d807962be28425ac21b112a716df4b72e"
+      },
+      {
+        "runtime": "original",
+        "clip": "1089-134691-0009",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "a0664d8450c8528098072500fdfadba20616aca06d213ad8d4ab52b76eb42ba0"
+      },
+      {
+        "runtime": "original",
+        "clip": "260-123286-0031",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "2df0640a498f0c95660c70b4a0301c46adf7e592539d9d90e0a1ee68c2e2b9e7"
+      },
+      {
+        "runtime": "original",
+        "clip": "4446-2273-0010",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "79854545ebf78d590c8870ba7751160264bb54283171fbde5764cd2b09ec525d"
+      },
+      {
+        "runtime": "original",
+        "clip": "2300-131720-0035",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "e71a89948295c87416d0c33c3cf69ab620e2cf87998e9ec528b17eb63c9bf239"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "4992-41797-0013",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "54abae05d5e066f17b18f9dcfcbfe5b43fa8f041ab6cb7fafec4e6b8619b6d9d"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "3570-5695-0001",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "34f88cdc8bdd23d1cd041909ee52fcdd8b1022562f96216dfbf39bc131b10a6b"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "3575-170457-0046",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "554af4b47bc199dba2005d18188eae1555c35acbd302fc55796a713d6981b928"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "7127-75947-0016",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "8d473d7c6ac9c338f0733f889d5f02d69748855461cb3e64a6e90e75c69997c4"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "4970-29093-0001",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "6dad04fb7318586d7a2218d7e30f7da5d2e3b84e993a376a627944cbdbfc6e95"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "5639-40744-0003",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "5c6c2fb3392d8f9d313582119f29d6f6b6187f2dde75866831127f9e75b9c12f"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "1320-122617-0026",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "9821181adb103b8e0a41c36c985f1b0601b16db0c9f0f793640f44367255db4a"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "4077-13754-0002",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "b6438ae41d276fb68361d34f67afe7d9231524296786d5d27b484a69c50d96c0"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "7021-79759-0004",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "a87acc2fe61bc6728926c3edafbe4051fa562480123e7fec5887b8b34a5b212b"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "1188-133604-0039",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "c2184782b2e5f737c70e9e97640690448e5e021fdd8d247769dddd9ed3bef283"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "3729-6852-0034",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "95022c2a077e55b18fa7e263e8d7bdbe9e354cde46be6a36b8da14c6e856e0d0"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "5683-32866-0019",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "d64395bbcca0c96e9751d310473dccf101dcbd2757cc2809f6a3d84dd45e32c3"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "7176-92135-0042",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "16b385af64035a79eff36af966261dda1ddcede21d98c8b8bcdae19bb11eb81e"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "2961-960-0002",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "00e5c8bd8d7d1dbf92db509f3349be29916af76461bf2951f65cd52ea8d32f50"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "8463-294825-0007",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "4048dce59edd893876a3320a118ec9ad94e46d01599b263f30b29e4fe7071e19"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "2094-142345-0054",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "df6982b210d0e613d020d26be3a5e5c2ef52e2036063dc87fcee4db35f27dba2"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "1221-135767-0004",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "bc478827ca351c29aa7df8646d4312d1d5e6c83c83a54e1a2c6620ef726712dd"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "8555-292519-0001",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "aad84a200ea7b4d552947866b763299222d9054a7f06fddb32249433dec862b7"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "61-70968-0054",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "043be3c7286ad7cdb5bea00eb305f97fd1e0a4bc07ac8a803e23c277abc539c8"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "5105-28233-0010",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "a369a34d899306a800761283a09bde0421f1a546c265b2d1195c9ee0b357f4df"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "1089-134691-0009",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "cb6d0c2ca7ae0563e2b2ab049eda237ec35aa7080ef0d27cd3037c2741ec80c1"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "260-123286-0031",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "3f38d00489570e5de5e6abf00bc1b31b12a64c0409e860d2299f7bb07368f4dc"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "4446-2273-0010",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "6148223281bc9885cbaa460c43135366d499de73902818250ba9086a23209394"
+      },
+      {
+        "runtime": "optimized",
+        "clip": "2300-131720-0035",
+        "repeat": 1,
+        "all_tensor_bytes_identical": true,
+        "snapshot_sha256": "60e13c5d0add3ec49603f880cb93f13a19ef9235120a1785d802ebe3e7012447"
+      }
+    ],
+    "all_frontend_and_encoder_tensors_identical": true,
+    "frontend_and_encoder_comparisons": [
+      {
+        "clip": "4992-41797-0013",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 502272,
+        "sha256": "c8d6d44e2abd6a7a393926d79acc5a91f1d3ad1ea09037c8d5cd1a7b2a4b1098"
+      },
+      {
+        "clip": "4992-41797-0013",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 503808,
+        "sha256": "ec025b1049f56da971356b5c332a6b730d480db4ca862d4b37e7069e7d0fc18f"
+      },
+      {
+        "clip": "4992-41797-0013",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 314880,
+        "sha256": "23f78c160513e3ccfdaff39d724dd097ab3e91b407102456dc1a997282a7c111"
+      },
+      {
+        "clip": "3570-5695-0001",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 753664,
+        "sha256": "ded2d5eda5220dbde6946c5978f8eed319046d3ccf69782bf64cf5366a9c3ad5"
+      },
+      {
+        "clip": "3570-5695-0001",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 753664,
+        "sha256": "e2f0d1f0cbb0e2a32a349dd54cbb6bd3490a08b7a3b3e5b452e419193db7aa9e"
+      },
+      {
+        "clip": "3570-5695-0001",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 471040,
+        "sha256": "b22602c40cdbaeb54be35a208a29d4ec5b6f66b094bf29fe24c6a0a98d348c29"
+      },
+      {
+        "clip": "3575-170457-0046",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1313280,
+        "sha256": "890ee9b9665303be9c9cbdcd7f7532672bc0c58e4ac614f526e1b4e96b4cb4df"
+      },
+      {
+        "clip": "3575-170457-0046",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1314816,
+        "sha256": "bd594c67256d23e9d837ba555e71cac6fc872be912954f2c2844bc4782080a95"
+      },
+      {
+        "clip": "3575-170457-0046",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 821760,
+        "sha256": "1893ab69cf486a6ce4c629d4bb42f42b0fefaec1831aecd84a3afd396f40e8c5"
+      },
+      {
+        "clip": "7127-75947-0016",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 383488,
+        "sha256": "5b5240dbd446d82f964bb503a296061e240906f81a6f021a97bff1a0aa2b8045"
+      },
+      {
+        "clip": "7127-75947-0016",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 385024,
+        "sha256": "9e90b6b4156c02f25f2fc33f8f3f19676a8a0f76d4ef4421fbd1ca1b5d112a45"
+      },
+      {
+        "clip": "7127-75947-0016",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 240640,
+        "sha256": "fd8bf4096c296b006a9ef57298adccc29bcae70a1a54f36b27ab22ef2d830c8b"
+      },
+      {
+        "clip": "4970-29093-0001",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 610816,
+        "sha256": "8c2c47792676f996d0afab6095b14e3dd3b1520ddf0c8d952d2df3a115b20a31"
+      },
+      {
+        "clip": "4970-29093-0001",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 614400,
+        "sha256": "3830d3d55ead21ca389b3a9f23d50d113c6b18682218748ffe3c7cd727839a07"
+      },
+      {
+        "clip": "4970-29093-0001",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 384000,
+        "sha256": "b3ec317d9716926f9db19574aef7239d8213836c94ccddc20e9180e814a8f5db"
+      },
+      {
+        "clip": "5639-40744-0003",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1389056,
+        "sha256": "f8ebeb7762c844234c9a98d0797d9bfca028d01ab7d8a8e2cd5c588c21a2297f"
+      },
+      {
+        "clip": "5639-40744-0003",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1392640,
+        "sha256": "2e23b7b02c06ef44d39e3aa34b65cc41eb3c33f94e20d45e73f4707f017dbcf5"
+      },
+      {
+        "clip": "5639-40744-0003",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 870400,
+        "sha256": "5a51a2e61d93843e3dec33344d71d8828b1d8fe7d7b43c3a3f1c063c2828224c"
+      },
+      {
+        "clip": "1320-122617-0026",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 267776,
+        "sha256": "090a3b08396f3880ba0078b265845fde63ff537a57243a1d2e43a0425263ef63"
+      },
+      {
+        "clip": "1320-122617-0026",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 270336,
+        "sha256": "eaec7b7ed5122eb712a5945725ea1ce46ca7c5c9dd4b49280e25ad1918323bf6"
+      },
+      {
+        "clip": "1320-122617-0026",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 168960,
+        "sha256": "6aba1fe28532fa0ca67fea3293287a0de1739222ffe7782c8135b1bb88f844a5"
+      },
+      {
+        "clip": "4077-13754-0002",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 910848,
+        "sha256": "8ded858b01b6b70705e4da1f70c712ba5ab749e6b4461e037f2ac881345fdcd2"
+      },
+      {
+        "clip": "4077-13754-0002",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 913408,
+        "sha256": "6b58913c02789f60b5f093e2412b3aada92fe0799657723de347ae84b31b1db1"
+      },
+      {
+        "clip": "4077-13754-0002",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 570880,
+        "sha256": "09b840516f284cd11f8a456ecae13451d9b34de9f1cb7833ad9b2af671d7fa70"
+      },
+      {
+        "clip": "7021-79759-0004",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1253376,
+        "sha256": "f011e571f67082c3099dbc74ada82ae44bca5226fbeffb71abf7e0fd1abfdbc7"
+      },
+      {
+        "clip": "7021-79759-0004",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1253376,
+        "sha256": "036b4ff798b25415903f15018b07da0484c1a71d45b92f2030b734bd603fe885"
+      },
+      {
+        "clip": "7021-79759-0004",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 783360,
+        "sha256": "8e339c32f838263f33f0f52772bd60e18c9f132b6c98542fe4e44b8751d7cbd7"
+      },
+      {
+        "clip": "1188-133604-0039",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 339456,
+        "sha256": "c4062eb56af36828a36bba882be975e58f668f0b74ee4ca96ecddd9694c543da"
+      },
+      {
+        "clip": "1188-133604-0039",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 339968,
+        "sha256": "fe80a990eb64032477e13378a3f16572a733ac6772f23db28f4c2405d90df981"
+      },
+      {
+        "clip": "1188-133604-0039",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 212480,
+        "sha256": "762ad80a768306c8edfc2f7bec279471475169b0e69ee0a41fc9e9016b54ab97"
+      },
+      {
+        "clip": "3729-6852-0034",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 967680,
+        "sha256": "7151233ace91db7e5cba511ca0bcf4c3d5b8bdacc4e9ed540785d3f6ea3c0b2c"
+      },
+      {
+        "clip": "3729-6852-0034",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 970752,
+        "sha256": "04beb298c02df2676574cc23801947de29d2a25c2cb4d607af018aa82821ae95"
+      },
+      {
+        "clip": "3729-6852-0034",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 606720,
+        "sha256": "831f5087d48bccd09ae6e6c3d038b0edf9362c446a317f38277181095d426a86"
+      },
+      {
+        "clip": "5683-32866-0019",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1068032,
+        "sha256": "56e492458e04c9fa5a1d5f33c4e4ab670173538f8d204a7480b15bb198c9163d"
+      },
+      {
+        "clip": "5683-32866-0019",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1069056,
+        "sha256": "5a71ce842db33300bbda87ea5cb99a697898a75c5f5f303a9e7ca30da7a87348"
+      },
+      {
+        "clip": "5683-32866-0019",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 668160,
+        "sha256": "167658beb98658399ccbafb6280860fa4ca2c768bae15d74e9d867f7ef66edc4"
+      },
+      {
+        "clip": "7176-92135-0042",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 372736,
+        "sha256": "0e86cb236a5844aa9b6c6e8ca3993102a9d0afc86cdf3c993725d288d2519d73"
+      },
+      {
+        "clip": "7176-92135-0042",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 372736,
+        "sha256": "ca61e8c36635706e8d0b27c8c221e4e82b092c3434b550ba62532b2e89eca389"
+      },
+      {
+        "clip": "7176-92135-0042",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 232960,
+        "sha256": "5d0632d750b6b0e8b5ce93d5b74e65c08846eb950cdeeda066880a2d0186fa5c"
+      },
+      {
+        "clip": "2961-960-0002",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 786432,
+        "sha256": "98be253ac5f45eb8561537331e198ac4bd7a1519c3ccbb0956a61f1ad0d97758"
+      },
+      {
+        "clip": "2961-960-0002",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 786432,
+        "sha256": "c96b373ada9d7545bb8f85b6627b54979448fd550db12f7ec73bd67dda9fe786"
+      },
+      {
+        "clip": "2961-960-0002",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 491520,
+        "sha256": "5104ae793833a8b6a54b4caadb1cd9807c029b827134fc07dd8dc24eb0a12ae3"
+      },
+      {
+        "clip": "8463-294825-0007",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1078272,
+        "sha256": "93b405083dcfb689b00269e1218c78934c31b9cdd4283693b898228ed5ea7e6f"
+      },
+      {
+        "clip": "8463-294825-0007",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1081344,
+        "sha256": "8cb3c1412951be989d294ffce3fd9aa7e67b8f175c4fdc279410c0933012dc89"
+      },
+      {
+        "clip": "8463-294825-0007",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 675840,
+        "sha256": "21c42b1013865e1b890889c4fda235e87425e9257fae17708a4c527e2e1d5ecf"
+      },
+      {
+        "clip": "2094-142345-0054",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 291328,
+        "sha256": "6ef75afba1fa9ce4709aaf4c4fef616e2b51e8dcce0637e627d665f3422fd038"
+      },
+      {
+        "clip": "2094-142345-0054",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 294912,
+        "sha256": "63ffaab500f9108217ddee23842eba9e479358144beb89184c611f1028bca7e1"
+      },
+      {
+        "clip": "2094-142345-0054",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 184320,
+        "sha256": "2fe58775dd078208f0e896a7a7d3c4ed9081b84960d781628f21f64ca888d2c9"
+      },
+      {
+        "clip": "1221-135767-0004",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 977920,
+        "sha256": "6ec5a724048b269035da66ce4e47d5e098ed07a683ca1dede4c164b43ae38df7"
+      },
+      {
+        "clip": "1221-135767-0004",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 978944,
+        "sha256": "5eb910ad57c6a28f6a5eef5bc12c75beeb910253251340bfe31ee4927a3b486d"
+      },
+      {
+        "clip": "1221-135767-0004",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 611840,
+        "sha256": "6f7361226e531e49d2f89a6947b069b2277f7b8f575329136f15b083a02a62c2"
+      },
+      {
+        "clip": "8555-292519-0001",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1066496,
+        "sha256": "9dcf599dfe1b1d0ea327a62d288223070f011c64ac24b3725172449163166dc3"
+      },
+      {
+        "clip": "8555-292519-0001",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1069056,
+        "sha256": "c1f370e61aa98b84ed266427e05bedc4d496671f94db2672a2128a03f4dab3d7"
+      },
+      {
+        "clip": "8555-292519-0001",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 668160,
+        "sha256": "d5249e79f33f65143320a226c8d8cc6224acdf50345b428b837e53d59235f8e4"
+      },
+      {
+        "clip": "61-70968-0054",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 402944,
+        "sha256": "915d91bf0ecc1c580dea1deb64bc19431ce07b3d12a0df9622a94e68533aad8e"
+      },
+      {
+        "clip": "61-70968-0054",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 405504,
+        "sha256": "b4ebe8a183ddff58e8efd1e839a366c41eae1d682c7923eddc10b72b3a3ff26e"
+      },
+      {
+        "clip": "61-70968-0054",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 253440,
+        "sha256": "f617e32dd64c15e7abbd2e4f3aba8490f79a722641c8138864e72f5aaf69ebf8"
+      },
+      {
+        "clip": "5105-28233-0010",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 696320,
+        "sha256": "1a810f0ad5a5cf5d391a862542911785ece10d6fd55dc55d24c8dbf1e668ff7c"
+      },
+      {
+        "clip": "5105-28233-0010",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 696320,
+        "sha256": "dcd1341c3f25118aa0064d9a96f19b2bab0045addf015675efc75fb509168cb8"
+      },
+      {
+        "clip": "5105-28233-0010",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 435200,
+        "sha256": "888e7203d15d9c6c16fe7e7a0a8ffab0542c318bef1c56d2d39e42fd0a31641f"
+      },
+      {
+        "clip": "1089-134691-0009",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1027072,
+        "sha256": "fe34a7693ea864bb56a59c582abd08c20aa6c90fab4456e76f3fcd96debbd89d"
+      },
+      {
+        "clip": "1089-134691-0009",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1028096,
+        "sha256": "618f5139869d6d8de367723d74beee764ce7a42aec8973d2bea3f8889de23a9a"
+      },
+      {
+        "clip": "1089-134691-0009",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 642560,
+        "sha256": "ee2c4bec85aa71764d76f4ddac6d7fade11787278e61c3ac69b0f836e3c1e012"
+      },
+      {
+        "clip": "260-123286-0031",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 259584,
+        "sha256": "5fab157169825763d511639b47ecaac349a085d305c24cd9304db4d8d279f20e"
+      },
+      {
+        "clip": "260-123286-0031",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 262144,
+        "sha256": "762b3e54849e6893eaefc4c4bdb3f2b6494376ecc8ff4d94d77b9ab36d14865c"
+      },
+      {
+        "clip": "260-123286-0031",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 163840,
+        "sha256": "841264160e57a96e30fb65f1b0aab9d264db9523e6874be64d34e9046b3b68f9"
+      },
+      {
+        "clip": "4446-2273-0010",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 637440,
+        "sha256": "3ef2d2ff8b176ca642099ac5bb977dac5ebcdd0f0d1af64080d58724ba15c4d8"
+      },
+      {
+        "clip": "4446-2273-0010",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 638976,
+        "sha256": "2797bbaab98697ba0b124d1532b329c9c58f7e1500e095c7e55f84e0023930fe"
+      },
+      {
+        "clip": "4446-2273-0010",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 399360,
+        "sha256": "00bfc06c1c5ac0f1f74653150d6e65c358e3f2c3d4253f9df6ffb1b1151285f3"
+      },
+      {
+        "clip": "2300-131720-0035",
+        "repeat": 0,
+        "tensor": "input_features",
+        "identical_bytes": 1305600,
+        "sha256": "ddac6e83b869c678cbce238de1929f8a9cf27323f02a0808f71f46af1a9446c0"
+      },
+      {
+        "clip": "2300-131720-0035",
+        "repeat": 0,
+        "tensor": "encoder_output",
+        "identical_bytes": 1306624,
+        "sha256": "3c7f1eab5f43465dbd0842ba167991b4dbd41952695ae8ab214ed2466085b405"
+      },
+      {
+        "clip": "2300-131720-0035",
+        "repeat": 0,
+        "tensor": "encoder_projection",
+        "identical_bytes": 816640,
+        "sha256": "f63552cbc3e2c2215a43a6f6f1cf364406e49f8b480eb8b9f69a4e376a17a9f8"
+      },
+      {
+        "clip": "4992-41797-0013",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 502272,
+        "sha256": "c8d6d44e2abd6a7a393926d79acc5a91f1d3ad1ea09037c8d5cd1a7b2a4b1098"
+      },
+      {
+        "clip": "4992-41797-0013",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 503808,
+        "sha256": "ec025b1049f56da971356b5c332a6b730d480db4ca862d4b37e7069e7d0fc18f"
+      },
+      {
+        "clip": "4992-41797-0013",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 314880,
+        "sha256": "23f78c160513e3ccfdaff39d724dd097ab3e91b407102456dc1a997282a7c111"
+      },
+      {
+        "clip": "3570-5695-0001",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 753664,
+        "sha256": "ded2d5eda5220dbde6946c5978f8eed319046d3ccf69782bf64cf5366a9c3ad5"
+      },
+      {
+        "clip": "3570-5695-0001",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 753664,
+        "sha256": "e2f0d1f0cbb0e2a32a349dd54cbb6bd3490a08b7a3b3e5b452e419193db7aa9e"
+      },
+      {
+        "clip": "3570-5695-0001",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 471040,
+        "sha256": "b22602c40cdbaeb54be35a208a29d4ec5b6f66b094bf29fe24c6a0a98d348c29"
+      },
+      {
+        "clip": "3575-170457-0046",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1313280,
+        "sha256": "890ee9b9665303be9c9cbdcd7f7532672bc0c58e4ac614f526e1b4e96b4cb4df"
+      },
+      {
+        "clip": "3575-170457-0046",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1314816,
+        "sha256": "bd594c67256d23e9d837ba555e71cac6fc872be912954f2c2844bc4782080a95"
+      },
+      {
+        "clip": "3575-170457-0046",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 821760,
+        "sha256": "1893ab69cf486a6ce4c629d4bb42f42b0fefaec1831aecd84a3afd396f40e8c5"
+      },
+      {
+        "clip": "7127-75947-0016",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 383488,
+        "sha256": "5b5240dbd446d82f964bb503a296061e240906f81a6f021a97bff1a0aa2b8045"
+      },
+      {
+        "clip": "7127-75947-0016",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 385024,
+        "sha256": "9e90b6b4156c02f25f2fc33f8f3f19676a8a0f76d4ef4421fbd1ca1b5d112a45"
+      },
+      {
+        "clip": "7127-75947-0016",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 240640,
+        "sha256": "fd8bf4096c296b006a9ef57298adccc29bcae70a1a54f36b27ab22ef2d830c8b"
+      },
+      {
+        "clip": "4970-29093-0001",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 610816,
+        "sha256": "8c2c47792676f996d0afab6095b14e3dd3b1520ddf0c8d952d2df3a115b20a31"
+      },
+      {
+        "clip": "4970-29093-0001",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 614400,
+        "sha256": "3830d3d55ead21ca389b3a9f23d50d113c6b18682218748ffe3c7cd727839a07"
+      },
+      {
+        "clip": "4970-29093-0001",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 384000,
+        "sha256": "b3ec317d9716926f9db19574aef7239d8213836c94ccddc20e9180e814a8f5db"
+      },
+      {
+        "clip": "5639-40744-0003",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1389056,
+        "sha256": "f8ebeb7762c844234c9a98d0797d9bfca028d01ab7d8a8e2cd5c588c21a2297f"
+      },
+      {
+        "clip": "5639-40744-0003",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1392640,
+        "sha256": "2e23b7b02c06ef44d39e3aa34b65cc41eb3c33f94e20d45e73f4707f017dbcf5"
+      },
+      {
+        "clip": "5639-40744-0003",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 870400,
+        "sha256": "5a51a2e61d93843e3dec33344d71d8828b1d8fe7d7b43c3a3f1c063c2828224c"
+      },
+      {
+        "clip": "1320-122617-0026",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 267776,
+        "sha256": "090a3b08396f3880ba0078b265845fde63ff537a57243a1d2e43a0425263ef63"
+      },
+      {
+        "clip": "1320-122617-0026",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 270336,
+        "sha256": "eaec7b7ed5122eb712a5945725ea1ce46ca7c5c9dd4b49280e25ad1918323bf6"
+      },
+      {
+        "clip": "1320-122617-0026",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 168960,
+        "sha256": "6aba1fe28532fa0ca67fea3293287a0de1739222ffe7782c8135b1bb88f844a5"
+      },
+      {
+        "clip": "4077-13754-0002",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 910848,
+        "sha256": "8ded858b01b6b70705e4da1f70c712ba5ab749e6b4461e037f2ac881345fdcd2"
+      },
+      {
+        "clip": "4077-13754-0002",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 913408,
+        "sha256": "6b58913c02789f60b5f093e2412b3aada92fe0799657723de347ae84b31b1db1"
+      },
+      {
+        "clip": "4077-13754-0002",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 570880,
+        "sha256": "09b840516f284cd11f8a456ecae13451d9b34de9f1cb7833ad9b2af671d7fa70"
+      },
+      {
+        "clip": "7021-79759-0004",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1253376,
+        "sha256": "f011e571f67082c3099dbc74ada82ae44bca5226fbeffb71abf7e0fd1abfdbc7"
+      },
+      {
+        "clip": "7021-79759-0004",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1253376,
+        "sha256": "036b4ff798b25415903f15018b07da0484c1a71d45b92f2030b734bd603fe885"
+      },
+      {
+        "clip": "7021-79759-0004",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 783360,
+        "sha256": "8e339c32f838263f33f0f52772bd60e18c9f132b6c98542fe4e44b8751d7cbd7"
+      },
+      {
+        "clip": "1188-133604-0039",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 339456,
+        "sha256": "c4062eb56af36828a36bba882be975e58f668f0b74ee4ca96ecddd9694c543da"
+      },
+      {
+        "clip": "1188-133604-0039",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 339968,
+        "sha256": "fe80a990eb64032477e13378a3f16572a733ac6772f23db28f4c2405d90df981"
+      },
+      {
+        "clip": "1188-133604-0039",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 212480,
+        "sha256": "762ad80a768306c8edfc2f7bec279471475169b0e69ee0a41fc9e9016b54ab97"
+      },
+      {
+        "clip": "3729-6852-0034",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 967680,
+        "sha256": "7151233ace91db7e5cba511ca0bcf4c3d5b8bdacc4e9ed540785d3f6ea3c0b2c"
+      },
+      {
+        "clip": "3729-6852-0034",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 970752,
+        "sha256": "04beb298c02df2676574cc23801947de29d2a25c2cb4d607af018aa82821ae95"
+      },
+      {
+        "clip": "3729-6852-0034",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 606720,
+        "sha256": "831f5087d48bccd09ae6e6c3d038b0edf9362c446a317f38277181095d426a86"
+      },
+      {
+        "clip": "5683-32866-0019",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1068032,
+        "sha256": "56e492458e04c9fa5a1d5f33c4e4ab670173538f8d204a7480b15bb198c9163d"
+      },
+      {
+        "clip": "5683-32866-0019",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1069056,
+        "sha256": "5a71ce842db33300bbda87ea5cb99a697898a75c5f5f303a9e7ca30da7a87348"
+      },
+      {
+        "clip": "5683-32866-0019",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 668160,
+        "sha256": "167658beb98658399ccbafb6280860fa4ca2c768bae15d74e9d867f7ef66edc4"
+      },
+      {
+        "clip": "7176-92135-0042",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 372736,
+        "sha256": "0e86cb236a5844aa9b6c6e8ca3993102a9d0afc86cdf3c993725d288d2519d73"
+      },
+      {
+        "clip": "7176-92135-0042",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 372736,
+        "sha256": "ca61e8c36635706e8d0b27c8c221e4e82b092c3434b550ba62532b2e89eca389"
+      },
+      {
+        "clip": "7176-92135-0042",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 232960,
+        "sha256": "5d0632d750b6b0e8b5ce93d5b74e65c08846eb950cdeeda066880a2d0186fa5c"
+      },
+      {
+        "clip": "2961-960-0002",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 786432,
+        "sha256": "98be253ac5f45eb8561537331e198ac4bd7a1519c3ccbb0956a61f1ad0d97758"
+      },
+      {
+        "clip": "2961-960-0002",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 786432,
+        "sha256": "c96b373ada9d7545bb8f85b6627b54979448fd550db12f7ec73bd67dda9fe786"
+      },
+      {
+        "clip": "2961-960-0002",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 491520,
+        "sha256": "5104ae793833a8b6a54b4caadb1cd9807c029b827134fc07dd8dc24eb0a12ae3"
+      },
+      {
+        "clip": "8463-294825-0007",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1078272,
+        "sha256": "93b405083dcfb689b00269e1218c78934c31b9cdd4283693b898228ed5ea7e6f"
+      },
+      {
+        "clip": "8463-294825-0007",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1081344,
+        "sha256": "8cb3c1412951be989d294ffce3fd9aa7e67b8f175c4fdc279410c0933012dc89"
+      },
+      {
+        "clip": "8463-294825-0007",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 675840,
+        "sha256": "21c42b1013865e1b890889c4fda235e87425e9257fae17708a4c527e2e1d5ecf"
+      },
+      {
+        "clip": "2094-142345-0054",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 291328,
+        "sha256": "6ef75afba1fa9ce4709aaf4c4fef616e2b51e8dcce0637e627d665f3422fd038"
+      },
+      {
+        "clip": "2094-142345-0054",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 294912,
+        "sha256": "63ffaab500f9108217ddee23842eba9e479358144beb89184c611f1028bca7e1"
+      },
+      {
+        "clip": "2094-142345-0054",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 184320,
+        "sha256": "2fe58775dd078208f0e896a7a7d3c4ed9081b84960d781628f21f64ca888d2c9"
+      },
+      {
+        "clip": "1221-135767-0004",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 977920,
+        "sha256": "6ec5a724048b269035da66ce4e47d5e098ed07a683ca1dede4c164b43ae38df7"
+      },
+      {
+        "clip": "1221-135767-0004",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 978944,
+        "sha256": "5eb910ad57c6a28f6a5eef5bc12c75beeb910253251340bfe31ee4927a3b486d"
+      },
+      {
+        "clip": "1221-135767-0004",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 611840,
+        "sha256": "6f7361226e531e49d2f89a6947b069b2277f7b8f575329136f15b083a02a62c2"
+      },
+      {
+        "clip": "8555-292519-0001",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1066496,
+        "sha256": "9dcf599dfe1b1d0ea327a62d288223070f011c64ac24b3725172449163166dc3"
+      },
+      {
+        "clip": "8555-292519-0001",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1069056,
+        "sha256": "c1f370e61aa98b84ed266427e05bedc4d496671f94db2672a2128a03f4dab3d7"
+      },
+      {
+        "clip": "8555-292519-0001",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 668160,
+        "sha256": "d5249e79f33f65143320a226c8d8cc6224acdf50345b428b837e53d59235f8e4"
+      },
+      {
+        "clip": "61-70968-0054",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 402944,
+        "sha256": "915d91bf0ecc1c580dea1deb64bc19431ce07b3d12a0df9622a94e68533aad8e"
+      },
+      {
+        "clip": "61-70968-0054",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 405504,
+        "sha256": "b4ebe8a183ddff58e8efd1e839a366c41eae1d682c7923eddc10b72b3a3ff26e"
+      },
+      {
+        "clip": "61-70968-0054",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 253440,
+        "sha256": "f617e32dd64c15e7abbd2e4f3aba8490f79a722641c8138864e72f5aaf69ebf8"
+      },
+      {
+        "clip": "5105-28233-0010",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 696320,
+        "sha256": "1a810f0ad5a5cf5d391a862542911785ece10d6fd55dc55d24c8dbf1e668ff7c"
+      },
+      {
+        "clip": "5105-28233-0010",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 696320,
+        "sha256": "dcd1341c3f25118aa0064d9a96f19b2bab0045addf015675efc75fb509168cb8"
+      },
+      {
+        "clip": "5105-28233-0010",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 435200,
+        "sha256": "888e7203d15d9c6c16fe7e7a0a8ffab0542c318bef1c56d2d39e42fd0a31641f"
+      },
+      {
+        "clip": "1089-134691-0009",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1027072,
+        "sha256": "fe34a7693ea864bb56a59c582abd08c20aa6c90fab4456e76f3fcd96debbd89d"
+      },
+      {
+        "clip": "1089-134691-0009",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1028096,
+        "sha256": "618f5139869d6d8de367723d74beee764ce7a42aec8973d2bea3f8889de23a9a"
+      },
+      {
+        "clip": "1089-134691-0009",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 642560,
+        "sha256": "ee2c4bec85aa71764d76f4ddac6d7fade11787278e61c3ac69b0f836e3c1e012"
+      },
+      {
+        "clip": "260-123286-0031",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 259584,
+        "sha256": "5fab157169825763d511639b47ecaac349a085d305c24cd9304db4d8d279f20e"
+      },
+      {
+        "clip": "260-123286-0031",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 262144,
+        "sha256": "762b3e54849e6893eaefc4c4bdb3f2b6494376ecc8ff4d94d77b9ab36d14865c"
+      },
+      {
+        "clip": "260-123286-0031",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 163840,
+        "sha256": "841264160e57a96e30fb65f1b0aab9d264db9523e6874be64d34e9046b3b68f9"
+      },
+      {
+        "clip": "4446-2273-0010",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 637440,
+        "sha256": "3ef2d2ff8b176ca642099ac5bb977dac5ebcdd0f0d1af64080d58724ba15c4d8"
+      },
+      {
+        "clip": "4446-2273-0010",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 638976,
+        "sha256": "2797bbaab98697ba0b124d1532b329c9c58f7e1500e095c7e55f84e0023930fe"
+      },
+      {
+        "clip": "4446-2273-0010",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 399360,
+        "sha256": "00bfc06c1c5ac0f1f74653150d6e65c358e3f2c3d4253f9df6ffb1b1151285f3"
+      },
+      {
+        "clip": "2300-131720-0035",
+        "repeat": 1,
+        "tensor": "input_features",
+        "identical_bytes": 1305600,
+        "sha256": "ddac6e83b869c678cbce238de1929f8a9cf27323f02a0808f71f46af1a9446c0"
+      },
+      {
+        "clip": "2300-131720-0035",
+        "repeat": 1,
+        "tensor": "encoder_output",
+        "identical_bytes": 1306624,
+        "sha256": "3c7f1eab5f43465dbd0842ba167991b4dbd41952695ae8ab214ed2466085b405"
+      },
+      {
+        "clip": "2300-131720-0035",
+        "repeat": 1,
+        "tensor": "encoder_projection",
+        "identical_bytes": 816640,
+        "sha256": "f63552cbc3e2c2215a43a6f6f1cf364406e49f8b480eb8b9f69a4e376a17a9f8"
+      }
+    ]
+  }
+}

@@ -33,6 +33,9 @@ cmake -S . -B build -DCMAKE_PREFIX_PATH=/path/to/nemo-speech
 cmake --build build
 ```
 
+For the Hoid Orukeet Metal build, see the
+[qualified SDK release and OpenWhispr integration guide](development/orukeet-metal-sdk.md).
+
 | Component | CMake target | Header | Capability |
 |---|---|---|---|
 | `ASR` | `NeMoSpeech::ASR` | `nemo_speech/asr.h` | offline and streaming recognition |
