@@ -6,6 +6,7 @@
 // Licensed under the MIT License. See THIRD_PARTY_NOTICES.md.
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <mutex>
 #include <unordered_set>
 
@@ -45,6 +46,46 @@ ggml_graph_compute_helper_async(
     }
 
     return ggml_backend_sched_graph_compute_async(sched, graph) == GGML_STATUS_SUCCESS;
+}
+
+// Threads for one graph shape.
+//
+// ggml joins every worker on a barrier after each node, so a graph's cost is
+// roughly `work / threads + nodes * barrier_cost * threads`: parallel
+// speedup on one side, a per-node barrier that grows with the pool on the
+// other. Minimizing over `threads` gives `sqrt(work / (nodes * c))`.
+//
+// This matters because ASR runs graphs four orders of magnitude apart in
+// size. Measured on an i7-13700 at 16 threads, Orukeet's 2240-node encoder
+// graph (~3e10 MACs) wants every thread, while the 76-node TDT decoder graph
+// (~1.2e7 MACs) runs almost twice as fast on 4 threads as on 16 - and it is
+// entered ~40 times per utterance. A single global thread count cannot serve
+// both.
+//
+// `work` counts destination elements, scaled by the reduction depth for
+// matmuls, which is the only op here whose cost per output element is not
+// O(1). kBarrierMacs is that model's `c`, fitted to the three graph shapes
+// Orukeet actually runs.
+int
+Session::graph_compute_threads(ggml_cgraph* gf) const {
+    constexpr double kBarrierMacs = 4500.0;
+
+    const int n_nodes = ggml_graph_n_nodes(gf);
+    if (n_nodes <= 0)
+        return 1;
+
+    double work = 0.0;
+    for (int i = 0; i < n_nodes; ++i) {
+        const ggml_tensor* node = ggml_graph_node(gf, i);
+        double elems = static_cast<double>(ggml_nelements(node));
+        if (node->op == GGML_OP_MUL_MAT || node->op == GGML_OP_MUL_MAT_ID)
+            elems *= static_cast<double>(node->src[0]->ne[0]);
+        work += elems;
+    }
+
+    const double ideal = std::sqrt(work / (n_nodes * kBarrierMacs));
+    const int threads = static_cast<int>(std::lround(ideal));
+    return std::clamp(threads, 1, cpu_threads_);
 }
 
 // A scheduler split can cover a graph range containing nodes that are not
@@ -913,7 +954,9 @@ Session::run_impl(
         }
 
         auto _t2 = _clk::now();
-        if (!ggml_graph_compute_helper_async(sched.get(), cr.gf, cpu_threads_)) {
+        if (cr.compute_threads == 0)
+            cr.compute_threads = graph_compute_threads(cr.gf);
+        if (!ggml_graph_compute_helper_async(sched.get(), cr.gf, cr.compute_threads)) {
             GGMLF_LOG_ERROR("Failed to compute graph\n");
             throw std::runtime_error("failed to compute graph");
         }

@@ -436,7 +436,14 @@ class Session {
         // Single-backend graphs without state views can bypass the scheduler.
         bool direct_ok = false;
         ggml_backend_t direct_backend = nullptr;
+        // Threads for this graph's shape, from graph_compute_threads(); 0
+        // until first computed.
+        int compute_threads = 0;
     };
+
+    // Worker count for one graph, balancing per-op parallel speedup against
+    // the per-node thread barrier. See cpu_topology.h for the model.
+    int graph_compute_threads(ggml_cgraph* gf) const;
     std::unordered_map<uint64_t, CachedRun> run_cache_;
     std::vector<uint64_t> run_cache_lru_;  // back() = most-recent
     size_t run_cache_capacity_ = 4;
