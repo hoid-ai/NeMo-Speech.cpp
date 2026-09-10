@@ -24,6 +24,60 @@ device_main_buft(const buft_list_t& buft_list) {
     return buft_list.back().second;  // CPU main is always last
 }
 
+// True when `buft` accepts `meta` as a MUL_MAT src[0].
+//
+// ggml exposes weight-layout buffer types (CPU_REPACK, which interleaves
+// quantized weight rows for its tiled GEMMs) only through a device's "extra"
+// buffer types, and the only way to ask whether one wants a given tensor is
+// to build the op and ask the device: ggml_backend_cpu_device_supports_op
+// routes to the extra buffer type's own predicate when a source lives there.
+// So attach a zero-length buffer of the candidate type to a throwaway tensor
+// of the same shape and dtype, and ask. This mirrors llama.cpp's
+// weight_buft_supported().
+static bool
+buft_supports_matmul_weight(
+    ggml_backend_dev_t dev, ggml_backend_buffer_type_t buft, const ggml_tensor* meta) {
+    ggml_init_params params = {
+        /*.mem_size   =*/ggml_tensor_overhead() * 8,
+        /*.mem_buffer =*/nullptr,
+        /*.no_alloc   =*/true,
+    };
+    ggml_context_ptr ctx{ggml_init(params)};
+    if (!ctx)
+        return false;
+
+    ggml_tensor* w = ggml_new_tensor_4d(
+        ctx.get(), meta->type, meta->ne[0], meta->ne[1], meta->ne[2], meta->ne[3]);
+    // A batch wide enough to exercise the GEMM rather than the GEMV path.
+    ggml_tensor* x = ggml_new_tensor_4d(
+        ctx.get(), GGML_TYPE_F32, meta->ne[0], 512, meta->ne[2], meta->ne[3]);
+    ggml_tensor* op = ggml_mul_mat(ctx.get(), w, x);
+
+    ggml_backend_buffer_t probe = ggml_backend_buft_alloc_buffer(buft, 0);
+    if (!probe)
+        return false;
+    w->buffer = probe;
+    const bool supported = ggml_backend_dev_supports_op(dev, op);
+    w->buffer = nullptr;
+    ggml_backend_buffer_free(probe);
+    return supported;
+}
+
+// First buffer type that will take `meta` as a matmul weight, else the
+// device's main buffer type. Extra buffer types precede the main one in
+// buft_list, so a weight-layout type wins when it applies and everything
+// else lands exactly where it did before.
+static ggml_backend_buffer_type_t
+matmul_weight_buft(const buft_list_t& buft_list, const ggml_tensor* meta) {
+    for (const auto& cur : buft_list) {
+        if (cur.second == ggml_backend_dev_buffer_type(cur.first))
+            continue;  // main buffer type: the fallback below.
+        if (buft_supports_matmul_weight(cur.first, cur.second, meta))
+            return cur.second;
+    }
+    return device_main_buft(buft_list);
+}
+
 TensorBag::TensorBag() {
     tensors = std::vector<ggml_bf_tensor>();
 }
@@ -104,8 +158,10 @@ TensorContainer::has_tensor_by_name(const std::string& name) {
 }
 
 ggml_bf_tensor
-TensorContainer::m_create_tensor(ggml_tensor* meta, std::string& name) {
-    ggml_backend_buffer_type_t buft = device_main_buft(buft_list);
+TensorContainer::m_create_tensor(ggml_tensor* meta, std::string& name, TensorRole role) {
+    ggml_backend_buffer_type_t buft = role == TensorRole::MatmulWeight
+                                          ? matmul_weight_buft(buft_list, meta)
+                                          : device_main_buft(buft_list);
     // Optional placement diagnostic. NEMO_SPEECH_LOG_PLACEMENT=1 prints
     // `name -> buft` for every tensor created here.
     static const bool log_placement = []() {
@@ -166,9 +222,10 @@ TensorContainer::create_tensor_1d(std::string name, ggml_type data_type, int64_t
 }
 
 ggml_bf_tensor
-TensorContainer::create_tensor_2d(std::string name, ggml_type data_type, int64_t ne0, int64_t ne1) {
+TensorContainer::create_tensor_2d(
+    std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, TensorRole role) {
     ggml_tensor* meta = ggml_new_tensor_2d(get_temp_ctx(), data_type, ne0, ne1);
-    return m_create_tensor(meta, name);
+    return m_create_tensor(meta, name, role);
 }
 
 ggml_bf_tensor
@@ -180,9 +237,10 @@ TensorContainer::create_tensor_3d(
 
 ggml_bf_tensor
 TensorContainer::create_tensor_4d(
-    std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2, int64_t ne3) {
+    std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2, int64_t ne3,
+    TensorRole role) {
     ggml_tensor* meta = ggml_new_tensor_4d(get_temp_ctx(), data_type, ne0, ne1, ne2, ne3);
-    return m_create_tensor(meta, name);
+    return m_create_tensor(meta, name, role);
 }
 
 ggml_bf_context

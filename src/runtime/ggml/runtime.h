@@ -250,14 +250,27 @@ class TensorContainer {
     // construction like ordinary model tensors but are never allocated or freed by the runtime.
     ggml_bf_tensor import_tensor(std::string name, ggml_tensor* tensor);
 
-    // Declares tensors on the primary device's main buffer type.
+    // What a declared tensor is for. `MatmulWeight` means "this tensor is only
+    // ever a ggml_mul_mat src[0]", which lets the runtime place it on a
+    // backend buffer type that stores weights in a matmul-specific layout
+    // (ggml's CPU_REPACK). Such a layout permutes the bytes, so declaring it
+    // for a tensor that any other op reads would silently produce garbage -
+    // hence an explicit opt-in per declaration site rather than a guess from
+    // dtype or shape.
+    enum class TensorRole { General, MatmulWeight };
+
+    // Declares tensors on the primary device's main buffer type, or, for
+    // TensorRole::MatmulWeight, on the first buffer type that accepts the
+    // tensor for MUL_MAT.
     ggml_bf_tensor create_tensor_1d(std::string name, ggml_type data_type, int64_t ne0);
     ggml_bf_tensor create_tensor_2d(
-        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1);
+        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1,
+        TensorRole role = TensorRole::General);
     ggml_bf_tensor create_tensor_3d(
         std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2);
     ggml_bf_tensor create_tensor_4d(
-        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2, int64_t ne3);
+        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2, int64_t ne3,
+        TensorRole role = TensorRole::General);
 
    private:
     ArenaSizes sizes_;
@@ -272,7 +285,8 @@ class TensorContainer {
     std::vector<ggml_backend_buffer_ptr> backend_buffers;
     std::map<std::string, ggml_bf_tensor> tensor_lookup;
 
-    ggml_bf_tensor m_create_tensor(ggml_tensor* meta, std::string& name);
+    ggml_bf_tensor m_create_tensor(
+        ggml_tensor* meta, std::string& name, TensorRole role = TensorRole::General);
 };
 
 // Per-stream device storage for a Session's state tensors. The state must
