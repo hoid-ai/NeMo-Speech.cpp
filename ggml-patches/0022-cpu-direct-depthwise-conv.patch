@@ -1,0 +1,99 @@
+diff --git a/src/ggml-cpu/ggml-cpu.cpp b/src/ggml-cpu/ggml-cpu.cpp
+index 0c57063..d49b5cd 100644
+--- a/src/ggml-cpu/ggml-cpu.cpp
++++ b/src/ggml-cpu/ggml-cpu.cpp
+@@ -453,6 +453,14 @@ static bool ggml_backend_cpu_device_supports_op(ggml_backend_dev_t dev, const st
+                 op->type != GGML_TYPE_IQ1_M; // missing type_traits.from_float
+         case GGML_OP_MUL_MAT:
+             return src1->type == GGML_TYPE_F32 || src1->type == ggml_get_type_traits_cpu(src0->type)->vec_dot_type;
++        case GGML_OP_CONV_2D_DW:
++            // An F16 kernel is staged through F32 only on the WHCN path, which
++            // is the one taken for a contiguous input. Report it honestly so a
++            // caller that asks first is not handed a silent misread.
++            if (src0->type == GGML_TYPE_F16) {
++                return ggml_is_contiguous(src1) && src1->type == GGML_TYPE_F32;
++            }
++            return src0->type == GGML_TYPE_F32;
+         case GGML_OP_SOFT_MAX_BACK: {
+             if (op->src[0]->type != GGML_TYPE_F32 || op->src[1]->type != GGML_TYPE_F32) {
+                 return false;
+diff --git a/src/ggml-cpu/ops.cpp b/src/ggml-cpu/ops.cpp
+index 7485ba4..f4ade43 100644
+--- a/src/ggml-cpu/ops.cpp
++++ b/src/ggml-cpu/ops.cpp
+@@ -11,6 +11,7 @@
+ #include <algorithm>
+ #include <cfloat>
+ #include <cmath>
++#include <vector>
+ 
+ // ggml_compute_forward_dup
+ 
+@@ -7202,6 +7203,19 @@ static void ggml_compute_forward_conv_2d_dw_cwhn(
+     }
+ }
+ 
++// A depthwise kernel is one tiny per-channel window. Stage it as F32 once per
++// channel so the loops below are type-agnostic, which is also what lets this
++// operator accept F16 weights on the CPU at all: it previously cast
++// kernel->data straight to float, so an F16 kernel was read as garbage.
++static void ggml_conv_2d_dw_kernel_f32(
++        const ggml_tensor * kernel, int64_t channel, int64_t knl_n, float * GGML_RESTRICT out) {
++    if (kernel->type == GGML_TYPE_F16) {
++        ggml_fp16_to_fp32_row((const ggml_fp16_t *)kernel->data + channel*knl_n, out, knl_n);
++    } else {
++        memcpy(out, (const float *)kernel->data + channel*knl_n, knl_n*sizeof(float));
++    }
++}
++
+ static void ggml_compute_forward_conv_2d_dw_whcn(
+         const ggml_compute_params * params,
+         const ggml_tensor * src,
+@@ -7214,11 +7228,37 @@ static void ggml_compute_forward_conv_2d_dw_whcn(
+     const int64_t start = params->ith * per_thread;
+     const int64_t end = MIN(start + per_thread, n);
+ 
++    const int64_t knl_n = p.knl_w * p.knl_h;
++    std::vector<float> knl_f32(knl_n);
++
++    // A 1-D depthwise convolution with unit stride and dilation - the
++    // FastConformer conv module - is knl_w saxpy passes over the output row,
++    // and ggml_vec_mad_f32 is already vectorized. Worth special-casing
++    // because the alternative lowering (im2col + mul_mat) materializes knl_w
++    // values per output element just to take a knl_w-long dot product.
++    const bool row_wise = p.knl_h == 1 && p.src_h == 1 && p.dst_h == 1 &&
++                          p.stride_x == 1 && p.dilation_x == 1;
++
+     for (int64_t i = start; i < end; ++i) {
+-        const float * knl_data = (const float *)kernel->data + (i % p.channels) * p.knl_w * p.knl_h;
++        ggml_conv_2d_dw_kernel_f32(kernel, i % p.channels, knl_n, knl_f32.data());
++        const float * knl_data = knl_f32.data();
+         const float * src_data = (const float *)src->data + i * p.src_w * p.src_h;
+         float * dst_data = (float *)dst->data + i * p.dst_w * p.dst_h;
+ 
++        if (row_wise) {
++            memset(dst_data, 0, p.dst_w*sizeof(float));
++            for (int64_t knl_x = 0; knl_x < p.knl_w; ++knl_x) {
++                // src_x = dst_x + shift; clip dst_x to where src_x is in range.
++                const int64_t shift = knl_x - p.pad_x;
++                const int64_t x0 = MAX(int64_t(0), -shift);
++                const int64_t x1 = MIN(p.dst_w, p.src_w - shift);
++                if (x1 > x0) {
++                    ggml_vec_mad_f32(x1 - x0, dst_data + x0, src_data + x0 + shift, knl_data[knl_x]);
++                }
++            }
++            continue;
++        }
++
+         for (int64_t dst_y = 0; dst_y < p.dst_h; ++dst_y) {
+             for (int64_t dst_x = 0; dst_x < p.dst_w; ++dst_x) {
+ 
+@@ -7271,6 +7311,8 @@ void ggml_compute_forward_conv_2d_dw(
+     if (ggml_is_contiguous(src)) {
+         ggml_compute_forward_conv_2d_dw_whcn(params, src, kernel, dst, p);
+     } else if (ggml_is_contiguous_channels(src)) {
++        // Only the WHCN path above stages the kernel through F32.
++        GGML_ASSERT(kernel->type == GGML_TYPE_F32);
+         // kernel should also have channels most contiguous in memory
+         GGML_ASSERT(kernel->nb[0] >= kernel->nb[2] && kernel->nb[1] >= kernel->nb[0]);
+         ggml_compute_forward_conv_2d_dw_cwhn(params, src, kernel, dst, p);

@@ -39,6 +39,12 @@ if(NEMO_SPEECH_DIRECT_DW_CONV)
     target_compile_definitions(nemo_speech_runtime_ggml PRIVATE NEMO_SPEECH_DIRECT_DW_CONV=1)
 endif()
 
+# CPU counterpart of the above (ggml patch 0022). Independent of GGML_CUDA:
+# it changes what a CPU-only session emits.
+if(NEMO_SPEECH_CPU_DIRECT_DW_CONV)
+    target_compile_definitions(nemo_speech_runtime_ggml PRIVATE NEMO_SPEECH_CPU_DIRECT_DW_CONV=1)
+endif()
+
 # ggml-cuda links CUDA::cuda_driver PRIVATE, so the stub libcuda.so on the
 # link line doesn't propagate to downstream executables. Re-link it PUBLIC
 # here so tests/ and riva_server inherit it and ld can resolve libggml-cuda's

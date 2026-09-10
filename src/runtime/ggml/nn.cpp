@@ -105,7 +105,12 @@ Conv1D::build_graph(
 #ifdef NEMO_SPEECH_DIRECT_DW_CONV
         // Patch 0004 adds the F16 direct depthwise kernel only for CUDA; other
         // backends require the portable path below.
-        direct_dw = session->params.use_gpu;
+        direct_dw = direct_dw || session->params.use_gpu;
+#endif
+#ifdef NEMO_SPEECH_CPU_DIRECT_DW_CONV
+        // Patch 0022 does the same for the CPU backend, and vectorizes the
+        // 1-D unit-stride case this module hits.
+        direct_dw = direct_dw || !session->params.use_gpu;
 #endif
         if (direct_dw) {
             ggml_tensor* x4 = ggml_reshape_4d(
@@ -258,7 +263,11 @@ Conv2DDW::build_graph(
     // gate as Conv1D's depthwise fast path above: a CPU-only session in a
     // CUDA build must take the portable lowering or it silently misreads the
     // F16 kernel as F32 (garbage subsampling output).
-    direct_dw = session->params.use_gpu;
+    direct_dw = direct_dw || session->params.use_gpu;
+#endif
+#ifdef NEMO_SPEECH_CPU_DIRECT_DW_CONV
+    // Patch 0022 gives the CPU backend the same F16-kernel handling.
+    direct_dw = direct_dw || !session->params.use_gpu;
 #endif
     if (direct_dw) {
         conv2d_ret = ggml_conv_2d_dw_direct(

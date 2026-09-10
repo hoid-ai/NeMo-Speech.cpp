@@ -24,6 +24,7 @@
       "displayName": "CPU ASR and diarization",
       "cacheVariables": {
         "GGML_LLAMAFILE": "ON",
+        "NEMO_SPEECH_CPU_DIRECT_DW_CONV": "ON",
         "NEMO_SPEECH_GGML_PATCHED": "OFF",
         "NEMO_SPEECH_BUILD_ASR": "ON",
         "NEMO_SPEECH_BUILD_DIAR": "ON",
@@ -37,6 +38,7 @@
       "displayName": "CPU standalone diarization",
       "cacheVariables": {
         "GGML_LLAMAFILE": "ON",
+        "NEMO_SPEECH_CPU_DIRECT_DW_CONV": "ON",
         "NEMO_SPEECH_GGML_PATCHED": "OFF",
         "NEMO_SPEECH_BUILD_ASR": "OFF",
         "NEMO_SPEECH_BUILD_DIAR": "ON",
@@ -50,6 +52,7 @@
       "displayName": "CPU text-to-speech",
       "cacheVariables": {
         "GGML_LLAMAFILE": "ON",
+        "NEMO_SPEECH_CPU_DIRECT_DW_CONV": "ON",
         "NEMO_SPEECH_GGML_PATCHED": "OFF",
         "NEMO_SPEECH_BUILD_ASR": "OFF",
         "NEMO_SPEECH_BUILD_DIAR": "OFF",
@@ -63,6 +66,7 @@
       "displayName": "CPU text translation",
       "cacheVariables": {
         "GGML_LLAMAFILE": "ON",
+        "NEMO_SPEECH_CPU_DIRECT_DW_CONV": "ON",
         "NEMO_SPEECH_GGML_PATCHED": "OFF",
         "NEMO_SPEECH_BUILD_ASR": "OFF",
         "NEMO_SPEECH_BUILD_DIAR": "OFF",
@@ -76,6 +80,7 @@
       "displayName": "CPU ASR, diarization, NMT, and TTS",
       "cacheVariables": {
         "GGML_LLAMAFILE": "ON",
+        "NEMO_SPEECH_CPU_DIRECT_DW_CONV": "ON",
         "NEMO_SPEECH_GGML_PATCHED": "OFF",
         "NEMO_SPEECH_BUILD_ASR": "ON",
         "NEMO_SPEECH_BUILD_DIAR": "ON",
@@ -214,6 +219,7 @@
       "displayName": "CPU speech CLI, HTTP server, and playground",
       "cacheVariables": {
         "GGML_LLAMAFILE": "ON",
+        "NEMO_SPEECH_CPU_DIRECT_DW_CONV": "ON",
         "NEMO_SPEECH_BUILD_TTS": "ON",
         "NEMO_SPEECH_BUILD_NMT": "ON",
         "NEMO_SPEECH_BUILD_HTTP": "ON",

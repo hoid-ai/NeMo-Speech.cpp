@@ -216,6 +216,20 @@ else()
         "NEMO_SPEECH_GGML_PATCHED=ON (patched ggml). Using ggml_conv_1d_dw.")
 endif()
 
+# Direct depthwise-conv kernel on the CPU backend. ggml patch 0022 teaches
+# ggml_compute_forward_conv_2d_dw to stage an F16 kernel through F32 - stock
+# ggml casts kernel->data straight to float and misreads it - and adds a
+# vectorized path for the 1-D unit-stride case, which is the FastConformer conv
+# module. Without the patch this MUST stay OFF: nn.cpp then uses the portable
+# ggml_conv_1d_dw / ggml_conv_2d_dw lowering, which is F16-safe everywhere.
+# The cpu-* presets enable it because scripts/configure.sh applies the patch
+# series for them.
+option(NEMO_SPEECH_CPU_DIRECT_DW_CONV
+    "Use the direct depthwise-conv kernel on CPU (requires ggml patch 0022)" OFF)
+if(NEMO_SPEECH_CPU_DIRECT_DW_CONV)
+    message(STATUS "NEMO_SPEECH_CPU_DIRECT_DW_CONV=ON: CPU sessions use GGML_OP_CONV_2D_DW")
+endif()
+
 # FastConformer graph rewrites that target CUDA-only ggml ops/fusions (sigmoid
 # GLU plus BF16 projection epilogues). Keep the symbols out of standard-ggml,
 # CPU, Metal, and Vulkan builds. The CUDA backend performs the finer runtime
