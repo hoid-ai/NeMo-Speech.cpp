@@ -9,8 +9,8 @@ git submodule update --init ggml
 scripts/apply-ggml-patches.sh        # applies patches in filename order
 ```
 
-Patched CUDA and Metal builds expect the patches before CMake configuration.
-CPU, Vulkan, and stock-CUDA builds do not. `apply-ggml-patches.sh` uses `git
+Patched CPU, CUDA and Metal builds expect the patches before CMake
+configuration. Vulkan and stock-CUDA builds do not. `apply-ggml-patches.sh` uses `git
 apply`, skips patches that are already applied, and applies new patches in
 filename order. Later patches may build on files changed by earlier patches;
 0006 carries the dispatch wiring for the ops/kernels introduced by
@@ -137,6 +137,18 @@ stock comparison therefore requires both a pristine ggml checkout and
 - **0019-cuda-graph-dynamic-update.patch** - refreshes CUDA graph node
   parameters when a cached graph is replayed so dynamic pointers and launch
   geometry do not retain values from an earlier execution.
+
+- **0021-cpu-x86-q8-repack-gemm.patch** - adds a Q8_0 repack GEMM for x86.
+  Upstream repacks Q8_0 only for NEON and RISC-V, so on x86 a Q8_0 weight
+  matrix went through the generic `ggml_vec_dot_q8_0_q8_0` path: one call per
+  output element, no register blocking, `src1` re-read for every weight row.
+  The new `q8_0_8x4` layout interleaves eight weight columns at 4-byte
+  granularity so one 32-byte load spans all eight and each of the eight int32
+  lanes accumulates one column, with no horizontal shuffle in the inner loop.
+  Two kernels share that loop: AVX2 (`vpmaddubsw` + `vpmaddwd`) and AVX-VNNI
+  (`vpdpbusd`), the latter compiled through a `target` attribute and selected
+  by a CPUID check so an AVX2-only build still runs anywhere. Weight sign is
+  folded into the activation as in ggml's scalar Q8_0 dot product.
 
 - **0020-bf16-convolution.patch** - adds BF16 im2col and direct depthwise
   convolution support, then fuses bias, BF16 output rounding, and optional
