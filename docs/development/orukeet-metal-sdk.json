@@ -1,0 +1,160 @@
+{
+  "success": true,
+  "scope": "OpenWhispr native worker built against the extracted release SDK, relocated and run with no DYLD path overrides; all 24 benchmark transcripts match the original runtime.",
+  "sdk_sha256": "8b409606b9043557e2fe41f5d8328aeba3010c93abcaa85104abdf711c02fd3a",
+  "release_archive_sha256": "26c0377dcffa031a1216b97350ab8c9c4687920c1842c9e6cc7e3e9d283ce10f",
+  "runtime_ready": {
+    "model_load_ms": 6925.663125,
+    "event": "ready",
+    "protocol_version": 1,
+    "device": "metal",
+    "gpu_index": 0,
+    "runtime_version": "nemo-speech-asr 0.1.0"
+  },
+  "clips": [
+    {
+      "id": "4992-41797-0013",
+      "transcript_exact": true,
+      "transcript_sha256": "4ae41faa533d757bf047f49cf162506dc29957c6f7b5306da5727d26d98b8f94"
+    },
+    {
+      "id": "3570-5695-0001",
+      "transcript_exact": true,
+      "transcript_sha256": "235026746be94b90d80714ce9a41afe1ecc2a2e1cb3737c09086bb2f978469f9"
+    },
+    {
+      "id": "3575-170457-0046",
+      "transcript_exact": true,
+      "transcript_sha256": "1ed756fe17d18596a1fe58dabbba408d1ffc4e22a906e2a5128ca9f589ac1aad"
+    },
+    {
+      "id": "7127-75947-0016",
+      "transcript_exact": true,
+      "transcript_sha256": "10dd9c579a21d0c904a4c8aae578664f03f54daacfb340f70e1fe5c23739d488"
+    },
+    {
+      "id": "4970-29093-0001",
+      "transcript_exact": true,
+      "transcript_sha256": "f984434df06c76ecd95c00226e2947d45f77c8bee75ed0805195a64c23b392ce"
+    },
+    {
+      "id": "5639-40744-0003",
+      "transcript_exact": true,
+      "transcript_sha256": "f5bd7dd5de9bf17969878b7804fb1a533df419a882c14c044ca2d8342d4c2c1f"
+    },
+    {
+      "id": "1320-122617-0026",
+      "transcript_exact": true,
+      "transcript_sha256": "971d86af1dd3ac0de47548bce245e935b966fae4b7b6ed84096bcd67f61d3d67"
+    },
+    {
+      "id": "4077-13754-0002",
+      "transcript_exact": true,
+      "transcript_sha256": "5c12e83db0ca5730beee7bc030eed1901cd58e8a1eb555fcb82861be3ca6778d"
+    },
+    {
+      "id": "7021-79759-0004",
+      "transcript_exact": true,
+      "transcript_sha256": "71a79925159155488ecc7e0ce08aea2a8c5b7de308e1ad41fc17ad0c3e4b6815"
+    },
+    {
+      "id": "1188-133604-0039",
+      "transcript_exact": true,
+      "transcript_sha256": "e372003cb95c343eddf5ace34f761b4875ce90406aa2b0e005a683c2eb0ce4e8"
+    },
+    {
+      "id": "3729-6852-0034",
+      "transcript_exact": true,
+      "transcript_sha256": "4c0a01738a762c9059fe8c7a2f48af92f217c9b547b0ac87225c482fc574c901"
+    },
+    {
+      "id": "5683-32866-0019",
+      "transcript_exact": true,
+      "transcript_sha256": "cce83a63ca43c4debab83baaea82c9dba34a2fabcd76276e27931dbd8242b10c"
+    },
+    {
+      "id": "7176-92135-0042",
+      "transcript_exact": true,
+      "transcript_sha256": "cb32d2dd8270a55c61ba4b951b5c033ad8e05cef9591d64ee0fdf235f5640e9b"
+    },
+    {
+      "id": "2961-960-0002",
+      "transcript_exact": true,
+      "transcript_sha256": "ab2a5cf2e484382357e25529b855e3d695c7e81b3cb4e405988f41f9ee35e552"
+    },
+    {
+      "id": "8463-294825-0007",
+      "transcript_exact": true,
+      "transcript_sha256": "0e04e2d7417eac0797ed20b1074bc71e6514da904e8d9c28b632352deb7f10fc"
+    },
+    {
+      "id": "2094-142345-0054",
+      "transcript_exact": true,
+      "transcript_sha256": "dc7c5636df4b66bb92a522babd2afddc563dc5315b7dce9774786c7445e053aa"
+    },
+    {
+      "id": "1221-135767-0004",
+      "transcript_exact": true,
+      "transcript_sha256": "09af54ad31b72d2e90a84c42a0262cccc485fd62446b4768e3405ebcdcbfea7d"
+    },
+    {
+      "id": "8555-292519-0001",
+      "transcript_exact": true,
+      "transcript_sha256": "8dd827ddce57aec09c0ed9826351a4b08a0e111177bddea7a6ab12f713aefe5d"
+    },
+    {
+      "id": "61-70968-0054",
+      "transcript_exact": true,
+      "transcript_sha256": "ecb24ce6b4a9baa286a45a59e7a0dc5a54186e468ee8ba8466800ee5bbc58be9"
+    },
+    {
+      "id": "5105-28233-0010",
+      "transcript_exact": true,
+      "transcript_sha256": "9901da8b5139ac78f9129029415221021fba3648f6333f21b82b1c25f20fbeb9"
+    },
+    {
+      "id": "1089-134691-0009",
+      "transcript_exact": true,
+      "transcript_sha256": "c8703acc9365b9374697a68ba6c5f6b407849c660f6d7aa78fa241adc682e8f5"
+    },
+    {
+      "id": "260-123286-0031",
+      "transcript_exact": true,
+      "transcript_sha256": "8a0c062518e8406139ec5fba27ad78d23e120f76db10f418b9ee89df662c98f4"
+    },
+    {
+      "id": "4446-2273-0010",
+      "transcript_exact": true,
+      "transcript_sha256": "630ea64e2f4601d119849256fd952f1dc88fd89f729974ee27d1a76ffc842c09"
+    },
+    {
+      "id": "2300-131720-0035",
+      "transcript_exact": true,
+      "transcript_sha256": "81dc0456a6b231da68efd169f3a4f1b8e5585087b4f1c1d7a8dba2d08104165b"
+    }
+  ],
+  "clean_shutdown": true,
+  "deterministic_archive_verified": true,
+  "extracted_sdk_fingerprint_verified": true,
+  "catalog_patch_applies_cleanly": true,
+  "release_tag": "v0.1.0-hoid-orukeet.1",
+  "release_published": false,
+  "catalog_entry": {
+    "version": "0.1.0-hoid-orukeet.1",
+    "component_api": 1,
+    "install_bytes": 5574446,
+    "platform": "macos_arm64",
+    "archives": [
+      {
+        "name": "nemo-speech-0.1.0-hoid-orukeet.1-macos-aarch64-metal.tar.gz",
+        "url": "https://github.com/hoid-ai/NeMo-Speech.cpp/releases/download/v0.1.0-hoid-orukeet.1/nemo-speech-0.1.0-hoid-orukeet.1-macos-aarch64-metal.tar.gz",
+        "sha256": "26c0377dcffa031a1216b97350ab8c9c4687920c1842c9e6cc7e3e9d283ce10f",
+        "size_bytes": 1840339,
+        "extract": "native-tar"
+      }
+    ]
+  },
+  "packager_sha256": "715886bd222d65df262e574db162875d2c457f70fed88bb14b424da810abbd71",
+  "catalog_patch_sha256": "e1e6d734ec3802628555beb168c3f0421b9310172d71430c2e915ae72b88d75b",
+  "source_sdk_libraries_unchanged": true
+}
