@@ -98,7 +98,12 @@ main(int argc, char** argv) {
     bm_params.pe_bin_path = const_cast<char*>("");
     ggml_runtime::BackendManager bm(bm_params);
     auto model = AsrModel::load(bm, model_path);
-    const bool is_rnnt = (model->head_kind() == HeadKind::Rnnt);
+    // TDT heads are served by RnntModel (head_kind() reports Tdt when the
+    // RNNT config carries duration bins), so they must take the RNNT branch.
+    // Testing only for HeadKind::Rnnt downcast TDT models to CtcModel and
+    // crashed in the mel extractor on the first infer_ctc call.
+    const HeadKind head = model->head_kind();
+    const bool is_rnnt = (head == HeadKind::Rnnt || head == HeadKind::Tdt);
     auto* rnnt = is_rnnt ? static_cast<RnntModel*>(model.get()) : nullptr;
     auto* ctc = is_rnnt ? nullptr : static_cast<CtcModel*>(model.get());
     const int sr = model->sample_rate();
@@ -128,6 +133,14 @@ main(int argc, char** argv) {
         rnnt->predict_rnnt(*state, rcfg.blank_id, /*active_bank=*/0);
         rnnt->joint_argmax(*state, enc_proj.data(), rcfg.joint_dim, 1, &best);
         std::fprintf(stderr, "[coverage] RNNT decoder stages ran (argmax=%d)\n", best);
+
+        // Full-context encoders have no cache-aware Session, so the offline
+        // encoder is the only encoder graph they ever build. Run it here or
+        // the schedule dump below reports no encoder at all for them.
+        std::vector<float> enc_out;
+        int T_enc = 0;
+        rnnt->infer_offline(audio.data(), audio.size(), enc_out, T_enc);
+        std::fprintf(stderr, "[coverage] offline encoder Session ran: T_enc=%d\n", T_enc);
     } else {
         std::vector<float> lp;
         int T_out = 0, n_classes = 0;
@@ -149,7 +162,10 @@ main(int argc, char** argv) {
     // cache-aware encoder Session plus staged RNNT decode on each chunk - on any
     // backend, CPU included.
     std::unique_ptr<CacheStreamRunner> runner;
-    if (is_rnnt) {
+    if (is_rnnt && !rnnt->supports_cache_streaming()) {
+        std::fprintf(
+            stderr, "[coverage] encoder is full-context only; skipping CacheStreamRunner\n");
+    } else if (is_rnnt) {
         RecognizerConfig cfg;
         cfg.streaming.rnnt_right_context = 1;  // Riva low-latency preset.
         runner = std::make_unique<CacheStreamRunner>(rnnt, cfg);
