@@ -62,7 +62,8 @@ Conv1D::define_tensors(Session* session) {
         // 2D weight: store at the GGUF's dtype (Q8_0 / F16 / F32 / ...)
         // so ggml_mul_mat sees the original quant blocks.
         this->weight = session->model_tensor_container->create_tensor_2d(
-            weight_name, stored, in_channels, out_channels);
+            weight_name, stored, in_channels, out_channels,
+            TensorContainer::TensorRole::MatmulWeight);
     } else if (is_dw) {
         this->weight = session->model_tensor_container->create_tensor_3d(
             weight_name, GGML_TYPE_F16, kernel_size, 1, in_channels);
@@ -104,7 +105,12 @@ Conv1D::build_graph(
 #ifdef NEMO_SPEECH_DIRECT_DW_CONV
         // Patch 0004 adds the F16 direct depthwise kernel only for CUDA; other
         // backends require the portable path below.
-        direct_dw = session->params.use_gpu;
+        direct_dw = direct_dw || session->params.use_gpu;
+#endif
+#ifdef NEMO_SPEECH_CPU_DIRECT_DW_CONV
+        // Patch 0022 does the same for the CPU backend, and vectorizes the
+        // 1-D unit-stride case this module hits.
+        direct_dw = direct_dw || !session->params.use_gpu;
 #endif
         if (direct_dw) {
             ggml_tensor* x4 = ggml_reshape_4d(
@@ -257,7 +263,11 @@ Conv2DDW::build_graph(
     // gate as Conv1D's depthwise fast path above: a CPU-only session in a
     // CUDA build must take the portable lowering or it silently misreads the
     // F16 kernel as F32 (garbage subsampling output).
-    direct_dw = session->params.use_gpu;
+    direct_dw = direct_dw || session->params.use_gpu;
+#endif
+#ifdef NEMO_SPEECH_CPU_DIRECT_DW_CONV
+    // Patch 0022 gives the CPU backend the same F16-kernel handling.
+    direct_dw = direct_dw || !session->params.use_gpu;
 #endif
     if (direct_dw) {
         conv2d_ret = ggml_conv_2d_dw_direct(
@@ -318,8 +328,11 @@ Linear::define_tensors(Session* session) {
     // matching byte sizes. Bias always stays at the stored type too
     // (typically F32 or F16 — we never quantize biases in the converter).
     ggml_type weight_type = session->gguf_loader->get_tensor_type(weight_name);
+    // Linear's weight is only ever a ggml_mul_mat src[0], so it may live on a
+    // matmul-layout buffer type (ggml's CPU_REPACK).
     this->weight = session->model_tensor_container->create_tensor_4d(
-        weight_name, weight_type, in_features, out_features, 1, 1);
+        weight_name, weight_type, in_features, out_features, 1, 1,
+        TensorContainer::TensorRole::MatmulWeight);
     if (use_bias) {
         ggml_type bias_type = session->gguf_loader->get_tensor_type(bias_name);
         this->bias = session->model_tensor_container->create_tensor_4d(

@@ -9,8 +9,8 @@ git submodule update --init ggml
 scripts/apply-ggml-patches.sh        # applies patches in filename order
 ```
 
-Patched CUDA and Metal builds expect the patches before CMake configuration.
-CPU, Vulkan, and stock-CUDA builds do not. `apply-ggml-patches.sh` uses `git
+Patched CPU, CUDA and Metal builds expect the patches before CMake
+configuration. Vulkan and stock-CUDA builds do not. `apply-ggml-patches.sh` uses `git
 apply`, skips patches that are already applied, and applies new patches in
 filename order. Later patches may build on files changed by earlier patches;
 0006 carries the dispatch wiring for the ops/kernels introduced by
@@ -137,6 +137,37 @@ stock comparison therefore requires both a pristine ggml checkout and
 - **0019-cuda-graph-dynamic-update.patch** - refreshes CUDA graph node
   parameters when a cached graph is replayed so dynamic pointers and launch
   geometry do not retain values from an earlier execution.
+
+- **0021-cpu-x86-q8-repack-gemm.patch** - adds a Q8_0 repack GEMM for x86.
+  Upstream repacks Q8_0 only for NEON and RISC-V, so on x86 a Q8_0 weight
+  matrix went through the generic `ggml_vec_dot_q8_0_q8_0` path: one call per
+  output element, no register blocking, `src1` re-read for every weight row.
+  The new `q8_0_8x4` layout interleaves eight weight columns at 4-byte
+  granularity so one 32-byte load spans all eight and each of the eight int32
+  lanes accumulates one column, with no horizontal shuffle in the inner loop.
+  Two kernels share that loop: AVX2 (`vpmaddubsw` + `vpmaddwd`) and AVX-VNNI
+  (`vpdpbusd`), the latter compiled through a `target` attribute and selected
+  by a CPUID check so an AVX2-only build still runs anywhere. Weight sign is
+  folded into the activation as in ggml's scalar Q8_0 dot product.
+
+  Also adds an AVX2 `ggml_quantize_mat_q8_0_4x4`, the activation-side
+  quantizer that GEMM consumes. x86 had none - `arch-fallback.h` aliased it to
+  the scalar C implementation, whose per-element `roundf` cost ~8% of encoder
+  time once the weight matmuls were repacked. The 4-byte interleave needs no
+  closing permute, unlike the existing 8-byte variant, and matching the
+  vectorized round-to-nearest makes the repacked result bit-identical to the
+  unrepacked path rather than merely within tolerance.
+
+- **0022-cpu-direct-depthwise-conv.patch** - lets the CPU backend run
+  `GGML_OP_CONV_2D_DW`. It cast `kernel->data` straight to `float`, so an F16
+  depthwise kernel was read as garbage and callers had to use the
+  `ggml_conv_1d_dw` / `ggml_conv_2d_dw` im2col lowering instead; the kernel is
+  now staged through F32 once per channel. Adds a vectorized path for the 1-D
+  unit-stride case (the FastConformer conv module), which is `knl_w`
+  `ggml_vec_mad_f32` passes over the output row instead of materializing
+  `knl_w` values per output element to take a `knl_w`-long dot product. Also
+  teaches `ggml_backend_cpu_device_supports_op` to report CONV_2D_DW type
+  support honestly instead of falling through to its `default: return true`.
 
 - **0020-bf16-convolution.patch** - adds BF16 im2col and direct depthwise
   convolution support, then fuses bias, BF16 output rounding, and optional

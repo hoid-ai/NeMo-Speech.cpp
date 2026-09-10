@@ -169,6 +169,9 @@ struct Params {
     bool use_gpu = false;
     int gpu_device_idx = 0;
     char* pe_bin_path = nullptr;
+    // Threads for ggml's CPU backend. 0 selects default_compute_threads()
+    // (see cpu_topology.h): one thread per performance core.
+    int cpu_threads = 0;
 };
 
 // Owns ggml backend handles shared by one or more Sessions.
@@ -247,14 +250,27 @@ class TensorContainer {
     // construction like ordinary model tensors but are never allocated or freed by the runtime.
     ggml_bf_tensor import_tensor(std::string name, ggml_tensor* tensor);
 
-    // Declares tensors on the primary device's main buffer type.
+    // What a declared tensor is for. `MatmulWeight` means "this tensor is only
+    // ever a ggml_mul_mat src[0]", which lets the runtime place it on a
+    // backend buffer type that stores weights in a matmul-specific layout
+    // (ggml's CPU_REPACK). Such a layout permutes the bytes, so declaring it
+    // for a tensor that any other op reads would silently produce garbage -
+    // hence an explicit opt-in per declaration site rather than a guess from
+    // dtype or shape.
+    enum class TensorRole { General, MatmulWeight };
+
+    // Declares tensors on the primary device's main buffer type, or, for
+    // TensorRole::MatmulWeight, on the first buffer type that accepts the
+    // tensor for MUL_MAT.
     ggml_bf_tensor create_tensor_1d(std::string name, ggml_type data_type, int64_t ne0);
     ggml_bf_tensor create_tensor_2d(
-        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1);
+        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1,
+        TensorRole role = TensorRole::General);
     ggml_bf_tensor create_tensor_3d(
         std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2);
     ggml_bf_tensor create_tensor_4d(
-        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2, int64_t ne3);
+        std::string name, ggml_type data_type, int64_t ne0, int64_t ne1, int64_t ne2, int64_t ne3,
+        TensorRole role = TensorRole::General);
 
    private:
     ArenaSizes sizes_;
@@ -269,7 +285,8 @@ class TensorContainer {
     std::vector<ggml_backend_buffer_ptr> backend_buffers;
     std::map<std::string, ggml_bf_tensor> tensor_lookup;
 
-    ggml_bf_tensor m_create_tensor(ggml_tensor* meta, std::string& name);
+    ggml_bf_tensor m_create_tensor(
+        ggml_tensor* meta, std::string& name, TensorRole role = TensorRole::General);
 };
 
 // Per-stream device storage for a Session's state tensors. The state must
@@ -379,6 +396,9 @@ class Session {
 
     WeightLoadHook weight_load_hook_;
 
+    // Resolved once in the constructor from params.cpu_threads.
+    int cpu_threads_ = 1;
+
     // Called under the compute mutex before graph allocation.
     void bind_state(SessionState* state);
 
@@ -430,7 +450,14 @@ class Session {
         // Single-backend graphs without state views can bypass the scheduler.
         bool direct_ok = false;
         ggml_backend_t direct_backend = nullptr;
+        // Threads for this graph's shape, from graph_compute_threads(); 0
+        // until first computed.
+        int compute_threads = 0;
     };
+
+    // Worker count for one graph, balancing per-op parallel speedup against
+    // the per-node thread barrier. See cpu_topology.h for the model.
+    int graph_compute_threads(ggml_cgraph* gf) const;
     std::unordered_map<uint64_t, CachedRun> run_cache_;
     std::vector<uint64_t> run_cache_lru_;  // back() = most-recent
     size_t run_cache_capacity_ = 4;

@@ -15,4 +15,7 @@ the server want [ASR configuration](../asr/configuration.md),
   they are applied at build setup.
 - [`cublas-shim.md`](cublas-shim.md) - the in-tree drop-in cuBLAS replacement
   under `kernels/` and where the custom GPU kernels live.
+- [`cpu-x86-orukeet.md`](cpu-x86-orukeet.md) - making the FastConformer encoder
+  fast on AVX2 x86: the Q8_0 repack GEMM, thread-pool sizing, and direct
+  depthwise convolution, with the measurements behind each.
 - [Windows build notes](windows-build.md)

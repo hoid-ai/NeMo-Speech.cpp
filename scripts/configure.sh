@@ -22,8 +22,8 @@ Examples:
   scripts/configure.sh cuda-server -DNEMO_SPEECH_WITH_NORM=ON
 
 The script checks required submodules and optional feature assets, applies the
-pinned ggml patch series for CUDA and Metal presets and the llama.cpp batching
-patch series when required, and then runs cmake --preset PRESET.
+pinned ggml patch series for CPU, CUDA and Metal presets and the llama.cpp
+batching patch series when required, and then runs cmake --preset PRESET.
 EOF
     exit 0
 fi
@@ -167,7 +167,7 @@ if [ "${#missing[@]}" -ne 0 ]; then
 fi
 
 case "$PRESET" in
-    cuda-*|metal-*)
+    cpu-*|cuda-*|metal-*)
         scripts/apply-ggml-patches.sh
         ;;
 esac
