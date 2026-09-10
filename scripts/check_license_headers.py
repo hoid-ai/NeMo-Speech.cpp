@@ -14,6 +14,8 @@ COPYRIGHT = (
     "SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. "
     "All rights reserved."
 )
+HOID_COPYRIGHT = "SPDX-FileCopyrightText: Copyright (c) 2026 Hoid AI"
+ACCEPTED_COPYRIGHTS = (COPYRIGHT, HOID_COPYRIGHT)
 LICENSE = "SPDX-License-Identifier: Apache-2.0"
 SOURCE_SUFFIXES = {
     ".c",
@@ -93,12 +95,12 @@ def comment_prefix(path: Path) -> str:
     return "//"
 
 
-def expected_header(path: Path) -> str:
+def expected_header(path: Path, copyright_text: str = COPYRIGHT) -> str:
     prefix = comment_prefix(path)
     if prefix == "/*":
-        lines = [f"/* {COPYRIGHT}", f" * {LICENSE}", " */"]
+        lines = [f"/* {copyright_text}", f" * {LICENSE}", " */"]
     else:
-        lines = [f"{prefix} {COPYRIGHT}", f"{prefix} {LICENSE}"]
+        lines = [f"{prefix} {copyright_text}", f"{prefix} {LICENSE}"]
 
     path_string = path.as_posix()
     if path_string.startswith(DERIVED_PREFIX) or path_string in DERIVED_FILES:
@@ -125,7 +127,7 @@ def expected_header(path: Path) -> str:
 
 def has_header(path: Path, text: str) -> bool:
     first_lines = "\n".join(text.splitlines()[:12])
-    if COPYRIGHT not in first_lines or LICENSE not in first_lines:
+    if not any(owner in first_lines for owner in ACCEPTED_COPYRIGHTS) or LICENSE not in first_lines:
         return False
     path_string = path.as_posix()
     if path_string.startswith(DERIVED_PREFIX) or path_string in DERIVED_FILES:
@@ -139,12 +141,16 @@ def has_header(path: Path, text: str) -> bool:
 def add_header(path: Path, text: str) -> str:
     lines = text.splitlines(keepends=True)
     insert_at = 1 if lines and lines[0].startswith("#!") else 0
-    header = expected_header(path)
-
-    # Replace an existing NVIDIA SPDX block instead of duplicating it.
     probe_end = min(len(lines), insert_at + 10)
     existing = "".join(lines[insert_at:probe_end])
-    if "SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION" in existing:
+    # Keep the contributor's ownership when repairing an existing SPDX block.
+    owners = [owner for owner in ACCEPTED_COPYRIGHTS if owner in existing]
+    header = expected_header(path, owners[0] if owners else COPYRIGHT)
+    if len(owners) > 1:
+        prefix = " *" if comment_prefix(path) == "/*" else comment_prefix(path)
+        first, rest = header.split("\n", 1)
+        header = first + "\n" + "".join(f"{prefix} {owner}\n" for owner in owners[1:]) + rest
+    if owners:
         while insert_at < len(lines) and (
             "SPDX-FileCopyrightText:" in lines[insert_at]
             or "SPDX-License-Identifier:" in lines[insert_at]

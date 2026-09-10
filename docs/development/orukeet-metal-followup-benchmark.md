@@ -106,6 +106,12 @@ do not characterize a clean first launch or isolate the cache's setup cost.
 
 ## Validation
 
+The subsequent [full-model numerical audit](orukeet-model-numerics.md)
+compares the complete encoder outputs and every token/duration logit with
+the original Q8 Metal runtime. All 32.9 million final scores across the
+24 benchmark clips, each run twice, pass `atol=rtol=1e-5`. This supplements
+the kernel NMSE tests and transcript checks below.
+
 **249 new CPU-reference tests passed with Metal shader validation:**
 
 | Test group | Cases |
